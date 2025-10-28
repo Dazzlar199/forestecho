@@ -157,7 +157,7 @@ service cloud.firestore {
       // 모두 읽기 가능 (로그인 불필요)
       allow read: if true;
 
-      // 생성/수정/삭제는 클라이언트에서 관리자 체크 후 진행
+      // 생성/수정/삭제는 로그인 필요 (관리자가 클라이언트에서)
       allow create, update, delete: if request.auth != null;
     }
   }
