@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Sun, Moon, Languages, Heart, Home, Brain, Calendar, Users, BookOpen, LogOut, User as UserIcon, TreePine, Edit2 } from 'lucide-react'
+import { Sun, Moon, Languages, Heart, Home, Brain, Calendar, Users, BookOpen, LogOut, User as UserIcon, TreePine, Edit2, HelpCircle, MessageSquare } from 'lucide-react'
 import { useAuth } from './AuthProvider'
 import { useTheme } from './ThemeProvider'
 import { useLanguage, type Language } from './LanguageProvider'
@@ -320,6 +320,51 @@ export default function Header() {
                         {language === 'en' && 'Education'}
                         {language === 'ja' && '心理教育'}
                         {language === 'zh' && '心理教育'}
+                      </span>
+                    </Link>
+
+                    {/* 구분선 */}
+                    <div className={`border-t ${
+                      theme === 'dark' ? 'border-white/10' : 'border-gray-200'
+                    }`}></div>
+
+                    {/* FAQ */}
+                    <Link
+                      href="/faq"
+                      onClick={() => setShowProfileMenu(false)}
+                      className={`w-full px-4 py-3 text-left text-sm transition-colors flex items-center gap-3 ${
+                        theme === 'dark'
+                          ? 'hover:bg-white/10 text-gray-300'
+                          : 'hover:bg-gray-100/50 text-gray-700'
+                      }`}
+                      style={{ fontWeight: 300, letterSpacing: '0.05em' }}
+                    >
+                      <HelpCircle className="w-4 h-4" />
+                      <span>
+                        {language === 'ko' && 'FAQ'}
+                        {language === 'en' && 'FAQ'}
+                        {language === 'ja' && 'FAQ'}
+                        {language === 'zh' && '常见问题'}
+                      </span>
+                    </Link>
+
+                    {/* 고객 지원 */}
+                    <Link
+                      href="/support"
+                      onClick={() => setShowProfileMenu(false)}
+                      className={`w-full px-4 py-3 text-left text-sm transition-colors flex items-center gap-3 ${
+                        theme === 'dark'
+                          ? 'hover:bg-white/10 text-gray-300'
+                          : 'hover:bg-gray-100/50 text-gray-700'
+                      }`}
+                      style={{ fontWeight: 300, letterSpacing: '0.05em' }}
+                    >
+                      <MessageSquare className="w-4 h-4" />
+                      <span>
+                        {language === 'ko' && '고객 지원'}
+                        {language === 'en' && 'Support'}
+                        {language === 'ja' && 'サポート'}
+                        {language === 'zh' && '客户支持'}
                       </span>
                     </Link>
 

@@ -125,5 +125,40 @@ service cloud.firestore {
       allow update, delete: if request.auth != null
                             && request.auth.uid == resource.data.authorId;
     }
+
+    // ==============================================
+    // 문의사항/피드백: 작성자 본인 + 관리자만 읽기 가능
+    // ==============================================
+    match /inquiries/{inquiryId} {
+      // 읽기: 본인 또는 관리자 (관리자는 앱에서 체크)
+      allow read: if request.auth != null
+                  && (request.auth.uid == resource.data.userId);
+
+      // 생성: 로그인한 사용자만
+      allow create: if request.auth != null
+                    && request.auth.uid == request.resource.data.userId
+                    && request.resource.data.userId is string
+                    && request.resource.data.type in ['inquiry', 'feedback', 'bug']
+                    && request.resource.data.status == 'pending';
+
+      // 수정: 본인만 (관리자 답변 제외)
+      allow update: if request.auth != null
+                    && request.auth.uid == resource.data.userId;
+
+      // 삭제: 본인만
+      allow delete: if request.auth != null
+                    && request.auth.uid == resource.data.userId;
+    }
+
+    // ==============================================
+    // FAQ: 모두 읽기, 관리자만 수정 (앱에서 체크)
+    // ==============================================
+    match /faqs/{faqId} {
+      // 모두 읽기 가능 (로그인 불필요)
+      allow read: if true;
+
+      // 생성/수정/삭제는 클라이언트에서 관리자 체크 후 진행
+      allow create, update, delete: if request.auth != null;
+    }
   }
 }
