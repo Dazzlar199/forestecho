@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
         },
         {
           role: 'user',
-          content: `다음은 지금까지의 상담 대화입니다:\n\n${conversationSummary}\n\n위 대화를 바탕으로 매우 디테일하고 정밀한 전문 심리 분석을 JSON 형식으로 제공해주세요.`,
+          content: `다음은 지금까지의 상담 대화입니다:\n\n${conversationSummary}\n\n위 대화를 바탕으로 매우 정밀하고 깊이 있는 전문 심리 분석을 JSON 형식으로 제공해주세요.`,
         },
       ],
       response_format: { type: 'json_object' },

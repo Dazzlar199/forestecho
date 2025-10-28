@@ -63,27 +63,27 @@ export default function AnalysisReport({
   }
 
   return (
-    <div className="mt-12 max-w-4xl mx-auto">
+    <div className="mt-8 sm:mt-12 max-w-4xl mx-auto">
       <button
         onClick={handleGenerateAnalysis}
         disabled={loading || messages.length < 4}
-        className="w-full px-8 py-6 bg-gradient-to-r from-blue-500/10 to-purple-500/10 backdrop-blur-md border border-white/20 text-gray-300 hover:from-blue-500/20 hover:to-purple-500/20 hover:border-white/30 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-3 rounded-lg"
+        className="w-full px-6 py-4 sm:px-8 sm:py-6 bg-gradient-to-r from-blue-500/10 to-purple-500/10 backdrop-blur-md border border-white/20 text-gray-300 hover:from-blue-500/20 hover:to-purple-500/20 hover:border-white/30 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 sm:gap-3 rounded-lg text-sm sm:text-base"
         style={{ fontWeight: 300, letterSpacing: '0.08em' }}
       >
         {loading ? (
           <>
-            <Loader2 className="w-5 h-5 animate-spin" />
-            <span>당신의 마음을 디테일하게 분석하고 있습니다...</span>
+            <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
+            <span>마음을 깊이 들여다보는 중입니다...</span>
           </>
         ) : (
           <>
-            <Sparkles className="w-5 h-5" />
+            <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />
             <span>전문 심리 분석 받기</span>
           </>
         )}
       </button>
       <p
-        className="text-center text-sm text-gray-600 mt-4"
+        className="text-center text-xs sm:text-sm text-gray-600 mt-3 sm:mt-4"
         style={{ fontWeight: 300, letterSpacing: '0.02em' }}
       >
         AI 기반 전문 심리 분석 리포트를 생성합니다
