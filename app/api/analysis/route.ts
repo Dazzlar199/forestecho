@@ -1,12 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import openai from '@/lib/openai/config'
 import { PREMIUM_ANALYSIS_PROMPT } from '@/lib/openai/prompts'
-import {
-  collection,
-  addDoc,
-  serverTimestamp,
-} from 'firebase/firestore'
-import { db } from '@/lib/firebase/config'
+import { adminDb } from '@/lib/firebase/admin'
+import admin from 'firebase-admin'
 import type { PsychologicalAnalysis } from '@/types/analysis'
 
 export async function POST(request: NextRequest) {
@@ -65,13 +61,13 @@ export async function POST(request: NextRequest) {
       throw new Error('분석 결과 파싱에 실패했습니다.')
     }
 
-    // Firestore에 분석 결과 저장
-    const analysisDoc = await addDoc(collection(db, 'psychologicalAnalyses'), {
+    // Firestore에 분석 결과 저장 (Admin SDK 사용)
+    const analysisDoc = await adminDb.collection('psychologicalAnalyses').add({
       ...analysisData,
       sessionId: sessionId || '',
       userId: userId,
-      generatedAt: serverTimestamp(),
-      createdAt: serverTimestamp(),
+      generatedAt: admin.firestore.FieldValue.serverTimestamp(),
+      createdAt: admin.firestore.FieldValue.serverTimestamp(),
     })
 
     const fullAnalysis: PsychologicalAnalysis = {

@@ -40,9 +40,8 @@ service cloud.firestore {
       allow read: if request.auth != null
                   && request.auth.uid == resource.data.userId;
 
-      // 생성: userId가 있으면 생성 허용 (API route에서 생성)
-      allow create: if request.resource.data.userId is string
-                    && request.resource.data.userId != '';
+      // 생성: Admin SDK에서 생성하므로 클라이언트에서는 생성 불가
+      allow create: if false;
 
       // 수정: 본인 분석만
       allow update: if request.auth != null
