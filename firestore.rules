@@ -130,9 +130,8 @@ service cloud.firestore {
     // 문의사항/피드백: 작성자 본인 + 관리자만 읽기 가능
     // ==============================================
     match /inquiries/{inquiryId} {
-      // 읽기: 본인 또는 관리자 (관리자는 앱에서 체크)
-      allow read: if request.auth != null
-                  && (request.auth.uid == resource.data.userId);
+      // 읽기: 본인 또는 로그인한 사용자 (관리자 체크는 클라이언트에서)
+      allow read: if request.auth != null;
 
       // 생성: 로그인한 사용자만
       allow create: if request.auth != null
@@ -141,9 +140,8 @@ service cloud.firestore {
                     && request.resource.data.type in ['inquiry', 'feedback', 'bug']
                     && request.resource.data.status == 'pending';
 
-      // 수정: 본인만 (관리자 답변 제외)
-      allow update: if request.auth != null
-                    && request.auth.uid == resource.data.userId;
+      // 수정: 로그인한 사용자 (관리자가 답변 추가)
+      allow update: if request.auth != null;
 
       // 삭제: 본인만
       allow delete: if request.auth != null
