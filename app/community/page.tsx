@@ -3,117 +3,172 @@
 import { useState, useEffect } from 'react'
 import { useLanguage } from '@/components/layout/LanguageProvider'
 import { useTheme } from '@/components/layout/ThemeProvider'
+import { useAuth } from '@/components/layout/AuthProvider'
 import { PenSquare, Filter } from 'lucide-react'
 import PostCreate from '@/components/community/PostCreate'
 import PostList from '@/components/community/PostList'
 import PostDetail from '@/components/community/PostDetail'
 import {
   CATEGORIES,
-  MOCK_POSTS,
-  MOCK_COMMENTS,
   type Post,
   type Comment,
   type PostCategory
 } from '@/types/community'
+import { db } from '@/lib/firebase/config'
+import {
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  onSnapshot,
+  where,
+  updateDoc,
+  doc,
+  increment,
+  arrayUnion,
+  arrayRemove,
+} from 'firebase/firestore'
 
 export default function CommunityPage() {
   const { language } = useLanguage()
   const { theme } = useTheme()
+  const { user } = useAuth()
   const [showPostCreate, setShowPostCreate] = useState(false)
   const [selectedPostId, setSelectedPostId] = useState<string | null>(null)
   const [posts, setPosts] = useState<Post[]>([])
   const [comments, setComments] = useState<Comment[]>([])
   const [selectedCategory, setSelectedCategory] = useState<PostCategory | 'all'>('all')
-  const currentUserId = 'test-user'
 
+  // 게시글 불러오기
   useEffect(() => {
-    // Mock data 초기화
-    setPosts(MOCK_POSTS)
-    setComments(MOCK_COMMENTS)
+    const q = query(collection(db, 'posts'), orderBy('timestamp', 'desc'))
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const postsData = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+        timestamp: doc.data().timestamp?.toDate() || new Date(),
+      })) as Post[]
+      setPosts(postsData)
+    })
+
+    return () => unsubscribe()
   }, [])
 
-  const handleCreatePost = (postData: {
+  // 댓글 불러오기
+  useEffect(() => {
+    if (!selectedPostId) return
+
+    const q = query(
+      collection(db, 'posts', selectedPostId, 'comments'),
+      orderBy('timestamp', 'asc')
+    )
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const commentsData = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+        timestamp: doc.data().timestamp?.toDate() || new Date(),
+      })) as Comment[]
+      setComments(commentsData)
+    })
+
+    return () => unsubscribe()
+  }, [selectedPostId])
+
+  const handleCreatePost = async (postData: {
     category: PostCategory
     title: string
     content: string
     isAnonymous: boolean
     tags: string[]
   }) => {
-    const newPost: Post = {
-      id: `post-${Date.now()}`,
-      authorId: currentUserId,
-      authorName: '익명',
-      isAnonymous: postData.isAnonymous,
-      category: postData.category,
-      title: postData.title,
-      content: postData.content,
-      timestamp: new Date(),
-      likes: 0,
-      commentCount: 0,
-      likedBy: [],
-      tags: postData.tags
+    if (!user) return
+
+    try {
+      await addDoc(collection(db, 'posts'), {
+        authorId: user.uid,
+        authorName: postData.isAnonymous ? '익명' : user.displayName || '사용자',
+        isAnonymous: postData.isAnonymous,
+        category: postData.category,
+        title: postData.title,
+        content: postData.content,
+        timestamp: new Date(),
+        likes: 0,
+        commentCount: 0,
+        likedBy: [],
+        tags: postData.tags,
+      })
+
+      setShowPostCreate(false)
+    } catch (error) {
+      console.error('게시글 작성 오류:', error)
+      alert('게시글 작성 중 오류가 발생했습니다.')
     }
-
-    setPosts([newPost, ...posts])
-    setShowPostCreate(false)
   }
 
-  const handlePostLike = (postId: string) => {
-    setPosts(posts.map(post => {
-      if (post.id === postId) {
-        const isLiked = post.likedBy.includes(currentUserId)
-        return {
-          ...post,
-          likes: isLiked ? post.likes - 1 : post.likes + 1,
-          likedBy: isLiked
-            ? post.likedBy.filter(id => id !== currentUserId)
-            : [...post.likedBy, currentUserId]
-        }
-      }
-      return post
-    }))
-  }
+  const handlePostLike = async (postId: string) => {
+    if (!user) return
 
-  const handleCommentLike = (commentId: string) => {
-    setComments(comments.map(comment => {
-      if (comment.id === commentId) {
-        const isLiked = comment.likedBy.includes(currentUserId)
-        return {
-          ...comment,
-          likes: isLiked ? comment.likes - 1 : comment.likes + 1,
-          likedBy: isLiked
-            ? comment.likedBy.filter(id => id !== currentUserId)
-            : [...comment.likedBy, currentUserId]
-        }
-      }
-      return comment
-    }))
-  }
+    try {
+      const post = posts.find((p) => p.id === postId)
+      if (!post) return
 
-  const handleCommentSubmit = (content: string, isAnonymous: boolean) => {
-    if (!selectedPostId) return
+      const isLiked = post.likedBy.includes(user.uid)
+      const postRef = doc(db, 'posts', postId)
 
-    const newComment: Comment = {
-      id: `comment-${Date.now()}`,
-      postId: selectedPostId,
-      authorId: currentUserId,
-      authorName: '익명',
-      isAnonymous,
-      content,
-      timestamp: new Date(),
-      likes: 0,
-      likedBy: []
+      await updateDoc(postRef, {
+        likes: increment(isLiked ? -1 : 1),
+        likedBy: isLiked ? arrayRemove(user.uid) : arrayUnion(user.uid),
+      })
+    } catch (error) {
+      console.error('좋아요 오류:', error)
     }
+  }
 
-    setComments([...comments, newComment])
+  const handleCommentLike = async (commentId: string) => {
+    if (!user || !selectedPostId) return
 
-    // Update comment count
-    setPosts(posts.map(post => {
-      if (post.id === selectedPostId) {
-        return { ...post, commentCount: post.commentCount + 1 }
-      }
-      return post
-    }))
+    try {
+      const comment = comments.find((c) => c.id === commentId)
+      if (!comment) return
+
+      const isLiked = comment.likedBy.includes(user.uid)
+      const commentRef = doc(db, 'posts', selectedPostId, 'comments', commentId)
+
+      await updateDoc(commentRef, {
+        likes: increment(isLiked ? -1 : 1),
+        likedBy: isLiked ? arrayRemove(user.uid) : arrayUnion(user.uid),
+      })
+    } catch (error) {
+      console.error('댓글 좋아요 오류:', error)
+    }
+  }
+
+  const handleCommentSubmit = async (content: string, isAnonymous: boolean) => {
+    if (!selectedPostId || !user) return
+
+    try {
+      await addDoc(collection(db, 'posts', selectedPostId, 'comments'), {
+        postId: selectedPostId,
+        authorId: user.uid,
+        authorName: isAnonymous ? '익명' : user.displayName || '사용자',
+        isAnonymous,
+        content,
+        timestamp: new Date(),
+        likes: 0,
+        likedBy: [],
+      })
+
+      // 댓글 수 증가
+      const postRef = doc(db, 'posts', selectedPostId)
+      await updateDoc(postRef, {
+        commentCount: increment(1),
+      })
+    } catch (error) {
+      console.error('댓글 작성 오류:', error)
+      alert('댓글 작성 중 오류가 발생했습니다.')
+    }
   }
 
   const filteredPosts = selectedCategory === 'all'
@@ -189,7 +244,7 @@ export default function CommunityPage() {
           posts={filteredPosts}
           onPostClick={setSelectedPostId}
           onLike={handlePostLike}
-          currentUserId={currentUserId}
+          currentUserId={user?.uid || ''}
         />
 
         {/* Post Create Modal */}
@@ -209,7 +264,7 @@ export default function CommunityPage() {
             onLike={handlePostLike}
             onCommentLike={handleCommentLike}
             onCommentSubmit={handleCommentSubmit}
-            currentUserId={currentUserId}
+            currentUserId={user?.uid || ''}
           />
         )}
       </div>
