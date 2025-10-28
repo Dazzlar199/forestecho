@@ -179,11 +179,11 @@ export default function CommunityPage() {
   const postComments = selectedPostId ? comments.filter(c => c.postId === selectedPostId) : []
 
   return (
-    <div className="min-h-screen py-32 px-6">
+    <div className="min-h-screen py-20 sm:py-32 px-4 sm:px-6">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className={`text-3xl font-medium mb-6 ${
+        <div className="mb-6 sm:mb-8">
+          <h1 className={`text-2xl sm:text-3xl font-medium mb-4 sm:mb-6 ${
             theme === 'dark' ? 'text-gray-200' : 'text-gray-800'
           }`}>
             {language === 'ko' && '게시판'}
@@ -196,14 +196,14 @@ export default function CommunityPage() {
           <div className="flex flex-col sm:flex-row gap-3">
             <button
               onClick={() => setShowPostCreate(true)}
-              className={`px-5 py-2.5 rounded-lg transition-all flex items-center justify-center gap-2 ${
+              className={`px-4 py-2.5 sm:px-5 rounded-lg transition-all flex items-center justify-center gap-2 text-sm ${
                 theme === 'dark'
                   ? 'bg-emerald-500 hover:bg-emerald-600 text-white'
                   : 'bg-emerald-600 hover:bg-emerald-700 text-white'
               }`}
             >
               <PenSquare className="w-4 h-4" />
-              <span className="text-sm">
+              <span>
                 {language === 'ko' && '글쓰기'}
                 {language === 'en' && 'Write'}
                 {language === 'ja' && '投稿'}
@@ -216,7 +216,7 @@ export default function CommunityPage() {
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value as PostCategory | 'all')}
-                className={`flex-1 px-4 py-2.5 rounded-lg border transition-colors text-sm ${
+                className={`w-full px-3 py-2.5 sm:px-4 rounded-lg border transition-colors text-sm ${
                   theme === 'dark'
                     ? 'bg-white/5 border-white/10 text-gray-300'
                     : 'bg-white border-gray-300 text-gray-700'

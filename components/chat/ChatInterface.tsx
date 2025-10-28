@@ -214,7 +214,7 @@ export default function ChatInterface() {
   }, [])
 
   return (
-    <div className="max-w-4xl mx-auto py-8">
+    <div className="max-w-4xl mx-auto py-4 sm:py-8 px-3 sm:px-6">
       {/* Chat History Sidebar */}
       {user && (
         <ChatHistory
@@ -230,9 +230,9 @@ export default function ChatInterface() {
       {/* Tone Slider */}
       <ToneSlider value={responseTone} onChange={setResponseTone} />
 
-      <div className="h-[65vh] flex flex-col bg-black/20 backdrop-blur-xl border border-white/10 rounded-lg overflow-hidden">
+      <div className="h-[calc(100vh-280px)] sm:h-[65vh] flex flex-col bg-black/20 backdrop-blur-xl border border-white/10 rounded-lg overflow-hidden">
         {/* Chat Messages */}
-        <div className="flex-1 overflow-y-auto px-10 py-12 space-y-8">
+        <div className="flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-6 md:px-10 md:py-12 space-y-4 sm:space-y-6 md:space-y-8">
           {messages.map((message, index) => (
             <ChatMessage key={index} message={message} />
           ))}
@@ -248,15 +248,15 @@ export default function ChatInterface() {
         </div>
 
         {/* Input Area */}
-        <div className="border-t border-white/10 bg-black/30 px-10 py-8">
-          <div className="flex gap-4">
+        <div className="border-t border-white/10 bg-black/30 px-4 py-4 sm:px-6 sm:py-6 md:px-10 md:py-8">
+          <div className="flex gap-2 sm:gap-4">
             <textarea
               ref={textareaRef}
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder={t('placeholder')}
-              className="flex-1 resize-none border-0 bg-transparent px-0 py-3 focus:outline-none focus:ring-0 text-gray-200 placeholder-gray-600"
+              className="flex-1 resize-none border-0 bg-transparent px-0 py-2 sm:py-3 focus:outline-none focus:ring-0 text-gray-200 placeholder-gray-600 text-sm sm:text-base"
               style={{ fontWeight: 300, fontSize: '16px', lineHeight: 1.8, letterSpacing: '0.02em' }}
               rows={2}
               disabled={isLoading}
@@ -264,7 +264,7 @@ export default function ChatInterface() {
             <button
               onClick={handleSend}
               disabled={isLoading || !input.trim()}
-              className="self-end p-3 text-gray-500 hover:text-gray-300 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+              className="self-end p-2 sm:p-3 text-gray-500 hover:text-gray-300 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
             >
               <Send className="w-5 h-5" />
             </button>

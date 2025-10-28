@@ -90,12 +90,12 @@ export default function EmotionPage() {
   // }
 
   return (
-    <div className="min-h-screen py-32 px-6">
-      <div className="max-w-6xl mx-auto space-y-8">
+    <div className="min-h-screen py-20 sm:py-32 px-4 sm:px-6">
+      <div className="max-w-6xl mx-auto space-y-6 sm:space-y-8">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h1 className={`text-4xl font-light mb-2 ${
+            <h1 className={`text-2xl sm:text-3xl md:text-4xl font-light mb-2 ${
               theme === 'dark' ? 'text-gray-200' : 'text-gray-800'
             }`} style={{ letterSpacing: '0.1em' }}>
               {language === 'ko' && '감정 기록'}
@@ -103,7 +103,7 @@ export default function EmotionPage() {
               {language === 'ja' && '感情記録'}
               {language === 'zh' && '情绪追踪'}
             </h1>
-            <p className={`text-sm ${theme === 'dark' ? 'text-gray-500' : 'text-gray-600'}`}>
+            <p className={`text-xs sm:text-sm ${theme === 'dark' ? 'text-gray-500' : 'text-gray-600'}`}>
               {language === 'ko' && '당신의 감정을 기록하고 패턴을 발견하세요'}
               {language === 'en' && 'Track your emotions and discover patterns'}
               {language === 'ja' && 'あなたの感情を記録してパターンを見つけましょう'}
@@ -114,13 +114,13 @@ export default function EmotionPage() {
           {/* Add Emotion Button */}
           <button
             onClick={() => setShowCheckin(true)}
-            className={`flex items-center gap-2 px-6 py-3 rounded-lg transition-all ${
+            className={`flex items-center gap-2 px-4 py-2.5 sm:px-6 sm:py-3 rounded-lg transition-all text-sm sm:text-base ${
               theme === 'dark'
                 ? 'bg-emerald-500 hover:bg-emerald-600 text-white'
                 : 'bg-emerald-600 hover:bg-emerald-700 text-white'
             }`}
           >
-            <Plus className="w-5 h-5" />
+            <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
             <span>
               {language === 'ko' && '감정 기록'}
               {language === 'en' && 'Log Emotion'}
@@ -132,7 +132,7 @@ export default function EmotionPage() {
 
         {/* Emotion Check-in Modal */}
         {showCheckin && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/60 backdrop-blur-sm">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm">
             <div className="w-full max-w-2xl max-h-[90vh] overflow-y-auto">
               <EmotionCheckin
                 onSave={handleSaveEmotion}
@@ -143,13 +143,13 @@ export default function EmotionPage() {
         )}
 
         {/* Tabs */}
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
           <div className={`flex gap-2 p-1 rounded-lg ${
             theme === 'dark' ? 'bg-white/5' : 'bg-gray-100'
           }`}>
             <button
               onClick={() => setActiveTab('graph')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-md transition-all ${
+              className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-3 py-2 sm:px-4 rounded-md transition-all text-sm ${
                 activeTab === 'graph'
                   ? theme === 'dark'
                     ? 'bg-emerald-500 text-white'
@@ -159,7 +159,7 @@ export default function EmotionPage() {
                     : 'text-gray-600 hover:text-gray-700'
               }`}
             >
-              <BarChart3 className="w-5 h-5" />
+              <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5" />
               <span>
                 {language === 'ko' && '분석'}
                 {language === 'en' && 'Analysis'}
@@ -169,7 +169,7 @@ export default function EmotionPage() {
             </button>
             <button
               onClick={() => setActiveTab('history')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-md transition-all ${
+              className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-3 py-2 sm:px-4 rounded-md transition-all text-sm ${
                 activeTab === 'history'
                   ? theme === 'dark'
                     ? 'bg-emerald-500 text-white'
@@ -179,7 +179,7 @@ export default function EmotionPage() {
                     : 'text-gray-600 hover:text-gray-700'
               }`}
             >
-              <List className="w-5 h-5" />
+              <List className="w-4 h-4 sm:w-5 sm:h-5" />
               <span>
                 {language === 'ko' && '기록'}
                 {language === 'en' && 'History'}
@@ -196,7 +196,7 @@ export default function EmotionPage() {
             }`}>
               <button
                 onClick={() => setPeriod('week')}
-                className={`px-4 py-2 rounded-md text-sm transition-all ${
+                className={`flex-1 sm:flex-none px-3 py-2 sm:px-4 rounded-md text-xs sm:text-sm transition-all ${
                   period === 'week'
                     ? theme === 'dark'
                       ? 'bg-white/10 text-gray-200'
@@ -213,7 +213,7 @@ export default function EmotionPage() {
               </button>
               <button
                 onClick={() => setPeriod('month')}
-                className={`px-4 py-2 rounded-md text-sm transition-all ${
+                className={`flex-1 sm:flex-none px-3 py-2 sm:px-4 rounded-md text-xs sm:text-sm transition-all ${
                   period === 'month'
                     ? theme === 'dark'
                       ? 'bg-white/10 text-gray-200'

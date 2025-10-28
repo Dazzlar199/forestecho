@@ -63,17 +63,17 @@ export default function FAQPage() {
   }
 
   return (
-    <div className="min-h-screen py-8 px-4">
+    <div className="min-h-screen py-20 sm:py-32 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto">
         {/* 헤더 */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-6 sm:mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <HelpCircle className={`w-12 h-12 ${theme === 'dark' ? 'text-emerald-400' : 'text-emerald-600'}`} />
+            <HelpCircle className={`w-10 sm:w-12 h-10 sm:h-12 ${theme === 'dark' ? 'text-emerald-400' : 'text-emerald-600'}`} />
           </div>
-          <h1 className={`text-4xl font-bold mb-3 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+          <h1 className={`text-2xl sm:text-3xl md:text-4xl font-bold mb-3 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
             자주 묻는 질문
           </h1>
-          <p className={`text-lg ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+          <p className={`text-sm sm:text-base md:text-lg ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
             궁금한 점을 빠르게 찾아보세요
           </p>
         </div>
@@ -82,7 +82,7 @@ export default function FAQPage() {
         <div className="mb-6">
           <div className="relative">
             <Search
-              className={`absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 ${
+              className={`absolute left-4 top-1/2 -translate-y-1/2 w-4 sm:w-5 h-4 sm:h-5 ${
                 theme === 'dark' ? 'text-gray-500' : 'text-gray-400'
               }`}
             />
@@ -91,7 +91,7 @@ export default function FAQPage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="질문 또는 답변 검색..."
-              className={`w-full pl-12 pr-4 py-4 rounded-2xl border transition-colors ${
+              className={`w-full pl-10 sm:pl-12 pr-4 py-3 sm:py-4 rounded-2xl border text-sm sm:text-base transition-colors ${
                 theme === 'dark'
                   ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-500'
                   : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400'
@@ -107,7 +107,7 @@ export default function FAQPage() {
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-4 py-2 rounded-xl font-medium transition-all ${
+                className={`px-3 sm:px-4 py-2 rounded-xl font-medium text-xs sm:text-sm transition-all ${
                   selectedCategory === category
                     ? theme === 'dark'
                       ? 'bg-emerald-600 text-white'
@@ -127,12 +127,12 @@ export default function FAQPage() {
         <div className="space-y-4">
           {filteredFAQs.length === 0 ? (
             <div
-              className={`p-8 text-center rounded-2xl ${
+              className={`p-4 sm:p-8 text-center rounded-2xl ${
                 theme === 'dark' ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'
               }`}
             >
-              <HelpCircle className={`w-12 h-12 mx-auto mb-3 ${theme === 'dark' ? 'text-gray-600' : 'text-gray-400'}`} />
-              <p className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>
+              <HelpCircle className={`w-10 sm:w-12 h-10 sm:h-12 mx-auto mb-3 ${theme === 'dark' ? 'text-gray-600' : 'text-gray-400'}`} />
+              <p className={`text-sm sm:text-base ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
                 {searchQuery ? '검색 결과가 없습니다' : 'FAQ가 아직 등록되지 않았습니다'}
               </p>
             </div>
@@ -146,32 +146,32 @@ export default function FAQPage() {
               >
                 <button
                   onClick={() => toggleExpanded(faq.id)}
-                  className={`w-full p-6 flex items-start justify-between gap-4 text-left transition-colors ${
+                  className={`w-full p-4 sm:p-6 flex items-start justify-between gap-4 text-left transition-colors ${
                     theme === 'dark' ? 'hover:bg-gray-750' : 'hover:bg-gray-50'
                   }`}
                 >
-                  <div className="flex-1">
+                  <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-2">
                       <span
-                        className={`text-xs px-2 py-1 rounded-full ${
+                        className={`text-xs px-2 py-1 rounded-full flex-shrink-0 ${
                           theme === 'dark' ? 'bg-emerald-900/30 text-emerald-400' : 'bg-emerald-100 text-emerald-700'
                         }`}
                       >
                         {faq.category}
                       </span>
                     </div>
-                    <h3 className={`text-lg font-medium ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                    <h3 className={`text-sm sm:text-lg font-medium break-words ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
                       {faq.question}
                     </h3>
                   </div>
-                  <div className={theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}>
-                    {expandedIds.has(faq.id) ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+                  <div className={`flex-shrink-0 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
+                    {expandedIds.has(faq.id) ? <ChevronUp className="w-4 sm:w-5 h-4 sm:h-5" /> : <ChevronDown className="w-4 sm:w-5 h-4 sm:h-5" />}
                   </div>
                 </button>
 
                 {expandedIds.has(faq.id) && (
                   <div
-                    className={`px-6 pb-6 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}
+                    className={`px-4 sm:px-6 pb-4 sm:pb-6 text-sm sm:text-base ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}
                     style={{ whiteSpace: 'pre-line' }}
                   >
                     {faq.answer}
@@ -184,14 +184,14 @@ export default function FAQPage() {
 
         {/* 추가 도움말 */}
         <div
-          className={`mt-8 p-6 rounded-2xl text-center ${
+          className={`mt-6 sm:mt-8 p-4 sm:p-6 rounded-2xl text-center ${
             theme === 'dark' ? 'bg-gray-800 border border-gray-700' : 'bg-emerald-50 border border-emerald-200'
           }`}
         >
-          <p className={`mb-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>원하는 답변을 찾지 못하셨나요?</p>
+          <p className={`mb-4 text-sm sm:text-base ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>원하는 답변을 찾지 못하셨나요?</p>
           <a
             href="/support"
-            className={`inline-block px-6 py-3 rounded-xl font-medium transition-all ${
+            className={`inline-block px-4 sm:px-6 py-2 sm:py-3 rounded-xl font-medium text-sm sm:text-base transition-all ${
               theme === 'dark'
                 ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
                 : 'bg-emerald-500 hover:bg-emerald-600 text-white'

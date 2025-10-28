@@ -28,11 +28,11 @@ export default function EducationPage() {
     : null
 
   return (
-    <div className="min-h-screen py-32 px-6">
+    <div className="min-h-screen py-20 sm:py-32 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className={`text-3xl font-medium mb-3 ${
+        <div className="mb-6 sm:mb-8">
+          <h1 className={`text-2xl sm:text-3xl md:text-4xl font-medium mb-3 ${
             theme === 'dark' ? 'text-gray-200' : 'text-gray-800'
           }`}>
             {language === 'ko' && '심리 교육'}
@@ -40,7 +40,7 @@ export default function EducationPage() {
             {language === 'ja' && '心理教育'}
             {language === 'zh' && '心理教育'}
           </h1>
-          <p className={`text-base ${
+          <p className={`text-sm sm:text-base ${
             theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
           }`}>
             {language === 'ko' && '신뢰할 수 있는 출처를 바탕으로 한 정신건강 정보'}
@@ -51,7 +51,7 @@ export default function EducationPage() {
         </div>
 
         {/* Category Filter */}
-        <div className="mb-8">
+        <div className="mb-8 sm:mb-12">
           <div className="flex items-center gap-2 mb-4">
             <button
               onClick={() => setSelectedCategory('all')}
@@ -72,7 +72,7 @@ export default function EducationPage() {
             </button>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
             {ARTICLE_CATEGORIES.map((category) => {
               const Icon = iconMap[category.icon]
               const isSelected = selectedCategory === category.id
@@ -80,7 +80,7 @@ export default function EducationPage() {
                 <button
                   key={category.id}
                   onClick={() => setSelectedCategory(category.id)}
-                  className={`p-4 rounded-lg border-2 transition-all text-left ${
+                  className={`p-3 sm:p-4 rounded-lg border-2 transition-all text-left ${
                     isSelected
                       ? 'shadow-lg'
                       : theme === 'dark'
@@ -121,7 +121,7 @@ export default function EducationPage() {
         </div>
 
         {/* Info Banner */}
-        <div className={`mb-8 p-4 rounded-lg border-l-4 ${
+        <div className={`mb-8 sm:mb-12 p-4 sm:p-5 rounded-lg border-l-4 ${
           theme === 'dark'
             ? 'bg-blue-500/10 border-l-blue-500 text-blue-400'
             : 'bg-blue-50 border-l-blue-600 text-blue-700'

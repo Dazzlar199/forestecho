@@ -16,8 +16,8 @@ export default function ChatMessage({ message }: ChatMessageProps) {
   const isUser = message.role === 'user'
 
   return (
-    <div className={`flex gap-5 ${isUser ? 'flex-row-reverse' : 'flex-row'}`}>
-      <div className="flex-shrink-0 w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
+    <div className={`flex gap-3 sm:gap-4 md:gap-5 ${isUser ? 'flex-row-reverse' : 'flex-row'}`}>
+      <div className="flex-shrink-0 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
         {isUser ? (
           <User className="w-4 h-4 text-gray-500" />
         ) : (
@@ -25,11 +25,11 @@ export default function ChatMessage({ message }: ChatMessageProps) {
         )}
       </div>
 
-      <div className={`chat-message ${isUser ? 'user' : 'assistant'}`}>
-        <div className="whitespace-pre-wrap break-words" style={{ letterSpacing: '0.01em' }}>
+      <div className={`chat-message ${isUser ? 'user' : 'assistant'} max-w-[85%] sm:max-w-none`}>
+        <div className="whitespace-pre-wrap break-words text-sm sm:text-base" style={{ letterSpacing: '0.01em' }}>
           {message.content}
         </div>
-        <div className={`text-xs mt-4 ${isUser ? 'text-gray-600' : 'text-gray-600'}`} style={{ letterSpacing: '0.03em' }}>
+        <div className={`text-xs mt-2 sm:mt-4 ${isUser ? 'text-gray-600' : 'text-gray-600'}`} style={{ letterSpacing: '0.03em' }}>
           {message.timestamp.toLocaleTimeString('ko-KR', {
             hour: '2-digit',
             minute: '2-digit',

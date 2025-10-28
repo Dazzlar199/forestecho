@@ -108,11 +108,11 @@ export default function AssessmentPage() {
   }
 
   return (
-    <div className="min-h-screen py-32 px-6">
+    <div className="min-h-screen py-20 sm:py-32 px-4 sm:px-6">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
-        <div className="mb-12 text-center">
-          <h1 className={`text-4xl font-light mb-4 ${
+        <div className="mb-8 sm:mb-12 text-center">
+          <h1 className={`text-2xl sm:text-3xl md:text-4xl font-light mb-4 ${
             theme === 'dark' ? 'text-gray-200' : 'text-gray-800'
           }`} style={{ letterSpacing: '0.1em' }}>
             {language === 'ko' && '심리 자가진단'}
@@ -120,7 +120,7 @@ export default function AssessmentPage() {
             {language === 'ja' && '心理セルフチェック'}
             {language === 'zh' && '心理自我评估'}
           </h1>
-          <p className={`text-base ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+          <p className={`text-sm sm:text-base ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
             {language === 'ko' && '전문적인 심리 선별 도구로 현재 상태를 확인하세요'}
             {language === 'en' && 'Check your current state with professional screening tools'}
             {language === 'ja' && '専門的なスクリーニングツールで現在の状態を確認しましょう'}
@@ -129,14 +129,14 @@ export default function AssessmentPage() {
         </div>
 
         {/* Assessment Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
           {assessments.map((assessment) => {
             const Icon = assessment.icon
             return (
               <button
                 key={assessment.id}
                 onClick={() => setActiveTest(assessment.id)}
-                className={`p-8 rounded-lg border-2 transition-all hover:scale-105 text-left ${
+                className={`p-5 sm:p-6 md:p-8 rounded-lg border-2 transition-all hover:scale-105 text-left ${
                   theme === 'dark'
                     ? 'bg-white/5 border-white/10 hover:border-white/30'
                     : 'bg-white border-gray-200 hover:border-gray-400 hover:shadow-xl'

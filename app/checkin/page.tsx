@@ -92,7 +92,7 @@ export default function CheckinPage() {
 
   if (showMorningCheckin) {
     return (
-      <div className="min-h-screen py-12 px-6">
+      <div className="min-h-screen py-8 sm:py-12 px-4 sm:px-6">
         <MorningCheckin
           onComplete={handleMorningComplete}
           onClose={() => setShowMorningCheckin(false)}
@@ -103,7 +103,7 @@ export default function CheckinPage() {
 
   if (showEveningCheckin) {
     return (
-      <div className="min-h-screen py-12 px-6">
+      <div className="min-h-screen py-8 sm:py-12 px-4 sm:px-6">
         <EveningCheckin
           onComplete={handleEveningComplete}
           onClose={() => setShowEveningCheckin(false)}
@@ -113,11 +113,11 @@ export default function CheckinPage() {
   }
 
   return (
-    <div className="min-h-screen py-32 px-6">
+    <div className="min-h-screen py-20 sm:py-32 px-4 sm:px-6">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
-        <div className="mb-12 text-center">
-          <h1 className={`text-4xl font-light mb-4 ${
+        <div className="mb-8 sm:mb-12 text-center">
+          <h1 className={`text-2xl sm:text-3xl md:text-4xl font-light mb-3 sm:mb-4 ${
             theme === 'dark' ? 'text-gray-200' : 'text-gray-800'
           }`} style={{ letterSpacing: '0.1em' }}>
             {language === 'ko' && '일일 체크인'}
@@ -125,7 +125,7 @@ export default function CheckinPage() {
             {language === 'ja' && '毎日のチェックイン'}
             {language === 'zh' && '每日签到'}
           </h1>
-          <p className={`text-base ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+          <p className={`text-sm sm:text-base ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
             {language === 'ko' && '하루를 시작하고 마무리하며 자신을 돌아보세요'}
             {language === 'en' && 'Start and end your day with self-reflection'}
             {language === 'ja' && '一日を始め、終え、自分を振り返りましょう'}
@@ -133,9 +133,9 @@ export default function CheckinPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-6 sm:mb-8">
           {/* Morning Check-in Card */}
-          <div className={`p-8 rounded-lg border-2 ${
+          <div className={`p-5 sm:p-6 md:p-8 rounded-lg border-2 ${
             morningCompleted
               ? theme === 'dark'
                 ? 'border-emerald-500/30 bg-emerald-500/10'
@@ -224,7 +224,7 @@ export default function CheckinPage() {
           </div>
 
           {/* Evening Check-in Card */}
-          <div className={`p-8 rounded-lg border-2 ${
+          <div className={`p-5 sm:p-6 md:p-8 rounded-lg border-2 ${
             eveningCompleted
               ? theme === 'dark'
                 ? 'border-emerald-500/30 bg-emerald-500/10'

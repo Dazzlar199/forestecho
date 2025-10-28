@@ -311,19 +311,19 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen py-8 px-4">
+    <div className="min-h-screen py-20 sm:py-32 px-4 sm:px-6">
       <div className="max-w-7xl mx-auto">
         {/* 헤더 */}
-        <div className="mb-8">
+        <div className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-2">
-            <Shield className={`w-8 h-8 ${theme === 'dark' ? 'text-emerald-400' : 'text-emerald-600'}`} />
-            <h1 className={`text-3xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>관리자 대시보드</h1>
+            <Shield className={`w-6 sm:w-8 h-6 sm:h-8 ${theme === 'dark' ? 'text-emerald-400' : 'text-emerald-600'}`} />
+            <h1 className={`text-2xl sm:text-3xl md:text-4xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>관리자 대시보드</h1>
           </div>
-          <p className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>문의 관리, FAQ 관리, 통계 확인</p>
+          <p className={`text-sm sm:text-base ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>문의 관리, FAQ 관리, 통계 확인</p>
         </div>
 
         {/* 통계 카드 */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
           {[
             { label: '총 사용자', value: stats.totalUsers, icon: Users, color: 'blue' },
             { label: '총 문의', value: stats.totalInquiries, icon: MessageSquare, color: 'purple' },
@@ -332,13 +332,13 @@ export default function AdminPage() {
           ].map((stat) => (
             <div
               key={stat.label}
-              className={`p-6 rounded-2xl ${
+              className={`p-4 sm:p-6 rounded-2xl ${
                 theme === 'dark' ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'
               }`}
             >
               <div className="flex items-center justify-between mb-3">
                 <stat.icon
-                  className={`w-8 h-8 ${
+                  className={`w-6 sm:w-8 h-6 sm:h-8 ${
                     stat.color === 'blue'
                       ? theme === 'dark'
                         ? 'text-blue-400'
@@ -357,16 +357,16 @@ export default function AdminPage() {
                   }`}
                 />
               </div>
-              <div className={`text-3xl font-bold mb-1 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+              <div className={`text-2xl sm:text-3xl font-bold mb-1 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
                 {stat.value}
               </div>
-              <div className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>{stat.label}</div>
+              <div className={`text-xs sm:text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>{stat.label}</div>
             </div>
           ))}
         </div>
 
         {/* 탭 */}
-        <div className="flex gap-2 mb-6">
+        <div className="flex gap-2 mb-6 flex-wrap">
           {[
             { id: 'inquiries', label: '문의 관리', icon: MessageSquare },
             { id: 'faqs', label: 'FAQ 관리', icon: FileText },
@@ -374,7 +374,7 @@ export default function AdminPage() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as any)}
-              className={`flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all ${
+              className={`flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 rounded-xl font-medium text-sm sm:text-base transition-all ${
                 activeTab === tab.id
                   ? theme === 'dark'
                     ? 'bg-emerald-600 text-white'
@@ -384,7 +384,7 @@ export default function AdminPage() {
                     : 'bg-white text-gray-600 hover:bg-gray-50'
               }`}
             >
-              <tab.icon className="w-5 h-5" />
+              <tab.icon className="w-4 sm:w-5 h-4 sm:h-5" />
               {tab.label}
             </button>
           ))}
@@ -395,14 +395,14 @@ export default function AdminPage() {
           <div className="space-y-4">
             {inquiries.length === 0 ? (
               <div
-                className={`p-8 text-center rounded-2xl ${
+                className={`p-4 sm:p-8 text-center rounded-2xl ${
                   theme === 'dark' ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'
                 }`}
               >
                 <MessageSquare
-                  className={`w-12 h-12 mx-auto mb-3 ${theme === 'dark' ? 'text-gray-600' : 'text-gray-400'}`}
+                  className={`w-10 sm:w-12 h-10 sm:h-12 mx-auto mb-3 ${theme === 'dark' ? 'text-gray-600' : 'text-gray-400'}`}
                 />
-                <p className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>문의가 없습니다</p>
+                <p className={`text-sm sm:text-base ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>문의가 없습니다</p>
               </div>
             ) : (
               inquiries.map((inquiry) => {
@@ -410,61 +410,61 @@ export default function AdminPage() {
                 return (
                   <div
                     key={inquiry.id}
-                    className={`p-6 rounded-2xl ${
+                    className={`p-4 sm:p-6 rounded-2xl ${
                       theme === 'dark' ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'
                     }`}
                   >
                     {/* 헤더 */}
-                    <div className="flex items-start justify-between mb-3">
-                      <div className="flex items-center gap-3 flex-1">
-                        <div className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>
+                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
+                      <div className="flex items-start gap-3 flex-1 min-w-0">
+                        <div className={`flex-shrink-0 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
                           {getTypeIcon(inquiry.type)}
                         </div>
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-1">
-                            <span className={`font-medium ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex flex-wrap items-center gap-2 mb-1">
+                            <span className={`font-medium break-words ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
                               {inquiry.title}
                             </span>
                             <span
-                              className={`text-xs px-2 py-1 rounded-full ${
+                              className={`text-xs px-2 py-1 rounded-full flex-shrink-0 ${
                                 theme === 'dark' ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-600'
                               }`}
                             >
                               {getTypeLabel(inquiry.type)}
                             </span>
                           </div>
-                          <div className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
+                          <div className={`text-xs sm:text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
                             {inquiry.userEmail} • {inquiry.createdAt.toLocaleDateString('ko-KR')}{' '}
                             {inquiry.createdAt.toLocaleTimeString('ko-KR')}
                           </div>
                         </div>
                       </div>
-                      <div className={`flex items-center gap-2 px-3 py-1 rounded-full ${statusBadge.bg} ${statusBadge.text}`}>
+                      <div className={`flex items-center gap-2 px-3 py-1 rounded-full flex-shrink-0 ${statusBadge.bg} ${statusBadge.text}`}>
                         {statusBadge.icon}
-                        <span className="text-sm font-medium">{statusBadge.label}</span>
+                        <span className="text-xs sm:text-sm font-medium">{statusBadge.label}</span>
                       </div>
                     </div>
 
                     {/* 내용 */}
-                    <div className={`mb-3 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                    <div className={`mb-3 text-sm sm:text-base ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                       {inquiry.content}
                     </div>
 
                     {/* 답변 */}
                     {inquiry.adminReply ? (
                       <div
-                        className={`p-4 rounded-xl mb-3 ${
+                        className={`p-3 sm:p-4 rounded-xl mb-3 ${
                           theme === 'dark'
                             ? 'bg-emerald-900/20 border border-emerald-800'
                             : 'bg-emerald-50 border border-emerald-200'
                         }`}
                       >
                         <div
-                          className={`text-sm font-medium mb-2 ${theme === 'dark' ? 'text-emerald-400' : 'text-emerald-600'}`}
+                          className={`text-xs sm:text-sm font-medium mb-2 ${theme === 'dark' ? 'text-emerald-400' : 'text-emerald-600'}`}
                         >
                           관리자 답변
                         </div>
-                        <div className={theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}>{inquiry.adminReply}</div>
+                        <div className={`text-sm sm:text-base ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>{inquiry.adminReply}</div>
                       </div>
                     ) : selectedInquiry?.id === inquiry.id ? (
                       <div className="space-y-3 mb-3">
@@ -473,17 +473,17 @@ export default function AdminPage() {
                           onChange={(e) => setReplyText(e.target.value)}
                           placeholder="답변을 입력하세요..."
                           rows={4}
-                          className={`w-full px-4 py-3 rounded-xl border transition-colors resize-none ${
+                          className={`w-full px-4 py-3 rounded-xl border text-sm sm:text-base transition-colors resize-none ${
                             theme === 'dark'
                               ? 'bg-gray-900 border-gray-700 text-white placeholder-gray-500'
                               : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-400'
                           }`}
                         />
-                        <div className="flex gap-2">
+                        <div className="flex gap-2 flex-wrap">
                           <button
                             onClick={handleReply}
                             disabled={replying || !replyText.trim()}
-                            className={`flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all ${
+                            className={`flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 rounded-xl font-medium text-sm sm:text-base transition-all ${
                               theme === 'dark'
                                 ? 'bg-emerald-600 hover:bg-emerald-700 text-white disabled:bg-gray-700'
                                 : 'bg-emerald-500 hover:bg-emerald-600 text-white disabled:bg-gray-300'
@@ -497,7 +497,7 @@ export default function AdminPage() {
                               setSelectedInquiry(null)
                               setReplyText('')
                             }}
-                            className={`px-4 py-2 rounded-xl font-medium transition-all ${
+                            className={`px-4 sm:px-6 py-2 sm:py-3 rounded-xl font-medium text-sm sm:text-base transition-all ${
                               theme === 'dark'
                                 ? 'bg-gray-700 hover:bg-gray-600 text-white'
                                 : 'bg-gray-200 hover:bg-gray-300 text-gray-700'
@@ -510,11 +510,11 @@ export default function AdminPage() {
                     ) : null}
 
                     {/* 액션 버튼 */}
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 flex-wrap">
                       {!inquiry.adminReply && selectedInquiry?.id !== inquiry.id && (
                         <button
                           onClick={() => setSelectedInquiry(inquiry)}
-                          className={`px-4 py-2 rounded-xl font-medium transition-all ${
+                          className={`px-4 sm:px-6 py-2 sm:py-3 rounded-xl font-medium text-sm sm:text-base transition-all ${
                             theme === 'dark'
                               ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
                               : 'bg-emerald-500 hover:bg-emerald-600 text-white'
@@ -526,7 +526,7 @@ export default function AdminPage() {
                       <select
                         value={inquiry.status}
                         onChange={(e) => updateInquiryStatus(inquiry.id, e.target.value as Inquiry['status'])}
-                        className={`px-4 py-2 rounded-xl border font-medium transition-colors ${
+                        className={`px-4 sm:px-6 py-2 sm:py-3 rounded-xl border font-medium text-sm sm:text-base transition-colors ${
                           theme === 'dark'
                             ? 'bg-gray-700 border-gray-600 text-white'
                             : 'bg-white border-gray-300 text-gray-900'
@@ -552,29 +552,29 @@ export default function AdminPage() {
             {!showFAQForm && (
               <button
                 onClick={() => setShowFAQForm(true)}
-                className={`px-6 py-3 rounded-xl font-medium transition-all ${
+                className={`px-4 sm:px-6 py-2 sm:py-3 rounded-xl font-medium text-sm sm:text-base transition-all ${
                   theme === 'dark'
                     ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
                     : 'bg-emerald-500 hover:bg-emerald-600 text-white'
                 }`}
               >
-                <Plus className="w-5 h-5 inline mr-2" />새 FAQ 추가
+                <Plus className="w-4 sm:w-5 h-4 sm:h-5 inline mr-2" />새 FAQ 추가
               </button>
             )}
 
             {/* FAQ 추가/수정 폼 */}
             {showFAQForm && (
               <div
-                className={`p-6 rounded-2xl ${
+                className={`p-4 sm:p-6 rounded-2xl ${
                   theme === 'dark' ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'
                 }`}
               >
-                <h3 className={`text-xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                <h3 className={`text-lg sm:text-xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
                   {editingFAQ ? 'FAQ 수정' : '새 FAQ 추가'}
                 </h3>
                 <form onSubmit={handleFAQSubmit} className="space-y-4">
                   <div>
-                    <label className={`block mb-2 font-medium ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                    <label className={`block mb-2 font-medium text-sm sm:text-base ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                       카테고리
                     </label>
                     <input
@@ -582,7 +582,7 @@ export default function AdminPage() {
                       value={faqFormData.category}
                       onChange={(e) => setFaqFormData({ ...faqFormData, category: e.target.value })}
                       placeholder="일반, 계정, 기능 등"
-                      className={`w-full px-4 py-3 rounded-xl border transition-colors ${
+                      className={`w-full px-4 py-3 rounded-xl border text-sm sm:text-base transition-colors ${
                         theme === 'dark'
                           ? 'bg-gray-900 border-gray-700 text-white placeholder-gray-500'
                           : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-400'
@@ -590,7 +590,7 @@ export default function AdminPage() {
                     />
                   </div>
                   <div>
-                    <label className={`block mb-2 font-medium ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                    <label className={`block mb-2 font-medium text-sm sm:text-base ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                       질문
                     </label>
                     <input
@@ -599,7 +599,7 @@ export default function AdminPage() {
                       onChange={(e) => setFaqFormData({ ...faqFormData, question: e.target.value })}
                       placeholder="자주 묻는 질문을 입력하세요"
                       required
-                      className={`w-full px-4 py-3 rounded-xl border transition-colors ${
+                      className={`w-full px-4 py-3 rounded-xl border text-sm sm:text-base transition-colors ${
                         theme === 'dark'
                           ? 'bg-gray-900 border-gray-700 text-white placeholder-gray-500'
                           : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-400'
@@ -607,7 +607,7 @@ export default function AdminPage() {
                     />
                   </div>
                   <div>
-                    <label className={`block mb-2 font-medium ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                    <label className={`block mb-2 font-medium text-sm sm:text-base ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                       답변
                     </label>
                     <textarea
@@ -616,17 +616,17 @@ export default function AdminPage() {
                       placeholder="답변을 입력하세요"
                       required
                       rows={4}
-                      className={`w-full px-4 py-3 rounded-xl border transition-colors resize-none ${
+                      className={`w-full px-4 py-3 rounded-xl border text-sm sm:text-base transition-colors resize-none ${
                         theme === 'dark'
                           ? 'bg-gray-900 border-gray-700 text-white placeholder-gray-500'
                           : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-400'
                       }`}
                     />
                   </div>
-                  <div className="flex gap-3">
+                  <div className="flex gap-3 flex-wrap">
                     <button
                       type="submit"
-                      className={`flex-1 px-6 py-3 rounded-xl font-medium transition-all ${
+                      className={`flex-1 min-w-[120px] px-4 sm:px-6 py-2 sm:py-3 rounded-xl font-medium text-sm sm:text-base transition-all ${
                         theme === 'dark'
                           ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
                           : 'bg-emerald-500 hover:bg-emerald-600 text-white'
@@ -641,7 +641,7 @@ export default function AdminPage() {
                         setEditingFAQ(null)
                         setFaqFormData({ question: '', answer: '', category: '일반' })
                       }}
-                      className={`px-6 py-3 rounded-xl font-medium transition-all ${
+                      className={`px-4 sm:px-6 py-2 sm:py-3 rounded-xl font-medium text-sm sm:text-base transition-all ${
                         theme === 'dark'
                           ? 'bg-gray-700 hover:bg-gray-600 text-white'
                           : 'bg-gray-200 hover:bg-gray-300 text-gray-700'
@@ -657,23 +657,23 @@ export default function AdminPage() {
             {/* FAQ 목록 */}
             {faqs.length === 0 ? (
               <div
-                className={`p-8 text-center rounded-2xl ${
+                className={`p-4 sm:p-8 text-center rounded-2xl ${
                   theme === 'dark' ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'
                 }`}
               >
-                <FileText className={`w-12 h-12 mx-auto mb-3 ${theme === 'dark' ? 'text-gray-600' : 'text-gray-400'}`} />
-                <p className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>FAQ가 없습니다</p>
+                <FileText className={`w-10 sm:w-12 h-10 sm:h-12 mx-auto mb-3 ${theme === 'dark' ? 'text-gray-600' : 'text-gray-400'}`} />
+                <p className={`text-sm sm:text-base ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>FAQ가 없습니다</p>
               </div>
             ) : (
               faqs.map((faq) => (
                 <div
                   key={faq.id}
-                  className={`p-6 rounded-2xl ${
+                  className={`p-4 sm:p-6 rounded-2xl ${
                     theme === 'dark' ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'
                   }`}
                 >
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex-1">
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
+                    <div className="flex-1 min-w-0">
                       <span
                         className={`inline-block text-xs px-2 py-1 rounded-full mb-2 ${
                           theme === 'dark' ? 'bg-emerald-900/30 text-emerald-400' : 'bg-emerald-100 text-emerald-700'
@@ -681,12 +681,12 @@ export default function AdminPage() {
                       >
                         {faq.category}
                       </span>
-                      <h4 className={`font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                      <h4 className={`font-bold mb-2 break-words text-sm sm:text-base ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
                         {faq.question}
                       </h4>
-                      <p className={theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}>{faq.answer}</p>
+                      <p className={`text-sm sm:text-base ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>{faq.answer}</p>
                     </div>
-                    <div className="flex gap-2 ml-4">
+                    <div className="flex gap-2 flex-shrink-0">
                       <button
                         onClick={() => {
                           setEditingFAQ(faq)
