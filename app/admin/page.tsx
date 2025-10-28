@@ -1,9 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useAuth } from '@/contexts/AuthContext'
-import { useTheme } from '@/contexts/ThemeContext'
-import { db } from '@/lib/firebase'
+import { useAuth } from '@/components/layout/AuthProvider'
+import { useTheme } from '@/components/layout/ThemeProvider'
+import { db } from '@/lib/firebase/config'
 import {
   collection,
   query,

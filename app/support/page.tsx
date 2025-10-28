@@ -1,9 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useAuth } from '@/contexts/AuthContext'
-import { useTheme } from '@/contexts/ThemeContext'
-import { db } from '@/lib/firebase'
+import { useAuth } from '@/components/layout/AuthProvider'
+import { useTheme } from '@/components/layout/ThemeProvider'
+import { db } from '@/lib/firebase/config'
 import { collection, addDoc, query, where, orderBy, onSnapshot } from 'firebase/firestore'
 import { useRouter } from 'next/navigation'
 import { Send, MessageSquare, Bug, Lightbulb, Clock, CheckCircle, XCircle } from 'lucide-react'

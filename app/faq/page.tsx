@@ -1,8 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useTheme } from '@/contexts/ThemeContext'
-import { db } from '@/lib/firebase'
+import { useTheme } from '@/components/layout/ThemeProvider'
+import { db } from '@/lib/firebase/config'
 import { collection, query, orderBy, onSnapshot } from 'firebase/firestore'
 import { ChevronDown, ChevronUp, Search, HelpCircle } from 'lucide-react'
 
