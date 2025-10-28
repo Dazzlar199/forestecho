@@ -1,0 +1,628 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Spectral', 'Nanum Myeongjo', serif;
+    font-weight: 300;
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
+    color: #1a1a1a;
+    background: #0a1612;
+    transition: background 0.5s ease, color 0.5s ease;
+  }
+
+  /* 다크 모드 (기본) */
+  body.dark-mode {
+    color: #1a1a1a;
+    background: #0a1612;
+  }
+
+  /* 라이트 모드 - 파란 하늘과 숲, 들판 */
+  body.light-mode {
+    color: #2a3a2a;
+    background: linear-gradient(180deg, #a8d5e0 0%, #b8dcc8 60%, #8cc5a0 100%);
+  }
+
+  /* 아트적 숲 배경 레이어 1 - 깊은 숲 (다크) */
+  body.dark-mode::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+      radial-gradient(ellipse at 30% 40%, rgba(20, 60, 40, 0.6) 0%, transparent 50%),
+      radial-gradient(ellipse at 70% 60%, rgba(15, 45, 35, 0.5) 0%, transparent 50%),
+      radial-gradient(circle at 50% 100%, rgba(10, 35, 25, 0.8) 0%, transparent 60%),
+      linear-gradient(180deg, #0a1612 0%, #1a3025 50%, #0f1e18 100%);
+    z-index: -5;
+    animation: forestBreath 20s ease-in-out infinite;
+  }
+
+  /* 아트적 숲 배경 레이어 1 - 하늘과 숲, 들판 (라이트) */
+  body.light-mode::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+      radial-gradient(ellipse at 30% 40%, rgba(140, 190, 150, 0.45) 0%, transparent 50%),
+      radial-gradient(ellipse at 70% 60%, rgba(120, 170, 200, 0.3) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 85%, rgba(130, 180, 140, 0.6) 0%, transparent 55%),
+      radial-gradient(circle at 50% 100%, rgba(100, 160, 120, 0.7) 0%, transparent 50%),
+      linear-gradient(180deg, #88c5e0 0%, #a8d5c8 40%, #98d5b0 70%, #8cc5a0 100%);
+    z-index: -5;
+    animation: forestBreath 20s ease-in-out infinite;
+  }
+
+  /* 아트적 숲 배경 레이어 2 - 일렁이는 나무들 (다크) */
+  body.dark-mode::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+      radial-gradient(ellipse 800px 600px at 20% 80%, rgba(25, 70, 50, 0.3) 0%, transparent 70%),
+      radial-gradient(ellipse 600px 800px at 80% 70%, rgba(30, 65, 45, 0.25) 0%, transparent 70%),
+      radial-gradient(circle 400px at 50% 50%, rgba(35, 75, 55, 0.2) 0%, transparent 70%),
+      radial-gradient(ellipse 900px 700px at 10% 90%, rgba(18, 50, 38, 0.4) 0%, transparent 65%),
+      radial-gradient(ellipse 700px 900px at 90% 85%, rgba(22, 55, 42, 0.35) 0%, transparent 65%);
+    z-index: -4;
+    animation: forestSway 15s ease-in-out infinite alternate;
+  }
+
+  /* 아트적 숲 배경 레이어 2 - 숲과 들판의 나무들 (라이트) */
+  body.light-mode::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+      radial-gradient(ellipse 800px 600px at 20% 75%, rgba(110, 160, 130, 0.35) 0%, transparent 70%),
+      radial-gradient(ellipse 600px 800px at 80% 70%, rgba(100, 150, 120, 0.3) 0%, transparent 70%),
+      radial-gradient(circle 500px at 50% 90%, rgba(90, 145, 110, 0.4) 0%, transparent 65%),
+      radial-gradient(ellipse 900px 700px at 10% 95%, rgba(105, 155, 125, 0.38) 0%, transparent 60%),
+      radial-gradient(ellipse 700px 900px at 90% 90%, rgba(95, 150, 115, 0.32) 0%, transparent 62%);
+    z-index: -4;
+    animation: forestSway 15s ease-in-out infinite alternate;
+  }
+
+  /* 포그/미스트 효과 */
+  .forest-mist {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+      radial-gradient(ellipse at 50% 30%, rgba(180, 200, 190, 0.03) 0%, transparent 60%),
+      radial-gradient(ellipse at 30% 70%, rgba(170, 190, 180, 0.02) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -3;
+    animation: mistFlow 25s ease-in-out infinite;
+  }
+
+  /* 레이어 3 - 빛 입자들 */
+  .forest-particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+      radial-gradient(2px 2px at 20% 30%, rgba(200, 220, 210, 0.15), transparent),
+      radial-gradient(2px 2px at 60% 70%, rgba(190, 210, 200, 0.12), transparent),
+      radial-gradient(3px 3px at 50% 50%, rgba(210, 230, 220, 0.1), transparent),
+      radial-gradient(2px 2px at 80% 10%, rgba(180, 200, 190, 0.13), transparent),
+      radial-gradient(2px 2px at 90% 60%, rgba(195, 215, 205, 0.11), transparent);
+    background-size: 200px 200px, 250px 250px, 300px 300px, 180px 180px, 220px 220px;
+    background-position: 0 0, 40px 60px, 130px 270px, 70px 100px, 150px 220px;
+    pointer-events: none;
+    z-index: -2;
+    animation: particleFloat 30s linear infinite;
+  }
+
+  @keyframes forestBreath {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.9;
+      transform: scale(1.03);
+    }
+  }
+
+  @keyframes forestSway {
+    0% {
+      transform: translateX(-10px) scale(1);
+      opacity: 0.8;
+    }
+    100% {
+      transform: translateX(10px) scale(1.02);
+      opacity: 0.9;
+    }
+  }
+
+  @keyframes mistFlow {
+    0%, 100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    50% {
+      opacity: 0.7;
+      transform: translateY(-20px);
+    }
+  }
+
+  @keyframes particleFloat {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-100px);
+    }
+  }
+
+  /* 반딧불이 효과 */
+  .fireflies {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .firefly {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: rgba(220, 255, 200, 0.8);
+    box-shadow:
+      0 0 10px rgba(220, 255, 200, 0.6),
+      0 0 20px rgba(220, 255, 200, 0.4),
+      0 0 30px rgba(220, 255, 200, 0.2);
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+
+  .firefly:nth-child(1) {
+    left: 10%;
+    top: 20%;
+    animation: firefly-float-1 15s infinite, firefly-glow 3s infinite;
+  }
+
+  .firefly:nth-child(2) {
+    left: 85%;
+    top: 15%;
+    background: rgba(240, 255, 180, 0.8);
+    box-shadow:
+      0 0 10px rgba(240, 255, 180, 0.6),
+      0 0 20px rgba(240, 255, 180, 0.4),
+      0 0 30px rgba(240, 255, 180, 0.2);
+    animation: firefly-float-2 18s infinite, firefly-glow 2.5s infinite 0.5s;
+  }
+
+  .firefly:nth-child(3) {
+    left: 30%;
+    top: 60%;
+    animation: firefly-float-3 20s infinite, firefly-glow 3.5s infinite 1s;
+  }
+
+  .firefly:nth-child(4) {
+    left: 70%;
+    top: 70%;
+    background: rgba(200, 255, 220, 0.8);
+    box-shadow:
+      0 0 10px rgba(200, 255, 220, 0.6),
+      0 0 20px rgba(200, 255, 220, 0.4),
+      0 0 30px rgba(200, 255, 220, 0.2);
+    animation: firefly-float-4 16s infinite, firefly-glow 2.8s infinite 1.5s;
+  }
+
+  .firefly:nth-child(5) {
+    left: 50%;
+    top: 40%;
+    animation: firefly-float-5 22s infinite, firefly-glow 3.2s infinite 0.8s;
+  }
+
+  .firefly:nth-child(6) {
+    left: 15%;
+    top: 80%;
+    background: rgba(230, 255, 190, 0.8);
+    box-shadow:
+      0 0 10px rgba(230, 255, 190, 0.6),
+      0 0 20px rgba(230, 255, 190, 0.4),
+      0 0 30px rgba(230, 255, 190, 0.2);
+    animation: firefly-float-6 19s infinite, firefly-glow 2.6s infinite 1.2s;
+  }
+
+  .firefly:nth-child(7) {
+    left: 90%;
+    top: 50%;
+    animation: firefly-float-7 17s infinite, firefly-glow 3.1s infinite 0.3s;
+  }
+
+  .firefly:nth-child(8) {
+    left: 40%;
+    top: 30%;
+    background: rgba(210, 255, 210, 0.8);
+    box-shadow:
+      0 0 10px rgba(210, 255, 210, 0.6),
+      0 0 20px rgba(210, 255, 210, 0.4),
+      0 0 30px rgba(210, 255, 210, 0.2);
+    animation: firefly-float-8 21s infinite, firefly-glow 2.9s infinite 1.8s;
+  }
+
+  .firefly:nth-child(9) {
+    left: 60%;
+    top: 85%;
+    animation: firefly-float-9 23s infinite, firefly-glow 3.3s infinite 0.6s;
+  }
+
+  .firefly:nth-child(10) {
+    left: 25%;
+    top: 45%;
+    background: rgba(235, 255, 200, 0.8);
+    box-shadow:
+      0 0 10px rgba(235, 255, 200, 0.6),
+      0 0 20px rgba(235, 255, 200, 0.4),
+      0 0 30px rgba(235, 255, 200, 0.2);
+    animation: firefly-float-10 18s infinite, firefly-glow 2.7s infinite 1.4s;
+  }
+
+  .firefly:nth-child(11) {
+    left: 75%;
+    top: 25%;
+    animation: firefly-float-11 20s infinite, firefly-glow 3.4s infinite 0.9s;
+  }
+
+  .firefly:nth-child(12) {
+    left: 5%;
+    top: 55%;
+    background: rgba(225, 255, 195, 0.8);
+    box-shadow:
+      0 0 10px rgba(225, 255, 195, 0.6),
+      0 0 20px rgba(225, 255, 195, 0.4),
+      0 0 30px rgba(225, 255, 195, 0.2);
+    animation: firefly-float-12 19s infinite, firefly-glow 2.8s infinite 1.6s;
+  }
+
+  @keyframes firefly-glow {
+    0%, 100% {
+      opacity: 0.2;
+      transform: scale(0.8);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+  }
+
+  @keyframes firefly-float-1 {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(40px, -50px); }
+    50% { transform: translate(20px, -80px); }
+    75% { transform: translate(-30px, -40px); }
+  }
+
+  @keyframes firefly-float-2 {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-50px, 60px); }
+    50% { transform: translate(-80px, 30px); }
+    75% { transform: translate(-20px, 80px); }
+  }
+
+  @keyframes firefly-float-3 {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(60px, -40px); }
+    50% { transform: translate(90px, -70px); }
+    75% { transform: translate(30px, -30px); }
+  }
+
+  @keyframes firefly-float-4 {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-40px, -60px); }
+    50% { transform: translate(-70px, -90px); }
+    75% { transform: translate(-20px, -50px); }
+  }
+
+  @keyframes firefly-float-5 {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(70px, 50px); }
+    50% { transform: translate(40px, 100px); }
+    75% { transform: translate(-50px, 60px); }
+  }
+
+  @keyframes firefly-float-6 {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(50px, -70px); }
+    50% { transform: translate(80px, -40px); }
+    75% { transform: translate(20px, -90px); }
+  }
+
+  @keyframes firefly-float-7 {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-60px, 40px); }
+    50% { transform: translate(-30px, 80px); }
+    75% { transform: translate(-80px, 30px); }
+  }
+
+  @keyframes firefly-float-8 {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(45px, -55px); }
+    50% { transform: translate(75px, -85px); }
+    75% { transform: translate(25px, -45px); }
+  }
+
+  @keyframes firefly-float-9 {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-55px, -45px); }
+    50% { transform: translate(-85px, -75px); }
+    75% { transform: translate(-35px, -55px); }
+  }
+
+  @keyframes firefly-float-10 {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(65px, 45px); }
+    50% { transform: translate(35px, 90px); }
+    75% { transform: translate(-45px, 55px); }
+  }
+
+  @keyframes firefly-float-11 {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-70px, -50px); }
+    50% { transform: translate(-40px, -100px); }
+    75% { transform: translate(-90px, -60px); }
+  }
+
+  @keyframes firefly-float-12 {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(55px, 65px); }
+    50% { transform: translate(85px, 35px); }
+    75% { transform: translate(45px, 75px); }
+  }
+
+  /* 제목 특수 효과 */
+  .forest-title {
+    position: relative;
+    display: inline-block;
+    text-shadow:
+      0 0 20px rgba(200, 255, 220, 0.3),
+      0 0 40px rgba(180, 240, 200, 0.2),
+      0 0 60px rgba(160, 220, 180, 0.1);
+    animation: titleGlow 4s ease-in-out infinite;
+  }
+
+  @keyframes titleGlow {
+    0%, 100% {
+      text-shadow:
+        0 0 20px rgba(200, 255, 220, 0.3),
+        0 0 40px rgba(180, 240, 200, 0.2),
+        0 0 60px rgba(160, 220, 180, 0.1);
+    }
+    50% {
+      text-shadow:
+        0 0 30px rgba(220, 255, 230, 0.4),
+        0 0 60px rgba(200, 250, 220, 0.3),
+        0 0 90px rgba(180, 240, 200, 0.2);
+    }
+  }
+
+  body > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Volume Slider Styling */
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  input[type="range"]::-webkit-slider-track {
+    background: rgba(255, 255, 255, 0.1);
+    height: 4px;
+    border-radius: 2px;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background: rgba(200, 220, 210, 0.8);
+    border-radius: 50%;
+    margin-top: -4px;
+  }
+
+  input[type="range"]::-webkit-slider-thumb:hover {
+    background: rgba(220, 240, 230, 1);
+  }
+
+  input[type="range"]::-moz-range-track {
+    background: rgba(255, 255, 255, 0.1);
+    height: 4px;
+    border-radius: 2px;
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    background: rgba(200, 220, 210, 0.8);
+    border-radius: 50%;
+    border: none;
+  }
+
+  input[type="range"]::-moz-range-thumb:hover {
+    background: rgba(220, 240, 230, 1);
+  }
+}
+
+@layer components {
+  .chat-message {
+    padding: 1.75rem 2rem;
+    margin-bottom: 1.5rem;
+    border-radius: 2px;
+    line-height: 1.9;
+    font-size: 16px;
+    letter-spacing: 0.02em;
+  }
+
+  .chat-message.user {
+    background: rgba(240, 245, 242, 0.08);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(200, 220, 210, 0.15);
+    color: #e8f0ed;
+    margin-left: auto;
+    max-width: 75%;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  }
+
+  .chat-message.assistant {
+    background: rgba(250, 255, 252, 0.06);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(180, 200, 190, 0.12);
+    color: #d5e5df;
+    margin-right: auto;
+    max-width: 80%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  }
+
+  .typing-indicator span {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin: 0 3px;
+    background: #95a5a6;
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: typing 1.4s infinite;
+  }
+
+  .typing-indicator span:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .typing-indicator span:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+
+  @keyframes typing {
+    0%, 60%, 100% {
+      transform: translateY(0);
+      opacity: 0.6;
+    }
+    30% {
+      transform: translateY(-8px);
+      opacity: 1;
+    }
+  }
+
+  /* Mobile Optimizations */
+  @media (max-width: 768px) {
+    .chat-message {
+      padding: 1.25rem 1.5rem;
+      font-size: 15px;
+    }
+
+    .chat-message.user,
+    .chat-message.assistant {
+      max-width: 90%;
+    }
+
+    /* Header 모바일 최적화 */
+    header {
+      padding: 1rem 1rem !important;
+    }
+
+    /* ForestVisualization 모바일 최적화 */
+    svg {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* 모달 모바일 최적화 */
+    .modal-content {
+      padding: 1.5rem !important;
+      max-width: 95vw !important;
+    }
+
+    /* 텍스트 크기 조정 */
+    h1 {
+      font-size: 2rem !important;
+    }
+
+    h2 {
+      font-size: 1.5rem !important;
+    }
+
+    h3 {
+      font-size: 1.25rem !important;
+    }
+
+    /* 버튼 터치 영역 확대 */
+    button {
+      min-height: 44px;
+    }
+
+    /* 입력창 확대 */
+    input, textarea {
+      font-size: 16px !important; /* iOS zoom 방지 */
+    }
+  }
+
+  /* Tablet Optimizations */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .chat-message {
+      padding: 1.5rem 1.75rem;
+    }
+
+    .chat-message.user,
+    .chat-message.assistant {
+      max-width: 85%;
+    }
+  }
+
+  /* Accessibility */
+  *:focus-visible {
+    outline: 2px solid rgba(100, 200, 150, 0.6);
+    outline-offset: 2px;
+  }
+
+  /* 다크모드 스크롤바 */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(100, 150, 120, 0.3);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(100, 150, 120, 0.5);
+  }
+}
