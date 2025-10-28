@@ -39,31 +39,31 @@ export default function ModeSelector({ selectedMode, onModeChange }: ModeSelecto
   const CurrentIcon = currentMode ? iconMap[currentMode.iconName] : Heart
 
   return (
-    <div className="relative mb-6">
+    <div className="relative mb-4 sm:mb-6">
       {/* Selected Mode Display */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`w-full flex items-center justify-between p-4 rounded-lg border backdrop-blur-md transition-all ${
+        className={`w-full flex items-center justify-between p-3 sm:p-4 rounded-lg border backdrop-blur-md transition-all ${
           theme === 'dark'
             ? 'bg-white/5 border-white/10 hover:bg-white/10'
             : 'bg-white/50 border-gray-700/20 hover:bg-white/70'
         }`}
       >
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: `${currentMode?.color}15` }}>
-            <CurrentIcon className="w-5 h-5" style={{ color: currentMode?.color }} />
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: `${currentMode?.color}15` }}>
+            <CurrentIcon className="w-4 h-4 sm:w-5 sm:h-5" style={{ color: currentMode?.color }} />
           </div>
-          <div className="text-left">
-            <div className={`font-medium ${theme === 'dark' ? 'text-gray-200' : 'text-gray-800'}`}>
+          <div className="text-left min-w-0 flex-1">
+            <div className={`font-medium text-sm sm:text-base truncate ${theme === 'dark' ? 'text-gray-200' : 'text-gray-800'}`}>
               {currentMode?.name}
             </div>
-            <div className={`text-xs ${theme === 'dark' ? 'text-gray-500' : 'text-gray-600'}`}>
+            <div className={`text-xs hidden sm:block ${theme === 'dark' ? 'text-gray-500' : 'text-gray-600'}`}>
               {currentMode?.description}
             </div>
           </div>
         </div>
         <ChevronDown
-          className={`w-5 h-5 transition-transform ${isOpen ? 'rotate-180' : ''} ${
+          className={`w-4 h-4 sm:w-5 sm:h-5 transition-transform flex-shrink-0 ${isOpen ? 'rotate-180' : ''} ${
             theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
           }`}
         />
@@ -95,7 +95,7 @@ export default function ModeSelector({ selectedMode, onModeChange }: ModeSelecto
                     onModeChange(mode.id as CounselingMode)
                     setIsOpen(false)
                   }}
-                  className={`w-full flex items-start gap-4 p-4 transition-all ${
+                  className={`w-full flex items-start gap-3 sm:gap-4 p-3 sm:p-4 transition-all ${
                     theme === 'dark'
                       ? 'hover:bg-white/10'
                       : 'hover:bg-gray-100/50'
@@ -111,18 +111,18 @@ export default function ModeSelector({ selectedMode, onModeChange }: ModeSelecto
                   }}
                 >
                   {/* Icon */}
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: `${mode.color}15` }}>
-                    <ModeIcon className="w-5 h-5" style={{ color: mode.color }} />
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: `${mode.color}15` }}>
+                    <ModeIcon className="w-4 h-4 sm:w-5 sm:h-5" style={{ color: mode.color }} />
                   </div>
 
                   {/* Content */}
-                  <div className="flex-1 text-left">
-                    <div className={`font-medium mb-1 flex items-center gap-2 ${
+                  <div className="flex-1 text-left min-w-0">
+                    <div className={`font-medium mb-1 flex items-center gap-2 text-sm sm:text-base ${
                       theme === 'dark' ? 'text-gray-200' : 'text-gray-800'
                     }`}>
                       {mode.name}
                       {mode.id === selectedMode && (
-                        <Check className="w-4 h-4" style={{ color: mode.color }} />
+                        <Check className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" style={{ color: mode.color }} />
                       )}
                     </div>
                     <div className={`text-xs leading-relaxed ${

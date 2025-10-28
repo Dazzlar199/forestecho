@@ -35,14 +35,14 @@ export default function ToneSlider({ value, onChange }: ToneSliderProps) {
   }
 
   return (
-    <div className={`backdrop-blur-xl border p-6 rounded-lg mb-4 ${
+    <div className={`backdrop-blur-xl border p-4 sm:p-6 rounded-lg mb-3 sm:mb-4 ${
       theme === 'dark'
         ? 'bg-black/20 border-white/10'
         : 'bg-white/40 border-gray-700/20'
     }`}>
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-3 sm:mb-4">
         <label
-          className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}
+          className={`text-xs sm:text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}
           style={{ fontWeight: 400, letterSpacing: '0.02em' }}
         >
           {getLabel()}
