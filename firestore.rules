@@ -1,0 +1,129 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ==============================================
+    // 기본 규칙: 모든 접근 차단 (안전 우선!)
+    // ==============================================
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // ==============================================
+    // 채팅 세션: 본인만 접근 가능
+    // ==============================================
+    match /chatSessions/{sessionId} {
+      // 읽기: 로그인 + 본인 세션만
+      allow read: if request.auth != null
+                  && request.auth.uid == resource.data.userId;
+
+      // 생성: 로그인 + userId 검증
+      allow create: if request.auth != null
+                    && request.auth.uid == request.resource.data.userId
+                    && request.resource.data.userId is string
+                    && request.resource.data.messages is list;
+
+      // 수정: 본인 세션만 (메시지 추가)
+      allow update: if request.auth != null
+                    && request.auth.uid == resource.data.userId;
+
+      // 삭제: 본인 세션만
+      allow delete: if request.auth != null
+                    && request.auth.uid == resource.data.userId;
+    }
+
+    // ==============================================
+    // 심리 분석: 본인만 접근 가능
+    // ==============================================
+    match /psychologicalAnalyses/{analysisId} {
+      // 읽기: 로그인 + 본인 분석만
+      allow read: if request.auth != null
+                  && request.auth.uid == resource.data.userId;
+
+      // 생성: 로그인 + userId 검증
+      allow create: if request.auth != null
+                    && request.auth.uid == request.resource.data.userId
+                    && request.resource.data.userId is string;
+
+      // 수정: 본인 분석만
+      allow update: if request.auth != null
+                    && request.auth.uid == resource.data.userId;
+
+      // 삭제: 본인 분석만
+      allow delete: if request.auth != null
+                    && request.auth.uid == resource.data.userId;
+    }
+
+    // ==============================================
+    // 사용자 프로필 (향후 사용)
+    // ==============================================
+    match /users/{userId} {
+      // 모든 로그인 사용자가 읽을 수 있음 (닉네임, 프로필 사진 등)
+      allow read: if request.auth != null;
+
+      // 본인만 수정 가능
+      allow write: if request.auth != null
+                   && request.auth.uid == userId;
+    }
+
+    // ==============================================
+    // 감정 기록: 본인만 접근
+    // ==============================================
+    match /emotions/{emotionId} {
+      allow read: if request.auth != null
+                  && request.auth.uid == resource.data.userId;
+
+      allow write: if request.auth != null
+                   && request.auth.uid == resource.data.userId;
+
+      allow create: if request.auth != null
+                    && request.auth.uid == request.resource.data.userId;
+    }
+
+    // ==============================================
+    // 체크인 기록: 본인만 접근
+    // ==============================================
+    match /checkins/{checkinId} {
+      allow read: if request.auth != null
+                  && request.auth.uid == resource.data.userId;
+
+      allow write: if request.auth != null
+                   && request.auth.uid == resource.data.userId;
+
+      allow create: if request.auth != null
+                    && request.auth.uid == request.resource.data.userId;
+    }
+
+    // ==============================================
+    // 커뮤니티 포스트: 모두 읽기, 작성자만 수정/삭제
+    // ==============================================
+    match /posts/{postId} {
+      // 로그인한 사람만 읽기
+      allow read: if request.auth != null;
+
+      // 로그인한 사람만 작성
+      allow create: if request.auth != null
+                    && request.auth.uid == request.resource.data.authorId;
+
+      // 작성자만 수정/삭제
+      allow update, delete: if request.auth != null
+                            && request.auth.uid == resource.data.authorId;
+    }
+
+    // ==============================================
+    // 커뮤니티 댓글
+    // ==============================================
+    match /posts/{postId}/comments/{commentId} {
+      // 로그인한 사람만 읽기
+      allow read: if request.auth != null;
+
+      // 로그인한 사람만 작성
+      allow create: if request.auth != null
+                    && request.auth.uid == request.resource.data.authorId;
+
+      // 작성자만 수정/삭제
+      allow update, delete: if request.auth != null
+                            && request.auth.uid == resource.data.authorId;
+    }
+  }
+}
