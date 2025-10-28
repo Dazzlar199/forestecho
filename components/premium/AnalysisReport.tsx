@@ -22,6 +22,11 @@ export default function AnalysisReport({
   const { user } = useAuth()
 
   const handleGenerateAnalysis = async () => {
+    if (!user) {
+      alert('로그인이 필요한 서비스입니다.')
+      return
+    }
+
     if (messages.length < 4) {
       alert('충분한 대화가 진행된 후 분석을 요청해주세요. (최소 2회 이상 대화 필요)')
       return
@@ -45,11 +50,12 @@ export default function AnalysisReport({
         }),
       })
 
-      if (!response.ok) {
-        throw new Error('분석 생성 실패')
-      }
-
       const data = await response.json()
+
+      if (!response.ok) {
+        console.error('Analysis API Error Response:', data)
+        throw new Error(data.error || '분석 생성 실패')
+      }
 
       // 분석 완료 후 전용 페이지로 이동
       if (data.analysisId) {
@@ -66,7 +72,7 @@ export default function AnalysisReport({
     <div className="mt-8 sm:mt-12 max-w-4xl mx-auto">
       <button
         onClick={handleGenerateAnalysis}
-        disabled={loading || messages.length < 4}
+        disabled={loading || messages.length < 4 || !user}
         className="w-full px-6 py-4 sm:px-8 sm:py-6 bg-gradient-to-r from-blue-500/10 to-purple-500/10 backdrop-blur-md border border-white/20 text-gray-300 hover:from-blue-500/20 hover:to-purple-500/20 hover:border-white/30 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 sm:gap-3 rounded-lg text-sm sm:text-base"
         style={{ fontWeight: 300, letterSpacing: '0.08em' }}
       >
@@ -86,7 +92,10 @@ export default function AnalysisReport({
         className="text-center text-xs sm:text-sm text-gray-600 mt-3 sm:mt-4"
         style={{ fontWeight: 300, letterSpacing: '0.02em' }}
       >
-        AI 기반 전문 심리 분석 리포트를 생성합니다
+        {!user
+          ? '로그인 후 AI 기반 전문 심리 분석 리포트를 받아보세요'
+          : 'AI 기반 전문 심리 분석 리포트를 생성합니다'
+        }
       </p>
     </div>
   )

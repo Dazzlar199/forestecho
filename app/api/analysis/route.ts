@@ -13,8 +13,13 @@ export async function POST(request: NextRequest) {
   try {
     const { messages, userId, sessionId } = await request.json()
 
-    // TODO: Firebase에서 사용자의 프리미엄 상태 확인
-    // 임시로 모든 요청 허용
+    // 로그인 확인
+    if (!userId) {
+      return NextResponse.json(
+        { error: '로그인이 필요한 서비스입니다.' },
+        { status: 401 }
+      )
+    }
 
     if (!messages || !Array.isArray(messages)) {
       return NextResponse.json(
@@ -63,8 +68,8 @@ export async function POST(request: NextRequest) {
     // Firestore에 분석 결과 저장
     const analysisDoc = await addDoc(collection(db, 'psychologicalAnalyses'), {
       ...analysisData,
-      sessionId: sessionId || null,
-      userId: userId || null,
+      sessionId: sessionId || '',
+      userId: userId,
       generatedAt: serverTimestamp(),
       createdAt: serverTimestamp(),
     })
@@ -72,7 +77,7 @@ export async function POST(request: NextRequest) {
     const fullAnalysis: PsychologicalAnalysis = {
       id: analysisDoc.id,
       sessionId: sessionId || '',
-      userId: userId || '',
+      userId: userId,
       generatedAt: new Date().toISOString(),
       ...analysisData,
     } as PsychologicalAnalysis
