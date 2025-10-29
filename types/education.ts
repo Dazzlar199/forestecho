@@ -1516,8 +1516,8 @@ export const ARTICLES: Article[] = [
         },
         price: 16020,
         affiliate: 'coupang',
-        link: 'https://link.coupang.com/a/cZKcY2',
-        imageUrl: 'https://image.coupangcdn.com/image/retail/images/2019/11/27/17/1/c3e4f5a6-7b8c-9d0e-1f2g-3h4i5j6k7l8m.jpg',
+        link: 'https://link.coupang.com/a/cZKiPH',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b01b/3a6dca4c1097d259b4bca4dfc034bb6826eeb8aafc11d0055732b5769df3.jpg',
         category: 'book'
       },
       {
