@@ -23,7 +23,8 @@ export default function ArticleContent({ article }: ArticleContentProps) {
   const { language } = useLanguage()
   const category = ARTICLE_CATEGORIES.find(c => c.id === article.category)
   const Icon = category ? iconMap[category.icon] : BookOpen
-  const content = article.content[language]
+  // Fallback to Korean if the selected language content doesn't exist
+  const content = article.content[language] || article.content.ko
 
   const formatDate = (date: Date) => {
     const year = date.getFullYear()
