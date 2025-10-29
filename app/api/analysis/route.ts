@@ -5,6 +5,8 @@ import { adminDb } from '@/lib/firebase/admin'
 import admin from 'firebase-admin'
 import type { PsychologicalAnalysis } from '@/types/analysis'
 
+export const dynamic = 'force-dynamic'
+
 export async function POST(request: NextRequest) {
   try {
     const { messages, userId, sessionId } = await request.json()

@@ -62,6 +62,8 @@ function getToneGuidance(tone: number): string {
   }
 }
 
+export const dynamic = 'force-dynamic'
+
 export async function POST(request: NextRequest) {
   try {
     const { messages, language = 'ko', counselingMode = 'general', responseTone = 50 } = await request.json()
