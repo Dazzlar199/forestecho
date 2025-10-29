@@ -58,6 +58,32 @@ export default function ArticleContent({ article }: ArticleContentProps) {
       adTop: '(Top)',
       adMiddle: '(Middle)',
       adBottom: '(Bottom)'
+    },
+    zh: {
+      backToList: '返回心理教育列表',
+      readTime: '分钟阅读',
+      lastUpdated: '最后更新',
+      references: '参考资料',
+      accessDate: '访问日期',
+      disclaimer: '此信息仅供教育目的，不能替代专业医疗建议。如有健康问题，请务必咨询专业人士。',
+      adPlaceholder: '广告区域',
+      adNote: 'AdSense批准后将激活',
+      adTop: '(顶部)',
+      adMiddle: '(中间)',
+      adBottom: '(底部)'
+    },
+    ja: {
+      backToList: '心理教育リストに戻る',
+      readTime: '分読む',
+      lastUpdated: '最終更新',
+      references: '参考資料',
+      accessDate: 'アクセス日',
+      disclaimer: 'この情報は教育目的でのみ提供されており、専門的な医療アドバイスに代わるものではありません。健康上の問題がある場合は、必ず専門家に相談してください。',
+      adPlaceholder: '広告エリア',
+      adNote: 'AdSense承認後に有効化されます',
+      adTop: '(上部)',
+      adMiddle: '(中央)',
+      adBottom: '(下部)'
     }
   }
 
