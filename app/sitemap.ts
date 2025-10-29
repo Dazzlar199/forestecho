@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next'
 import { ARTICLES } from '@/types/education'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://forestecho-3514b.web.app'
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://forestecho.app'
 
   // Static pages
   const staticPages: MetadataRoute.Sitemap = [
