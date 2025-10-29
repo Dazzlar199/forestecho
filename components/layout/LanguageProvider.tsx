@@ -23,7 +23,7 @@ const translations = {
     // Welcome Screen
     siteName: '숲울림',
     subtitle: '당신의 속 마음, 울림에 귀 기울입니다',
-    description1: '전문 심리상담사가 24시간 당신의 이야기를 들어드립니다.',
+    description1: '전문 AI 심리상담사가 24시간 당신의 이야기를 들어드립니다.',
     description2: '이곳은 당신만을 위한 안전한 공간입니다.',
     startChat: '대화 시작하기',
     feature1: '전문 심리학 기반 상담',

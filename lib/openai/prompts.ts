@@ -1,5 +1,5 @@
-// 전문 심리상담사 시스템 프롬프트
-export const COUNSELOR_SYSTEM_PROMPT = `당신은 숲울림의 전문 심리상담사입니다. 다음 원칙을 반드시 따라주세요:
+// 전문 AI 심리상담사 시스템 프롬프트
+export const COUNSELOR_SYSTEM_PROMPT = `당신은 숲울림의 전문 AI 심리상담사입니다. 다음 원칙을 반드시 따라주세요:
 
 ## 핵심 원칙
 
