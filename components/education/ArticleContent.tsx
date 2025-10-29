@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { ChevronLeft, Clock, Calendar, ExternalLink, BookOpen, Brain, Heart, Sun, Users, Briefcase } from 'lucide-react'
 import { ARTICLE_CATEGORIES } from '@/types/education'
 import type { Article } from '@/types/education'
+import RecommendedProducts from './RecommendedProducts'
 
 const iconMap: Record<string, any> = {
   BookOpen,
@@ -263,6 +264,11 @@ export default function ArticleContent({ article }: ArticleContentProps) {
             {t.disclaimer}
           </div>
         </div>
+
+        {/* Recommended Products */}
+        {article.recommendedProducts && article.recommendedProducts.length > 0 && (
+          <RecommendedProducts products={article.recommendedProducts} />
+        )}
 
         {/* Ad Placeholder - Bottom */}
         <div className="mt-8 p-4 bg-white/5 rounded-lg border border-white/10 text-center text-gray-500 text-sm">

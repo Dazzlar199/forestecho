@@ -32,6 +32,27 @@ export interface Article {
   sources: Source[]
   lastUpdated: Date
   featured?: boolean
+  recommendedProducts?: RecommendedProduct[]
+}
+
+export interface RecommendedProduct {
+  title: {
+    ko: string
+    en: string
+    ja: string
+    zh: string
+  }
+  description: {
+    ko: string
+    en: string
+    ja: string
+    zh: string
+  }
+  price: number
+  affiliate: 'coupang' | 'aladin' | 'amazon'
+  link: string
+  imageUrl: string
+  category: 'book' | 'tool' | 'supplement' | 'device'
 }
 
 export interface ArticleSection {
@@ -502,7 +523,66 @@ export const ARTICLES: Article[] = [
       }
     ],
     lastUpdated: new Date('2025-10-27'),
-    featured: true
+    featured: true,
+    recommendedProducts: [
+      {
+        title: {
+          ko: '정신건강의학',
+          en: 'Psychiatry Textbook',
+          ja: '精神医学',
+          zh: '精神病学'
+        },
+        description: {
+          ko: '정신건강의 기초부터 전문적인 지식까지 담은 필독서',
+          en: 'Essential reading covering basics to advanced mental health knowledge',
+          ja: 'メンタルヘルスの基礎から専門知識まで網羅した必読書',
+          zh: '涵盖心理健康基础到专业知识的必读书'
+        },
+        price: 28000,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/bZXSHF',
+        imageUrl: 'https://image.coupangcdn.com/image/vendor_inventory/5e12/44fcb6cf70d3d2f64da85e2f9df4f4d2c8a0e0b3d3.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '마음챙김 명상',
+          en: 'Mindfulness Meditation Guide',
+          ja: 'マインドフルネス瞑想',
+          zh: '正念冥想指南'
+        },
+        description: {
+          ko: '일상에서 실천하는 마음챙김 명상 입문서',
+          en: 'Beginner guide to practicing mindfulness in daily life',
+          ja: '日常で実践するマインドフルネス瞑想入門書',
+          zh: '日常生活中的正念冥想入门指南'
+        },
+        price: 16200,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/bZXTFM',
+        imageUrl: 'https://image.coupangcdn.com/image/retail/images/2019/03/21/10/3/f0b3e4d8-4b9c-4c3a-9d2e-7e6e8c8f9e0e.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '감정일기장',
+          en: 'Emotion Journal',
+          ja: '感情日記帳',
+          zh: '情绪日记本'
+        },
+        description: {
+          ko: '하루의 감정을 기록하고 정리하는 힐링 다이어리',
+          en: 'Healing diary for recording and organizing daily emotions',
+          ja: '1日の感情を記録し整理するヒーリング日記',
+          zh: '记录和整理每日情绪的治愈日记'
+        },
+        price: 12900,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/bZXUdL',
+        imageUrl: 'https://image.coupangcdn.com/image/retail/images/2021/04/15/18/7/a1b2c3d4-5e6f-7g8h-9i0j-k1l2m3n4o5p6.jpg',
+        category: 'tool'
+      }
+    ]
   },
 
   // ===== 정신건강 질환 (Conditions) =====
