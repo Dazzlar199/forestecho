@@ -214,7 +214,7 @@ export default function ChatInterface() {
   }, [])
 
   return (
-    <div className="max-w-4xl mx-auto py-4 sm:py-8 px-3 sm:px-6">
+    <div className="max-w-4xl mx-auto py-2 sm:py-8 px-3 sm:px-6">
       {/* Chat History Sidebar */}
       {user && (
         <ChatHistory
@@ -225,12 +225,16 @@ export default function ChatInterface() {
       )}
 
       {/* Mode Selector */}
-      <ModeSelector selectedMode={counselingMode} onModeChange={setCounselingMode} />
+      <div className="mb-3 sm:mb-4">
+        <ModeSelector selectedMode={counselingMode} onModeChange={setCounselingMode} />
+      </div>
 
       {/* Tone Slider */}
-      <ToneSlider value={responseTone} onChange={setResponseTone} />
+      <div className="mb-4 sm:mb-6">
+        <ToneSlider value={responseTone} onChange={setResponseTone} />
+      </div>
 
-      <div className="h-[calc(100vh-280px)] sm:h-[65vh] flex flex-col bg-black/20 backdrop-blur-xl border border-white/10 rounded-lg overflow-hidden">
+      <div className="h-[calc(100vh-450px)] sm:h-[65vh] flex flex-col bg-black/20 backdrop-blur-xl border border-white/10 rounded-lg overflow-hidden">
         {/* Chat Messages */}
         <div className="flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-6 md:px-10 md:py-12 space-y-4 sm:space-y-6 md:space-y-8">
           {messages.map((message, index) => (
