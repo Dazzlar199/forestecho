@@ -68,7 +68,7 @@ export const dynamic = 'force-dynamic'
 export async function POST(request: NextRequest) {
   try {
     // Rate limiting: 10 requests per minute per IP
-    const identifier = request.ip ?? request.headers.get('x-forwarded-for') ?? 'anonymous'
+    const identifier = request.headers.get('x-forwarded-for') ?? request.headers.get('x-real-ip') ?? 'anonymous'
     const rateLimitResult = rateLimit(identifier, { limit: 10, window: 60 })
 
     if (!rateLimitResult.success) {

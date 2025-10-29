@@ -11,7 +11,7 @@ export const dynamic = 'force-dynamic'
 export async function POST(request: NextRequest) {
   try {
     // Rate limiting: 3 analyses per hour per IP (더 엄격함, 비용이 높은 API)
-    const identifier = request.ip ?? request.headers.get('x-forwarded-for') ?? 'anonymous'
+    const identifier = request.headers.get('x-forwarded-for') ?? request.headers.get('x-real-ip') ?? 'anonymous'
     const rateLimitResult = rateLimit(identifier, { limit: 3, window: 3600 })
 
     if (!rateLimitResult.success) {
