@@ -29,6 +29,18 @@ export default function Header() {
     setMounted(true)
   }, [])
 
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (showMobileMenu) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [showMobileMenu])
+
   const languages = [
     { code: 'ko' as Language, label: '한국어', flag: '🇰🇷' },
     { code: 'en' as Language, label: 'English', flag: '🇺🇸' },
