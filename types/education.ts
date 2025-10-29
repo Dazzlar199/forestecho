@@ -1499,7 +1499,66 @@ export const ARTICLES: Article[] = [
       }
     ],
     lastUpdated: new Date('2025-10-27'),
-    featured: true
+    featured: true,
+    recommendedProducts: [
+      {
+        title: {
+          ko: '우울할 땐 뇌과학',
+          en: 'The Upward Spiral',
+          ja: 'うつのための脳科学',
+          zh: '抑郁时的脑科学'
+        },
+        description: {
+          ko: '신경과학으로 이해하는 우울증과 과학적 극복 방법',
+          en: 'Understanding depression through neuroscience and scientific methods to overcome it',
+          ja: '神経科学で理解するうつ病と科学的克服法',
+          zh: '通过神经科学理解抑郁症及科学克服方法'
+        },
+        price: 16020,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/cZKcY2',
+        imageUrl: 'https://image.coupangcdn.com/image/retail/images/2019/11/27/17/1/c3e4f5a6-7b8c-9d0e-1f2g-3h4i5j6k7l8m.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '나는 왜 눈치를 보는가',
+          en: 'Why Do I People Please?',
+          ja: 'なぜ私は顔色を窺うのか',
+          zh: '我为什么总是察言观色'
+        },
+        description: {
+          ko: '오은영 박사가 전하는 타인의 시선에서 벗어나는 법',
+          en: 'Dr. Oh Eun-young guide on how to break free from others gaze',
+          ja: 'オ・ウニョン博士が伝える他人の視線から抜け出す方法',
+          zh: '吴恩英博士教你摆脱他人眼光'
+        },
+        price: 17550,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/PLACEHOLDER2',
+        imageUrl: 'https://image.coupangcdn.com/image/retail/images/2023/05/10/12/3/a1b2c3d4-5e6f-7g8h-9i0j-k1l2m3n4o5p6.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '감정 기록 다이어리',
+          en: 'Emotion Journal',
+          ja: '感情記録ダイアリー',
+          zh: '情绪记录日记'
+        },
+        description: {
+          ko: '하루의 감정을 기록하고 패턴을 파악하는 치유 도구',
+          en: 'Healing tool to record daily emotions and identify patterns',
+          ja: '1日の感情を記録しパターンを把握する癒しツール',
+          zh: '记录每日情绪并识别模式的治愈工具'
+        },
+        price: 11900,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/PLACEHOLDER3',
+        imageUrl: 'https://image.coupangcdn.com/image/retail/images/2023/08/15/14/5/b2c3d4e5-6f7g-8h9i-0j1k-2l3m4n5o6p7q.jpg',
+        category: 'tool'
+      }
+    ]
   },
 
   // ===== 정신건강 질환 (Conditions) - Article 2 =====
