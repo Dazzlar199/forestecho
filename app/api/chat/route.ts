@@ -11,6 +11,7 @@ import {
 } from '@/lib/openai/context-manager'
 import { enhanceWithResearch } from '@/lib/search/tavily'
 import { COUNSELING_MODES, type CounselingMode } from '@/lib/openai/counseling-modes'
+import { rateLimit } from '@/lib/rate-limit'
 
 const languageInstructions = {
   ko: '한국어로 답변하세요.',
@@ -66,6 +67,29 @@ export const dynamic = 'force-dynamic'
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting: 10 requests per minute per IP
+    const identifier = request.ip ?? request.headers.get('x-forwarded-for') ?? 'anonymous'
+    const rateLimitResult = rateLimit(identifier, { limit: 10, window: 60 })
+
+    if (!rateLimitResult.success) {
+      return NextResponse.json(
+        {
+          error: '요청 한도를 초과했습니다. 잠시 후 다시 시도해주세요.',
+          error_en: 'Rate limit exceeded. Please try again later.',
+          retryAfter: Math.ceil((rateLimitResult.reset - Date.now()) / 1000)
+        },
+        {
+          status: 429,
+          headers: {
+            'X-RateLimit-Limit': rateLimitResult.limit.toString(),
+            'X-RateLimit-Remaining': rateLimitResult.remaining.toString(),
+            'X-RateLimit-Reset': rateLimitResult.reset.toString(),
+            'Retry-After': Math.ceil((rateLimitResult.reset - Date.now()) / 1000).toString()
+          }
+        }
+      )
+    }
+
     const { messages, language = 'ko', counselingMode = 'general', responseTone = 50 } = await request.json()
 
     if (!messages || !Array.isArray(messages)) {

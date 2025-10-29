@@ -4,11 +4,35 @@ import { PREMIUM_ANALYSIS_PROMPT } from '@/lib/openai/prompts'
 import { adminDb } from '@/lib/firebase/admin'
 import admin from 'firebase-admin'
 import type { PsychologicalAnalysis } from '@/types/analysis'
+import { rateLimit } from '@/lib/rate-limit'
 
 export const dynamic = 'force-dynamic'
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting: 3 analyses per hour per IP (더 엄격함, 비용이 높은 API)
+    const identifier = request.ip ?? request.headers.get('x-forwarded-for') ?? 'anonymous'
+    const rateLimitResult = rateLimit(identifier, { limit: 3, window: 3600 })
+
+    if (!rateLimitResult.success) {
+      return NextResponse.json(
+        {
+          error: '분석 요청 한도를 초과했습니다. 1시간 후 다시 시도해주세요.',
+          error_en: 'Analysis rate limit exceeded. Please try again in 1 hour.',
+          retryAfter: Math.ceil((rateLimitResult.reset - Date.now()) / 1000)
+        },
+        {
+          status: 429,
+          headers: {
+            'X-RateLimit-Limit': rateLimitResult.limit.toString(),
+            'X-RateLimit-Remaining': rateLimitResult.remaining.toString(),
+            'X-RateLimit-Reset': rateLimitResult.reset.toString(),
+            'Retry-After': Math.ceil((rateLimitResult.reset - Date.now()) / 1000).toString()
+          }
+        }
+      )
+    }
+
     const { messages, userId, sessionId } = await request.json()
 
     // 로그인 확인
