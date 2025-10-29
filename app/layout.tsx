@@ -23,10 +23,20 @@ export const metadata: Metadata = {
   description: '전문 심리상담 서비스. 24시간 언제든지 당신의 이야기를 들어드립니다.',
   keywords: ['심리상담', '상담', '멘탈케어', '심리치료', '정신건강', '마음치유', '숲울림'],
   authors: [{ name: '숲울림' }],
+  verification: {
+    // Google Search Console 인증 코드를 여기에 추가하세요
+    // google: 'your-google-verification-code',
+    // 네이버 서치어드바이저 인증 코드를 여기에 추가하세요
+    // other: {
+    //   'naver-site-verification': 'your-naver-verification-code',
+    // },
+  },
   openGraph: {
     title: '숲울림 - 심리상담',
     description: '전문 심리상담 서비스',
     type: 'website',
+    url: 'https://forestecho.app',
+    siteName: '숲울림',
   },
 }
 

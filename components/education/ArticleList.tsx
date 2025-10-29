@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useLanguage } from '../layout/LanguageProvider'
 import { useTheme } from '../layout/ThemeProvider'
 import { Clock, Star, BookOpen, Brain, Heart, Sun, Users, Briefcase } from 'lucide-react'
@@ -16,13 +17,11 @@ const iconMap: Record<string, any> = {
 
 interface ArticleListProps {
   articles: Article[]
-  onArticleClick: (articleId: string) => void
   selectedCategory?: ArticleCategory | 'all'
 }
 
 export default function ArticleList({
   articles,
-  onArticleClick,
   selectedCategory = 'all'
 }: ArticleListProps) {
   const { language } = useLanguage()
@@ -61,10 +60,10 @@ export default function ArticleList({
         const Icon = category ? iconMap[category.icon] : BookOpen
 
         return (
-          <div
+          <Link
             key={article.id}
-            onClick={() => onArticleClick(article.id)}
-            className={`p-6 rounded-lg border-2 transition-all cursor-pointer ${
+            href={`/education/${article.id}`}
+            className={`block p-6 rounded-lg border-2 transition-all ${
               theme === 'dark'
                 ? 'bg-white/5 border-white/10 hover:border-white/30 hover:bg-white/10'
                 : 'bg-white border-gray-200 hover:border-gray-400 hover:shadow-lg'
@@ -154,7 +153,7 @@ export default function ArticleList({
                 {article.sources.length}
               </span>
             </div>
-          </div>
+          </Link>
         )
       })}
     </div>

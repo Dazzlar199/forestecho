@@ -5,7 +5,6 @@ import { useLanguage } from '@/components/layout/LanguageProvider'
 import { useTheme } from '@/components/layout/ThemeProvider'
 import { BookOpen, Brain, Heart, Sun, Users, Briefcase } from 'lucide-react'
 import ArticleList from '@/components/education/ArticleList'
-import ArticleDetail from '@/components/education/ArticleDetail'
 import { ARTICLES, ARTICLE_CATEGORIES, type ArticleCategory } from '@/types/education'
 
 const iconMap: Record<string, any> = {
@@ -21,11 +20,6 @@ export default function EducationPage() {
   const { language } = useLanguage()
   const { theme } = useTheme()
   const [selectedCategory, setSelectedCategory] = useState<ArticleCategory | 'all'>('all')
-  const [selectedArticleId, setSelectedArticleId] = useState<string | null>(null)
-
-  const selectedArticle = selectedArticleId
-    ? ARTICLES.find(a => a.id === selectedArticleId)
-    : null
 
   return (
     <div className="min-h-screen py-20 sm:py-32 px-4 sm:px-6">
@@ -137,17 +131,8 @@ export default function EducationPage() {
         {/* Article List */}
         <ArticleList
           articles={ARTICLES}
-          onArticleClick={setSelectedArticleId}
           selectedCategory={selectedCategory}
         />
-
-        {/* Article Detail Modal */}
-        {selectedArticle && (
-          <ArticleDetail
-            article={selectedArticle}
-            onClose={() => setSelectedArticleId(null)}
-          />
-        )}
       </div>
     </div>
   )
