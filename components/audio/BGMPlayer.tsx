@@ -4,12 +4,12 @@ import { useState, useRef, useEffect } from 'react'
 import { Volume2, VolumeX, Play, Pause, SkipForward } from 'lucide-react'
 
 const MUSIC_TRACKS = [
-  { title: '숲의 속삭임', file: '/music/Forest Whispers.wav' },
-  { title: '황금빛 꿈', file: '/music/Golden Hour Dreams.wav' },
-  { title: '치유의 빗소리', file: '/music/Healing Rain Therapy.wav' },
-  { title: '바다의 환상', file: '/music/Ocean Reverie.wav' },
-  { title: '별빛 명상', file: '/music/Starlit Reverie.wav' },
-  { title: '무중력 꿈', file: '/music/Weightless Dreams.wav' },
+  { title: '숲의 속삭임', file: '/music/forest-whispers.mp3' },
+  { title: '황금빛 꿈', file: '/music/golden-hour-dreams.mp3' },
+  { title: '치유의 빗소리', file: '/music/healing-rain-therapy.mp3' },
+  { title: '바다의 환상', file: '/music/ocean-reverie.mp3' },
+  { title: '별빛 명상', file: '/music/starlit-reverie.mp3' },
+  { title: '무중력 꿈', file: '/music/weightless-dreams.mp3' },
 ]
 
 export default function BGMPlayer() {
