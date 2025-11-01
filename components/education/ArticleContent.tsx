@@ -84,29 +84,29 @@ export default function ArticleContent({ article }: ArticleContentProps) {
   const t = translations[language]
 
   return (
-    <div className="min-h-screen py-20 sm:py-32 px-4 sm:px-6">
+    <div className="min-h-screen py-16 md:py-20 lg:py-32 px-3 sm:px-4 md:px-6">
       <article className="max-w-4xl mx-auto">
         {/* Back Button */}
         <Link
           href="/education"
-          className="inline-flex items-center gap-2 mb-6 text-gray-400 hover:text-gray-200 transition-colors"
+          className="inline-flex items-center gap-1.5 md:gap-2 mb-4 md:mb-6 text-gray-400 hover:text-gray-200 transition-colors"
         >
-          <ChevronLeft className="w-4 h-4" />
-          <span className="text-sm">{t.backToList}</span>
+          <ChevronLeft className="w-3.5 h-3.5 md:w-4 md:h-4" />
+          <span className="text-xs md:text-sm">{t.backToList}</span>
         </Link>
 
         {/* Category Badge */}
         {category && (
-          <div className="mb-6">
+          <div className="mb-4 md:mb-6">
             <div
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full"
+              className="inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-full"
               style={{
                 backgroundColor: `${category.color}20`,
                 color: category.color
               }}
             >
-              {Icon && <Icon className="w-4 h-4" />}
-              <span className="text-sm font-medium">
+              {Icon && <Icon className="w-3.5 h-3.5 md:w-4 md:h-4" />}
+              <span className="text-xs md:text-sm font-medium">
                 {category.name[language]}
               </span>
             </div>
@@ -114,41 +114,41 @@ export default function ArticleContent({ article }: ArticleContentProps) {
         )}
 
         {/* Meta Info */}
-        <div className="flex items-center gap-4 mb-4 text-sm text-gray-500">
+        <div className="flex items-center gap-2 md:gap-4 mb-3 md:mb-4 text-xs md:text-sm text-gray-500 flex-wrap">
           <div className="flex items-center gap-1">
-            <Clock className="w-4 h-4" />
+            <Clock className="w-3 h-3 md:w-4 md:h-4" />
             <span>{article.readTime}{t.readTime}</span>
           </div>
           <span>•</span>
           <div className="flex items-center gap-1">
-            <Calendar className="w-4 h-4" />
-            <span>{t.lastUpdated}: {formatDate(article.lastUpdated)}</span>
+            <Calendar className="w-3 h-3 md:w-4 md:h-4" />
+            <span className="text-[11px] md:text-sm">{t.lastUpdated}: {formatDate(article.lastUpdated)}</span>
           </div>
         </div>
 
         {/* Title */}
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-light mb-6 text-gray-200" style={{ letterSpacing: '0.03em', lineHeight: 1.4 }}>
+        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light mb-4 md:mb-6 text-gray-200" style={{ letterSpacing: '0.03em', lineHeight: 1.4 }}>
           {article.title[language]}
         </h1>
 
         {/* Summary */}
-        <div className="mb-8 p-4 sm:p-5 rounded-lg border-l-4 bg-white/5 border-l-emerald-500">
-          <p className="text-base text-gray-300" style={{ lineHeight: 1.8 }}>
+        <div className="mb-6 md:mb-8 p-3 md:p-4 lg:p-5 rounded-lg border-l-4 bg-white/5 border-l-emerald-500">
+          <p className="text-sm md:text-base text-gray-300" style={{ lineHeight: 1.8 }}>
             {article.summary[language]}
           </p>
         </div>
 
         {/* Ad Placeholder - Top */}
-        <div className="mb-8 p-4 bg-white/5 rounded-lg border border-white/10 text-center text-gray-500 text-sm">
+        <div className="mb-6 md:mb-8 p-3 md:p-4 bg-white/5 rounded-lg border border-white/10 text-center text-gray-500 text-xs md:text-sm">
           {t.adPlaceholder} {t.adTop} - {t.adNote}
         </div>
 
         {/* Article Content */}
-        <div className="space-y-6 mb-8">
+        <div className="space-y-4 md:space-y-6 mb-6 md:mb-8">
           {content.map((section, index) => (
             <div key={index}>
               {section.heading && (
-                <h2 className="text-2xl font-medium mb-4 text-gray-200" style={{ letterSpacing: '0.02em' }}>
+                <h2 className="text-xl md:text-2xl font-medium mb-3 md:mb-4 text-gray-200" style={{ letterSpacing: '0.02em' }}>
                   {section.heading}
                 </h2>
               )}
@@ -156,7 +156,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
               {section.paragraphs && section.paragraphs.map((paragraph, pIndex) => (
                 <p
                   key={pIndex}
-                  className="text-base mb-4 text-gray-300"
+                  className="text-sm md:text-base mb-3 md:mb-4 text-gray-300"
                   style={{ lineHeight: 1.8 }}
                 >
                   {paragraph}
@@ -164,13 +164,13 @@ export default function ArticleContent({ article }: ArticleContentProps) {
               ))}
 
               {section.list && (
-                <div className="mb-4">
+                <div className="mb-3 md:mb-4">
                   {section.list.type === 'bullet' ? (
-                    <ul className="space-y-2 ml-6">
+                    <ul className="space-y-2 ml-4 md:ml-6">
                       {section.list.items.map((item, iIndex) => (
                         <li
                           key={iIndex}
-                          className="text-base list-disc text-gray-300"
+                          className="text-sm md:text-base list-disc text-gray-300"
                           style={{ lineHeight: 1.8 }}
                         >
                           {item}
@@ -178,11 +178,11 @@ export default function ArticleContent({ article }: ArticleContentProps) {
                       ))}
                     </ul>
                   ) : (
-                    <ol className="space-y-2 ml-6">
+                    <ol className="space-y-2 ml-4 md:ml-6">
                       {section.list.items.map((item, iIndex) => (
                         <li
                           key={iIndex}
-                          className="text-base list-decimal text-gray-300"
+                          className="text-sm md:text-base list-decimal text-gray-300"
                           style={{ lineHeight: 1.8 }}
                         >
                           {item}
@@ -197,17 +197,17 @@ export default function ArticleContent({ article }: ArticleContentProps) {
         </div>
 
         {/* Ad Placeholder - Middle */}
-        <div className="mb-8 p-4 bg-white/5 rounded-lg border border-white/10 text-center text-gray-500 text-sm">
+        <div className="mb-6 md:mb-8 p-3 md:p-4 bg-white/5 rounded-lg border border-white/10 text-center text-gray-500 text-xs md:text-sm">
           {t.adPlaceholder} {t.adMiddle} - {t.adNote}
         </div>
 
         {/* Tags */}
         {article.tags && article.tags.length > 0 && (
-          <div className="flex flex-wrap gap-2 mb-8">
+          <div className="flex flex-wrap gap-1.5 md:gap-2 mb-6 md:mb-8">
             {article.tags.map((tag) => (
               <span
                 key={tag}
-                className="text-sm px-3 py-1 rounded-full bg-white/10 text-gray-400"
+                className="text-xs md:text-sm px-2 md:px-3 py-0.5 md:py-1 rounded-full bg-white/10 text-gray-400"
               >
                 #{tag}
               </span>
@@ -216,25 +216,25 @@ export default function ArticleContent({ article }: ArticleContentProps) {
         )}
 
         {/* Sources */}
-        <div className="pt-6 border-t border-white/10">
-          <h3 className="text-lg font-medium mb-4 text-gray-300">
+        <div className="pt-4 md:pt-6 border-t border-white/10">
+          <h3 className="text-base md:text-lg font-medium mb-3 md:mb-4 text-gray-300">
             {t.references}
           </h3>
-          <div className="space-y-3">
+          <div className="space-y-2 md:space-y-3">
             {article.sources.map((source, index) => (
               <div
                 key={index}
-                className="p-4 rounded-lg border bg-white/5 border-white/10"
+                className="p-3 md:p-4 rounded-lg border bg-white/5 border-white/10"
               >
-                <div className="flex items-start justify-between gap-4">
+                <div className="flex items-start justify-between gap-2 md:gap-4">
                   <div className="flex-1">
-                    <p className="text-sm font-medium mb-1 text-gray-300">
+                    <p className="text-xs md:text-sm font-medium mb-1 text-gray-300">
                       {source.name}
                     </p>
-                    <p className="text-xs mb-2 text-gray-500">
+                    <p className="text-[10px] md:text-xs mb-1 md:mb-2 text-gray-500">
                       {source.organization}
                     </p>
-                    <p className="text-xs text-gray-600">
+                    <p className="text-[10px] md:text-xs text-gray-600">
                       {t.accessDate}: {source.accessDate}
                     </p>
                   </div>
@@ -242,9 +242,9 @@ export default function ArticleContent({ article }: ArticleContentProps) {
                     href={source.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 rounded transition-colors hover:bg-white/10 text-emerald-500"
+                    className="p-1.5 md:p-2 rounded transition-colors hover:bg-white/10 text-emerald-500"
                   >
-                    <ExternalLink className="w-4 h-4" />
+                    <ExternalLink className="w-3.5 h-3.5 md:w-4 md:h-4" />
                   </a>
                 </div>
               </div>
@@ -252,7 +252,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
           </div>
 
           {/* Disclaimer */}
-          <div className="mt-6 p-4 rounded-lg text-xs bg-amber-500/10 text-amber-400">
+          <div className="mt-4 md:mt-6 p-3 md:p-4 rounded-lg text-[10px] md:text-xs bg-amber-500/10 text-amber-400">
             {t.disclaimer}
           </div>
         </div>
@@ -263,7 +263,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
         )}
 
         {/* Ad Placeholder - Bottom */}
-        <div className="mt-8 p-4 bg-white/5 rounded-lg border border-white/10 text-center text-gray-500 text-sm">
+        <div className="mt-6 md:mt-8 p-3 md:p-4 bg-white/5 rounded-lg border border-white/10 text-center text-gray-500 text-xs md:text-sm">
           {t.adPlaceholder} {t.adBottom} - {t.adNote}
         </div>
       </article>

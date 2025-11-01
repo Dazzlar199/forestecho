@@ -5,6 +5,7 @@ export type ArticleCategory =
   | 'lifestyle' // 생활습관
   | 'relationships' // 대인관계
   | 'workplace' // 직장/학업
+  | 'adolescent' // 청소년 정신건강
 
 export interface Article {
   id: string
@@ -143,6 +144,18 @@ export const ARTICLE_CATEGORIES = [
     },
     icon: 'Briefcase',
     color: '#06b6d4'
+  },
+  {
+    id: 'adolescent' as ArticleCategory,
+    name: { ko: '청소년 정신건강', en: 'Adolescent Health', ja: '青少年のメンタルヘルス', zh: '青少年心理健康' },
+    description: {
+      ko: '청소년 특화 정신건강 정보',
+      en: 'Mental health for adolescents',
+      ja: '青少年向けのメンタルヘルス',
+      zh: '青少年心理健康信息'
+    },
+    icon: 'Heart',
+    color: '#f59e0b'
   }
 ] as const
 
@@ -527,59 +540,59 @@ export const ARTICLES: Article[] = [
     recommendedProducts: [
       {
         title: {
-          ko: '정신의학의 모든 것',
-          en: 'Everything about Psychiatry',
-          ja: '精神医学のすべて',
-          zh: '精神病学的一切'
+          ko: '웰리너리 하루한장 마음챙김 마음치유 감정 일기장 다이어리',
+          en: 'Wellinary Daily Mindfulness & Emotional Healing Diary',
+          ja: 'ウェリナリー毎日のマインドフルネス感情ヒーリング日記',
+          zh: 'Wellinary每日正念情绪治愈日记'
         },
         description: {
-          ko: '정신건강의 기초부터 전문적인 지식까지 담은 필독서',
-          en: 'Essential reading covering basics to advanced mental health knowledge',
-          ja: 'メンタルヘルスの基礎から専門知識まで網羅した必読書',
-          zh: '涵盖心理健康基础到专业知识的必读书'
+          ko: '하루 한 장, 마음을 돌보고 감정을 기록하는 마음챙김 일기장',
+          en: 'Daily mindfulness diary for self-care and emotional recording',
+          ja: '1日1ページ、心をケアし感情を記録するマインドフルネス日記',
+          zh: '每天一页，关怀心灵并记录情绪的正念日记'
         },
-        price: 35000,
+        price: 16020,
         affiliate: 'coupang',
         link: 'https://link.coupang.com/a/c0kPPD',
-        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/d4c0/6a7e8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e.jpg',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/0dc1/3857867902b8f574ab48cd9e2e7834e82da795156938b4b8e5c135c590ef.jpg',
         category: 'book'
       },
       {
         title: {
-          ko: '마음챙김 명상 가이드',
-          en: 'Mindfulness Meditation Guide',
-          ja: 'マインドフルネス瞑想ガイド',
-          zh: '正念冥想指南'
+          ko: '마음챙김 명상과 자기치유(상)',
+          en: 'Mindfulness Meditation and Self-Healing (Vol. 1)',
+          ja: 'マインドフルネス瞑想と自己治癒（上）',
+          zh: '正念冥想与自我治愈（上）'
         },
         description: {
-          ko: '일상에서 실천하는 마음챙김 명상 입문서',
-          en: 'Beginner guide to practicing mindfulness in daily life',
-          ja: '日常で実践するマインドフルネス瞑想入門書',
-          zh: '日常生活中的正念冥想入门指南'
+          ko: '마음챙김 명상을 통한 자기치유의 여정을 안내하는 필독서',
+          en: 'Essential guide to self-healing through mindfulness meditation',
+          ja: 'マインドフルネス瞑想による自己治癒の旅を案内する必読書',
+          zh: '通过正念冥想实现自我治愈的必读指南'
         },
         price: 18000,
         affiliate: 'coupang',
         link: 'https://link.coupang.com/a/c0kOOm',
-        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/a1b2/3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2.jpg',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/441c/c5d6b1be917a965fd1b451b30988d9f780ba1f6f5c397e3c9ba49a2ea2e1.jpg',
         category: 'book'
       },
       {
         title: {
-          ko: '감정 힐링 워크북',
-          en: 'Emotional Healing Workbook',
-          ja: '感情ヒーリングワークブック',
-          zh: '情绪治愈工作簿'
+          ko: '감정은 어떻게 만들어지는가?',
+          en: 'How Emotions Are Made',
+          ja: '感情はどのように作られるのか？',
+          zh: '情绪是如何产生的？'
         },
         description: {
-          ko: '하루의 감정을 기록하고 정리하는 힐링 워크북',
-          en: 'Healing workbook for recording and organizing daily emotions',
-          ja: '1日の感情を記録し整理するヒーリングワークブック',
-          zh: '记录和整理每日情绪的治愈工作簿'
+          ko: '감정의 과학적 원리와 우리 뇌가 감정을 만드는 방법에 대한 혁신적 통찰',
+          en: 'Revolutionary insights into the science of emotions and how our brain creates them',
+          ja: '感情の科学的原理と脳が感情を作る方法についての革新的洞察',
+          zh: '关于情绪科学原理及大脑如何产生情绪的革命性见解'
         },
-        price: 15000,
+        price: 24000,
         affiliate: 'coupang',
         link: 'https://link.coupang.com/a/c0kPji',
-        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b1c2/d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c.jpg',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/0af2/3fdb5c3a1f988f748fd7ebdad24e999bc2430a5f0a2edee170a74ee60064.jpg',
         category: 'book'
       }
     ]
@@ -1522,40 +1535,40 @@ export const ARTICLES: Article[] = [
       },
       {
         title: {
-          ko: '우울증 극복 가이드',
-          en: 'Overcoming Depression Guide',
-          ja: 'うつ病克服ガイド',
-          zh: '克服抑郁症指南'
+          ko: '왜 나는 늘 눈치를 보는 걸까',
+          en: 'Why Am I Always Reading the Room?',
+          ja: 'なぜ私はいつも人の顔色を伺うのか',
+          zh: '为什么我总是察言观色？'
         },
         description: {
-          ko: '전문가가 알려주는 우울증 극복을 위한 실전 가이드',
-          en: 'Expert guide for overcoming depression',
-          ja: '専門家が教えるうつ病克服のための実践ガイド',
-          zh: '专家教你克服抑郁症的实用指南'
+          ko: '눈치를 많이 보는 사람들을 위한 심리적 해법과 자존감 회복 가이드',
+          en: 'Psychological solutions and self-esteem recovery guide for people who constantly read the room',
+          ja: '人の顔色を伺う人のための心理的解決法と自尊心回復ガイド',
+          zh: '为习惯察言观色的人提供的心理解决方案和自尊恢复指南'
         },
-        price: 19800,
+        price: 16020,
         affiliate: 'coupang',
         link: 'https://link.coupang.com/a/c0kRtf',
-        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/e1f2/a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2.jpg',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail-product-api/A00023529/437919/797356/main/41f15c09f706b09ce9fe565ad74d7dc8ac2f2481ab36ef5da28876c2f89e6cf4.jpg',
         category: 'book'
       },
       {
         title: {
-          ko: '마음 회복 워크북',
-          en: 'Mind Recovery Workbook',
-          ja: '心の回復ワークブック',
-          zh: '心灵恢复工作簿'
+          ko: '감정 연습',
+          en: 'Emotional Practice',
+          ja: '感情練習',
+          zh: '情绪练习'
         },
         description: {
-          ko: '하루의 감정을 기록하고 패턴을 파악하는 치유 워크북',
-          en: 'Healing workbook to record daily emotions and identify patterns',
-          ja: '1日の感情を記録しパターンを把握する癒しワークブック',
-          zh: '记录每日情绪并识别模式的治愈工作簿'
+          ko: '감정을 이용해 원하는 삶으로 옮겨가는 22가지 방법',
+          en: '22 ways to use emotions to move toward the life you want',
+          ja: '感情を活用して望む人生へ移行する22の方法',
+          zh: '利用情绪走向理想生活的22种方法'
         },
-        price: 16500,
+        price: 17100,
         affiliate: 'coupang',
         link: 'https://link.coupang.com/a/c0kRNI',
-        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/c3d4/e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4.jpg',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/cd80/46026e6860ddb19def6d7908e922b1705d57af519aac67ca1787f8cf0f44.jpg',
         category: 'book'
       }
     ]
@@ -2478,59 +2491,59 @@ export const ARTICLES: Article[] = [
     recommendedProducts: [
       {
         title: {
-          ko: '불안할 땐 뇌과학',
-          en: 'Neuroscience for Anxiety',
-          ja: '不安の時の脳科学',
-          zh: '焦虑时的脑科学'
+          ko: '법정 스님의 말과 글 : 삶을 채우는 시간 지혜의 필사책',
+          en: 'Words and Writings of Beop-jeong Sunim',
+          ja: '法頂スニムの言葉と文：人生を満たす時間 知恵の筆写本',
+          zh: '法顶法师的话语与文字：充实人生的时光智慧抄写本'
         },
         description: {
-          ko: '뇌과학으로 이해하는 불안의 메커니즘과 극복 방법',
-          en: 'Understanding anxiety mechanisms through neuroscience and overcoming methods',
-          ja: '脳科学で理解する不安のメカニズムと克服法',
-          zh: '通过神经科学理解焦虑机制及克服方法'
+          ko: '법정 스님의 깊은 통찰이 담긴 지혜로운 말씀을 필사하며 마음의 평안을 찾는 책',
+          en: 'Find peace of mind by transcribing the wise words of Beop-jeong Sunim',
+          ja: '法頂スニムの深い洞察が込められた知恵の言葉を筆写して心の平安を見つける本',
+          zh: '通过抄写法顶法师充满深刻洞察的智慧话语来寻找内心平静的书'
         },
-        price: 15300,
+        price: 16200,
         affiliate: 'coupang',
-        link: 'https://link.coupang.com/a/PLACEHOLDER_ANXIETY_1',
-        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/placeholder1.jpg',
+        link: 'https://link.coupang.com/a/c0loBj',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/2025/04/23/13/3/e9f10656-7bf0-4be9-8d4c-9d142f94ec56.jpg',
         category: 'book'
       },
       {
         title: {
-          ko: '걱정 말아요 그대',
-          en: 'Don\'t Worry',
-          ja: '心配しないで',
-          zh: '不要担心'
+          ko: '불안 (리커버:K) 특별판',
+          en: 'Anxiety (Recover:K) Special Edition',
+          ja: '不安（リカバー:K）特別版',
+          zh: '焦虑（康复:K）特别版'
         },
         description: {
-          ko: '혜민 스님이 전하는 불안과 걱정을 내려놓는 지혜',
-          en: 'Wisdom on letting go of anxiety and worry from Haemin Sunim',
-          ja: 'ヘミンスニムが伝える不安と心配を手放す知恵',
-          zh: '惠敏法师教你放下焦虑和担忧的智慧'
+          ko: '불안의 본질을 이해하고 극복하는 방법을 알려주는 특별판',
+          en: 'Special edition guide to understanding and overcoming the nature of anxiety',
+          ja: '不安の本質を理解し克服する方法を教える特別版',
+          zh: '理解焦虑本质并克服的特别版指南'
         },
-        price: 13500,
+        price: 18900,
         affiliate: 'coupang',
-        link: 'https://link.coupang.com/a/PLACEHOLDER_ANXIETY_2',
-        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/placeholder2.jpg',
+        link: 'https://link.coupang.com/a/c0loYo',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b69d/4e5fde3adc26e701f03ad53d0fe87f41f82ef7cafab004bde62716d45e04.jpg',
         category: 'book'
       },
       {
         title: {
-          ko: '불안 극복 워크북',
-          en: 'Anxiety Workbook',
-          ja: '不安克服ワークブック',
-          zh: '克服焦虑工作手册'
+          ko: '불안에 대처하는 법 : 불안장애 이해하고 극복하기',
+          en: 'How to Deal with Anxiety: Understanding and Overcoming Anxiety Disorders',
+          ja: '不安に対処する方法：不安障害を理解し克服する',
+          zh: '应对焦虑的方法：理解和克服焦虑症'
         },
         description: {
-          ko: '실용적인 인지행동치료 기법으로 불안 다스리기',
-          en: 'Managing anxiety with practical CBT techniques',
-          ja: '実用的な認知行動療法で不安をコントロール',
-          zh: '用实用认知行为疗法管理焦虑'
+          ko: '불안장애를 과학적으로 이해하고 실질적으로 극복하는 방법을 제시하는 실용서',
+          en: 'Practical guide presenting scientific understanding and real methods to overcome anxiety disorders',
+          ja: '不安障害を科学的に理解し実質的に克服する方法を提示する実用書',
+          zh: '科学理解焦虑症并提供实际克服方法的实用指南'
         },
-        price: 18000,
+        price: 20700,
         affiliate: 'coupang',
-        link: 'https://link.coupang.com/a/PLACEHOLDER_ANXIETY_3',
-        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/placeholder3.jpg',
+        link: 'https://link.coupang.com/a/c0lph8',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/rs_quotation_api/goxk7dhm/d3d2e3b1e0a746f184655810fd591dd7.jpg',
         category: 'book'
       }
     ]
@@ -3433,7 +3446,66 @@ export const ARTICLES: Article[] = [
       }
     ],
     lastUpdated: new Date('2025-10-27'),
-    featured: false
+    featured: false,
+    recommendedProducts: [
+      {
+        title: {
+          ko: '몸은 기억한다: 트라우마가 남긴 흔적들',
+          en: 'The Body Keeps the Score: Brain, Mind, and Body in the Healing of Trauma',
+          ja: '身体はトラウマを記録する',
+          zh: '身体记住创伤'
+        },
+        description: {
+          ko: '트라우마가 뇌, 마음, 몸에 미치는 영향과 치유 방법을 다룬 세계적 베스트셀러',
+          en: 'Global bestseller on how trauma affects the brain, mind, and body and methods of healing',
+          ja: 'トラウマが脳、心、体に与える影響と治癒方法を扱った世界的ベストセラー',
+          zh: '关于创伤如何影响大脑、心灵和身体以及治愈方法的全球畅销书'
+        },
+        price: 18500,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0lpIl',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail-product-api/A00077021/28458007/32008135/main/9788932474366_L.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '트라우마: 가정 폭력에서 정치적 테러까지',
+          en: 'Trauma and Recovery: The Aftermath of Violence',
+          ja: 'トラウマ：家庭内暴力から政治的テロまで',
+          zh: '创伤：从家庭暴力到政治恐怖'
+        },
+        description: {
+          ko: '트라우마의 본질과 회복 과정을 심층적으로 다룬 정신의학 명저',
+          en: 'Psychiatric masterpiece that deeply explores the nature of trauma and recovery process',
+          ja: 'トラウマの本質と回復過程を深く扱った精神医学の名著',
+          zh: '深入探讨创伤本质和康复过程的精神病学杰作'
+        },
+        price: 19800,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0lpWN',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/rs_quotation_api/zs0ryrfz/cbb1bdffa04f4da1827324dd00569c57.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '내면아이의 상처 치유하기: 내 안의 나와 행복하게 사는 법',
+          en: 'Healing Your Inner Child: Living Happily with Yourself',
+          ja: 'インナーチャイルドの傷を癒す：自分の中の自分と幸せに生きる方法',
+          zh: '治愈内在小孩：与内心的自己幸福相处的方法'
+        },
+        description: {
+          ko: '어린 시절의 트라우마를 치유하고 내면아이와 화해하는 실천적 가이드',
+          en: 'Practical guide to healing childhood trauma and reconciling with your inner child',
+          ja: '幼少期のトラウマを癒し、インナーチャイルドと和解する実践的ガイド',
+          zh: '治愈童年创伤并与内在小孩和解的实用指南'
+        },
+        price: 21000,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0lqdu',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail-product-api/A00077021/238472288/256337883/main/9791160024302_L.jpg',
+        category: 'book'
+      }
+    ]
   },
 
   // ===== 관리 및 대처 (Management) - Article 1 =====
@@ -4273,7 +4345,66 @@ export const ARTICLES: Article[] = [
       }
     ],
     lastUpdated: new Date('2025-10-27'),
-    featured: false
+    featured: false,
+    recommendedProducts: [
+      {
+        title: {
+          ko: '멈추면 비로소 보이는 것들',
+          en: 'The Things You Can See Only When You Slow Down',
+          ja: '止まると見えてくるもの',
+          zh: '当你放慢脚步时才能看到的事物'
+        },
+        description: {
+          ko: '혜민 스님이 전하는 마음의 평화와 여유를 찾는 법',
+          en: 'How to find peace and calm in your mind by Haemin Sunim',
+          ja: 'ヘミン僧侶が伝える心の平和と余裕を見つける方法',
+          zh: '慧敏僧人传授如何找到内心的平静与从容'
+        },
+        price: 15200,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0lqq6',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/27be/93f6d8a7e6022312033ac611f3d0eb322b0e9a40b57b364c5c1d1ae7885c.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '스트레스의 힘: 끊임없는 자극이 만드는 극적인 성장',
+          en: 'The Upside of Stress: Why Stress Is Good for You',
+          ja: 'ストレスの力：絶え間ない刺激が作る劇的な成長',
+          zh: '压力的力量：持续刺激带来的极大成长'
+        },
+        description: {
+          ko: '스트레스를 성장의 기회로 바꾸는 새로운 관점',
+          en: 'A new perspective on turning stress into opportunities for growth',
+          ja: 'ストレスを成長の機会に変える新しい視点',
+          zh: '将压力转化为成长机会的新视角'
+        },
+        price: 16800,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0lqEU',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/2020/05/27/6/5/ca3826b8-95ac-4035-a13f-8090031bf995.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '타이탄의 도구들: 1만 시간의 법칙을 깬 거인들의 61가지 전략',
+          en: 'Tools of Titans: The Tactics, Routines, and Habits of Billionaires, Icons, and World-Class Performers',
+          ja: 'タイタンの道具たち：1万時間の法則を破った巨人たちの61の戦略',
+          zh: '泰坦的工具：打破一万小时法则的巨人们的61种策略'
+        },
+        description: {
+          ko: '세계 최고 성공인들의 스트레스 관리와 성과 향상 전략',
+          en: 'Stress management and performance enhancement strategies from world-class achievers',
+          ja: '世界最高の成功者たちのストレス管理とパフォーマンス向上戦略',
+          zh: '世界顶级成功人士的压力管理和绩效提升策略'
+        },
+        price: 17500,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0lqUI',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/8579167791531356-b146f9e4-8526-440c-b157-c5eda8a4db25.jpg',
+        category: 'book'
+      }
+    ]
   },
 
   // ===== 생활습관 (Lifestyle) - Article 1 =====
@@ -4905,7 +5036,66 @@ export const ARTICLES: Article[] = [
       }
     ],
     lastUpdated: new Date('2025-10-27'),
-    featured: false
+    featured: false,
+    recommendedProducts: [
+      {
+        title: {
+          ko: '우리는 왜 잠을 자야 할까: 수면과 꿈의 과학',
+          en: 'Why We Sleep: Unlocking the Power of Sleep and Dreams',
+          ja: '私たちはなぜ眠るのか：睡眠と夢の科学',
+          zh: '我们为何睡眠：睡眠与梦的科学'
+        },
+        description: {
+          ko: '매슈 워커 교수가 밝히는 수면의 중요성과 숙면의 과학',
+          en: 'Professor Matthew Walker reveals the importance of sleep and the science of quality rest',
+          ja: 'マシュー・ウォーカー教授が明かす睡眠の重要性と快眠の科学',
+          zh: '马修·沃克教授揭示睡眠的重要性和优质睡眠的科学'
+        },
+        price: 14700,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0lsL2',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/2019/02/21/23/2/950f6466-a7b8-43a4-b8b6-ac3003f4606f.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '매일 숙면: 못 자는 이유부터 잘 자는 방법까지',
+          en: 'Daily Deep Sleep: From Why You Can\'t Sleep to How to Sleep Well',
+          ja: '毎日快眠：眠れない理由から良く眠る方法まで',
+          zh: '每天好眠：从无法入睡的原因到良好睡眠的方法'
+        },
+        description: {
+          ko: '불면증의 근본 원인을 찾아 해결하는 실용적인 숙면 가이드',
+          en: 'Practical sleep guide to identify and solve the root causes of insomnia',
+          ja: '不眠症の根本原因を見つけて解決する実用的な快眠ガイド',
+          zh: '找到并解决失眠根本原因的实用睡眠指南'
+        },
+        price: 16300,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0ls02',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail-product-api/A00077021/234929024/252625228/main/9791191104875_L.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '불면증 즉각 벗어날 수 있다: 불면증을 치유하는 마음공부',
+          en: 'You Can Immediately Escape Insomnia: Mental Practices to Heal Insomnia',
+          ja: '不眠症から即座に抜け出せる：不眠症を癒す心の学び',
+          zh: '立即摆脱失眠：治愈失眠的心灵修炼'
+        },
+        description: {
+          ko: '마음을 다스려 불면증을 근본적으로 치유하는 방법',
+          en: 'Methods to fundamentally heal insomnia by controlling your mind',
+          ja: '心を治めて不眠症を根本的に癒す方法',
+          zh: '通过控制心灵从根本上治愈失眠的方法'
+        },
+        price: 18200,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0ltsh',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/ed96/609b69d6bf711749f914e67756b85114ceb0c6820c2b0d115f02be7d1261.jpg',
+        category: 'book'
+      }
+    ]
   },
 
   // ===== 직장/학업 (Workplace) - Article 1 =====
@@ -5765,7 +5955,66 @@ export const ARTICLES: Article[] = [
       }
     ],
     lastUpdated: new Date('2025-10-27'),
-    featured: false
+    featured: false,
+    recommendedProducts: [
+      {
+        title: {
+          ko: '회복탄력성의 뇌과학: 하버드대 의사가 알려주는 5가지 회복탄력성 리셋 버튼',
+          en: 'The Neuroscience of Resilience: 5 Resilience Reset Buttons from a Harvard Physician',
+          ja: '回復力の脳科学：ハーバード大学の医師が教える5つの回復力リセットボタン',
+          zh: '复原力的脑科学：哈佛医生教您的5个复原力重置按钮'
+        },
+        description: {
+          ko: '번아웃으로부터 회복하고 정신적 회복탄력성을 키우는 과학적 방법',
+          en: 'Scientific methods to recover from burnout and build mental resilience',
+          ja: 'バーンアウトから回復し、精神的回復力を育てる科学的方法',
+          zh: '从倦怠中恢复并培养心理韧性的科学方法'
+        },
+        price: 18000,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0ndD1',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/2025/05/16/11/6/d423efb4-6333-4e22-92f3-870ae8ed838d.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '번아웃의 종말: 우리는 왜 일에 지치고 쓸모없다고 버려지는가',
+          en: 'Can\'t Even: How Millennials Became the Burnout Generation',
+          ja: 'バーンアウトの終焉：なぜ私たちは仕事に疲れ、役に立たないと捨てられるのか',
+          zh: '倦怠的终结：我们为何在工作中疲惫不堪并被抛弃'
+        },
+        description: {
+          ko: '현대 직장 문화의 번아웃 문제를 분석하고 해결책을 제시하는 필독서',
+          en: 'Essential reading analyzing burnout in modern workplace culture and offering solutions',
+          ja: '現代の職場文化のバーンアウト問題を分析し、解決策を提示する必読書',
+          zh: '分析现代职场文化倦怠问题并提供解决方案的必读书'
+        },
+        price: 19500,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0nefW',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/634469839130561-d9e2f2ee-dee1-4e70-9969-42fa7df4aaa8.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '당신은 뇌를 고칠 수 있다: 매주 1시간 투자하여 최상의 기억력 생산성 수면을 얻는 법',
+          en: 'You Can Fix Your Brain: Achieving Peak Performance Through Weekly Investment',
+          ja: 'あなたは脳を治せる：毎週1時間投資して最高の記憶力・生産性・睡眠を得る方法',
+          zh: '您可以修复大脑：每周投资1小时获得最佳记忆力、生产力和睡眠的方法'
+        },
+        description: {
+          ko: '번아웃으로 지친 뇌를 회복하고 최상의 상태로 만드는 실천 가이드',
+          en: 'Practical guide to recovering your burnout brain and achieving peak performance',
+          ja: 'バーンアウトで疲れた脳を回復し、最高の状態にする実践ガイド',
+          zh: '恢复倦怠大脑并实现最佳状态的实用指南'
+        },
+        price: 20000,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0ner9',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/6654/2735b57991886cc5243a8bef78df88d9e3bf966dc1da43fdad8af5f0bd21.jpg',
+        category: 'book'
+      }
+    ]
   },
 
   // ===== 대인관계 (Relationships) =====
@@ -6605,7 +6854,66 @@ export const ARTICLES: Article[] = [
       }
     ],
     lastUpdated: new Date('2025-10-27'),
-    featured: false
+    featured: false,
+    recommendedProducts: [
+      {
+        title: {
+          ko: '비폭력대화',
+          en: 'Nonviolent Communication: A Language of Life',
+          ja: '非暴力コミュニケーション',
+          zh: '非暴力沟通'
+        },
+        description: {
+          ko: '마셜 로젠버그가 제시하는 공감과 이해를 바탕으로 한 혁신적인 대화 방법',
+          en: 'Marshall Rosenberg\'s innovative communication method based on empathy and understanding',
+          ja: 'マーシャル・ローゼンバーグが提示する共感と理解に基づく革新的な対話方法',
+          zh: '马歇尔·罗森伯格提出的基于同理心和理解的创新沟通方法'
+        },
+        price: 17000,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0neFj',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/481810951873145-ba367e6e-351b-4705-9b77-c5a27a0b14af.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '어떻게 말할 것인가',
+          en: 'Talk Like TED: The 9 Public-Speaking Secrets of the World\'s Top Minds',
+          ja: 'どのように話すか',
+          zh: '如何说话'
+        },
+        description: {
+          ko: '세계 최고의 연사들이 사용하는 설득과 소통의 기술',
+          en: 'Persuasion and communication techniques used by world\'s top speakers',
+          ja: '世界最高の演説者が使う説得とコミュニケーションの技術',
+          zh: '世界顶级演讲者使用的说服和沟通技巧'
+        },
+        price: 16500,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0neXl',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/578d/d48c345f78077c5cea4057ff5417440b06c37532c3a8e738beff4473c5b8.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '나는 나로 살기로 했다 (영미권 출간기념 특별판)',
+          en: 'I Decided to Live as Me (Special Edition)',
+          ja: '私は私として生きることにした（英米圏出版記念特別版）',
+          zh: '我决定做自己（英美版出版纪念特别版）'
+        },
+        description: {
+          ko: '타인의 시선에서 벗어나 진정한 나로 살아가는 법을 담은 에세이',
+          en: 'Essay on living authentically as yourself, free from others\' judgments',
+          ja: '他人の視線から抜け出し、本当の自分として生きる方法を込めたエッセイ',
+          zh: '摆脱他人眼光，活出真实自我的散文集'
+        },
+        price: 15800,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0nfdv',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/175034774971519-e3dae224-408e-4a84-a291-a33bb00e0ddd.png',
+        category: 'book'
+      }
+    ]
   },
 
   // ===== 생활습관 (Lifestyle) - Article 2 =====
@@ -7253,7 +7561,66 @@ export const ARTICLES: Article[] = [
       }
     ],
     lastUpdated: new Date('2025-10-27'),
-    featured: true
+    featured: true,
+    recommendedProducts: [
+      {
+        title: {
+          ko: '운동화 신은 뇌 (개정판)',
+          en: 'Spark: The Revolutionary New Science of Exercise and the Brain',
+          ja: '運動靴を履いた脳（改訂版）',
+          zh: '运动改造大脑（修订版）'
+        },
+        description: {
+          ko: '운동이 뇌와 정신건강에 미치는 혁신적인 영향을 밝힌 필독서',
+          en: 'Essential reading revealing the revolutionary impact of exercise on brain and mental health',
+          ja: '運動が脳と精神的健康に与える革新的な影響を明らかにした必読書',
+          zh: '揭示运动对大脑和心理健康革命性影响的必读书'
+        },
+        price: 19800,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0nfHe',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/rs_quotation_api/acj3kb9w/1ae0b2becdec423e9b666cf574304dbd.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '운동의 뇌과학',
+          en: 'Move: The New Science of Body Over Mind',
+          ja: '運動の脳科学',
+          zh: '运动的脑科学'
+        },
+        description: {
+          ko: '신체 활동이 정신건강을 향상시키는 과학적 메커니즘',
+          en: 'Scientific mechanisms of how physical activity enhances mental health',
+          ja: '身体活動が精神的健康を向上させる科学的メカニズム',
+          zh: '体育活动增强心理健康的科学机制'
+        },
+        price: 18500,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0nfYJ',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/2023/07/31/13/1/3be046a8-c912-487b-ba42-04551efa1992.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '요가의 힘: 요가는 어떻게 왜 삶을 변화시키는가?',
+          en: 'The Power of Yoga: How and Why Yoga Transforms Life',
+          ja: 'ヨガの力：ヨガはどのように、なぜ人生を変えるのか',
+          zh: '瑜伽的力量：瑜伽如何以及为何改变生活'
+        },
+        description: {
+          ko: '요가를 통한 몸과 마음의 통합적 치유',
+          en: 'Holistic healing of body and mind through yoga',
+          ja: 'ヨガを通じた体と心の統合的癒し',
+          zh: '通过瑜伽实现身心的整体治愈'
+        },
+        price: 16500,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0ngq6',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/444993120729345-d8f1735f-fa41-4654-a956-52a82ee794ae.jpg',
+        category: 'book'
+      }
+    ]
   },
 
   // ===== 관리 및 대처 (Management) - Article 2 =====
@@ -7765,7 +8132,66 @@ export const ARTICLES: Article[] = [
       }
     ],
     lastUpdated: new Date('2025-10-27'),
-    featured: true
+    featured: true,
+    recommendedProducts: [
+      {
+        title: {
+          ko: '존 카밧진의 왜 마음챙김 명상인가?',
+          en: 'Coming to Our Senses: Healing Ourselves and the World Through Mindfulness',
+          ja: 'ジョン・カバットジンのなぜマインドフルネス瞑想なのか',
+          zh: '乔·卡巴金：为什么是正念冥想'
+        },
+        description: {
+          ko: '마음챙김의 창시자가 전하는 명상의 본질과 실천 방법',
+          en: 'The essence and practice of meditation from the founder of mindfulness',
+          ja: 'マインドフルネスの創始者が伝える瞑想の本質と実践方法',
+          zh: '正念创始人讲述冥想的本质和实践方法'
+        },
+        price: 18000,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0ngXr',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/302089560071959-74868854-c792-4cf9-a94e-67fcaddb96bf.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '사는 동안 틈틈이 행복합시다',
+          en: 'Let\'s Be Happy From Time to Time While Living',
+          ja: '生きている間、折に触れて幸せになりましょう',
+          zh: '活着的时候让我们时时刻刻幸福'
+        },
+        description: {
+          ko: '일상 속 작은 행복과 마음챙김을 실천하는 지혜',
+          en: 'Wisdom for practicing small happiness and mindfulness in daily life',
+          ja: '日常の小さな幸せとマインドフルネスを実践する知恵',
+          zh: '在日常生活中实践小幸福和正念的智慧'
+        },
+        price: 15500,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0nhWE',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/2b64/7fa7760a6ab0d711c10448db0f7542b768cc1941910ab340929122d5938c.png',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '오늘 당신은 어떤 용기를 내었는가',
+          en: 'What Courage Did You Muster Today',
+          ja: '今日あなたはどんな勇気を出しましたか',
+          zh: '今天你鼓起了什么勇气'
+        },
+        description: {
+          ko: '매 순간 용기를 내며 살아가는 법에 대한 마음챙김 에세이',
+          en: 'Mindfulness essay on living courageously in each moment',
+          ja: '一瞬一瞬勇気を出して生きる方法についてのマインドフルネスエッセイ',
+          zh: '关于在每一刻勇敢生活的正念散文'
+        },
+        price: 16200,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0nhD4',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/2025/09/24/16/2/ce14b81a-5d85-4f6d-acdd-a00c5563d000.jpg',
+        category: 'book'
+      }
+    ]
   },
   {
     id: 'article-lifestyle-3',
@@ -8575,7 +9001,66 @@ export const ARTICLES: Article[] = [
       }
     ],
     lastUpdated: new Date('2025-10-27'),
-    featured: false
+    featured: false,
+    recommendedProducts: [
+      {
+        title: {
+          ko: '브레인 에너지: 미토콘드리아로 밝혀낸 정신 건강의 새로운 길',
+          en: 'Brain Energy: A Revolutionary Breakthrough in Understanding Mental Health',
+          ja: 'ブレインエナジー：ミトコンドリアで明らかになった精神健康の新しい道',
+          zh: '大脑能量：通过线粒体揭示心理健康的新途径'
+        },
+        description: {
+          ko: '영양과 뇌 건강의 관계를 미토콘드리아 관점에서 밝힌 혁신적 연구',
+          en: 'Revolutionary research revealing the relationship between nutrition and brain health from a mitochondrial perspective',
+          ja: '栄養と脳の健康の関係をミトコンドリアの観点から明らかにした革新的研究',
+          zh: '从线粒体角度揭示营养与大脑健康关系的革命性研究'
+        },
+        price: 22000,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0niCb',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail-product-api/A00077021/280884542/299939489/main/9791172540203_L.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '뇌가 멈추기 전에',
+          en: 'Before Your Brain Stops',
+          ja: '脳が止まる前に',
+          zh: '在大脑停止之前'
+        },
+        description: {
+          ko: '뇌 건강을 지키는 식습관과 생활방식에 대한 실용적 가이드',
+          en: 'Practical guide on dietary habits and lifestyle to protect brain health',
+          ja: '脳の健康を守る食習慣とライフスタイルについての実用的ガイド',
+          zh: '保护大脑健康的饮食习惯和生活方式实用指南'
+        },
+        price: 17800,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0niUi',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/2025/06/30/12/6/5e6d3e95-48b6-475d-a83a-aa6235643671.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '인지장애와 치매 잡는 뇌 건강 식사법: 저속노화 MIND 식단',
+          en: 'Brain-Healthy Eating to Combat Cognitive Decline and Dementia: The MIND Diet',
+          ja: '認知障害と認知症を防ぐ脳の健康食事法：低速老化MIND食事',
+          zh: '对抗认知障碍和痴呆的大脑健康饮食法：MIND饮食'
+        },
+        description: {
+          ko: '과학적으로 검증된 MIND 식단으로 뇌 건강 지키기',
+          en: 'Protecting brain health with the scientifically validated MIND diet',
+          ja: '科学的に検証されたMIND食事で脳の健康を守る',
+          zh: '用经过科学验证的MIND饮食保护大脑健康'
+        },
+        price: 19500,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0njmr',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/2025/09/08/13/6/5647569a-5d99-4b4c-a8bc-5cb2ce726084.jpg',
+        category: 'book'
+      }
+    ]
   },
   {
     id: 'article-relationships-2',
@@ -9797,7 +10282,66 @@ export const ARTICLES: Article[] = [
       }
     ],
     lastUpdated: new Date('2025-10-27'),
-    featured: true
+    featured: true,
+    recommendedProducts: [
+      {
+        title: {
+          ko: '바운더리: 성과를 만드는 통제와 책임의 힘',
+          en: 'Boundaries: When to Say Yes, How to Say No to Take Control of Your Life',
+          ja: 'バウンダリー：成果を作る統制と責任の力',
+          zh: '界限：创造成果的控制和责任力量'
+        },
+        description: {
+          ko: '건강한 경계 설정을 통해 삶의 통제권을 되찾는 실천 가이드',
+          en: 'Practical guide to regaining control of your life through healthy boundary setting',
+          ja: '健康的な境界線設定を通じて人生の統制権を取り戻す実践ガイド',
+          zh: '通过设定健康界限重新掌控生活的实用指南'
+        },
+        price: 16500,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0njDJ',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail-product-api/A00077021/100442318/112046047/main/9791155581049_L.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '[마음산책] 이타미 준 나의 건축',
+          en: 'Itami Jun: My Architecture',
+          ja: '[マウムサンチェク] 伊丹潤 私の建築',
+          zh: '[心灵散步] 伊丹润 我的建筑'
+        },
+        description: {
+          ko: '공간과 경계에 대한 철학적 사유를 담은 건축가의 에세이',
+          en: 'Architect\'s essay on philosophical reflections about space and boundaries',
+          ja: '空間と境界についての哲学的思索を込めた建築家のエッセイ',
+          zh: '包含对空间和界限哲学思考的建筑师散文'
+        },
+        price: 18000,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0njTc',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail-product-api/A00077021/389145420/411577105/main/9788960909540_L.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '내 안에서 나를 만드는 것들',
+          en: 'How Adam Smith Can Change Your Life',
+          ja: '私の中で私を作るもの',
+          zh: '在我内心塑造我的事物'
+        },
+        description: {
+          ko: '자기 정체성과 내적 경계를 발견하는 철학적 탐구',
+          en: 'Philosophical exploration of self-identity and inner boundaries',
+          ja: '自己アイデンティティと内的境界を発見する哲学的探求',
+          zh: '发现自我认同和内在界限的哲学探索'
+        },
+        price: 17200,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0nj7P',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/2024/08/27/12/8/4e214ea5-464d-48d6-a498-1d88a1498ef9.jpg',
+        category: 'book'
+      }
+    ]
   },
   {
     id: 'article-workplace-2',
@@ -10624,6 +11168,65 @@ export const ARTICLES: Article[] = [
         organization: 'HelpGuide',
         url: 'https://www.helpguide.org/mental-health/wellbeing/work-life-balance',
         accessDate: '2025-10-27'
+      }
+    ],
+    recommendedProducts: [
+      {
+        title: {
+          ko: '에센셜리즘: 본질에 집중하는 힘',
+          en: 'Essentialism: The Disciplined Pursuit of Less',
+          ja: 'エッセンシャリズム：本質に集中する力',
+          zh: '精要主义：专注于本质的力量'
+        },
+        description: {
+          ko: '정말 중요한 것에만 집중하는 방법을 제시하는 실용적 가이드',
+          en: 'A practical guide on how to focus only on what really matters',
+          ja: '本当に重要なことにのみ集中する方法を提示する実用ガイド',
+          zh: '关于如何只专注于真正重要的事情的实用指南'
+        },
+        price: 16200,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0nki5',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/9c73/dd5e76217e7ea2064b1adf29d7741aa1c1f42a45992fd07c46126682ca52.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '딥 워크: 강렬한 몰입 최고의 성과',
+          en: 'Deep Work: Rules for Focused Success in a Distracted World',
+          ja: 'ディープ・ワーク：強烈な没入最高の成果',
+          zh: '深度工作：专注力的力量'
+        },
+        description: {
+          ko: '집중력을 높여 업무 효율성과 삶의 균형을 찾는 방법',
+          en: 'How to increase focus to find work efficiency and life balance',
+          ja: '集中力を高めて業務効率と人生のバランスを見つける方法',
+          zh: '提高专注力以找到工作效率和生活平衡的方法'
+        },
+        price: 16020,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0nkAC',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/9522422076243220-e0f577bf-9c17-448c-a879-b6f9bb54b890.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '1만 시간의 재발견: 노력은 왜 우리를 배신하는가',
+          en: 'Peak: Secrets from the New Science of Expertise',
+          ja: '1万時間の再発見：努力はなぜ私たちを裏切るのか',
+          zh: '一万小时的再发现：为什么努力会背叛我们'
+        },
+        description: {
+          ko: '효과적인 연습과 성장의 과학을 통해 일과 삶의 균형을 재정립하는 방법',
+          en: 'How to redefine work-life balance through the science of effective practice and growth',
+          ja: '効果的な練習と成長の科学を通じて仕事と人生のバランスを再定義する方法',
+          zh: '通过有效练习和成长科学重新定义工作与生活平衡的方法'
+        },
+        price: 16650,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0nkLF',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/48f0/5aabf35afd2bc9b471fb8893e8ae8372a9b872c6cd66934343febf7cfb0d.jpg',
+        category: 'book'
       }
     ],
     lastUpdated: new Date('2025-10-27'),
@@ -13144,7 +13747,3434 @@ export const ARTICLES: Article[] = [
         accessDate: '2025-10-27'
       }
     ],
+    recommendedProducts: [
+      {
+        title: {
+          ko: '분노를 다스리는 인지행동 워크북',
+          en: 'Cognitive Behavioral Workbook for Anger',
+          ja: '怒りをコントロールする認知行動ワークブック',
+          zh: '愤怒管理认知行为工作手册'
+        },
+        description: {
+          ko: '성공을 위한 단계별 프로그램으로 분노 조절 기술 배우기',
+          en: 'Step-by-step program for learning anger management skills',
+          ja: '成功のための段階的プログラムで怒りの調節技術を学ぶ',
+          zh: '通过循序渐进的程序学习愤怒管理技巧'
+        },
+        price: 19800,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0r779',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail-product-api/A00077021/91238742/101700721/main/9791188768516_L.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '경계선 성격 장애 워크북',
+          en: 'Borderline Personality Disorder Workbook',
+          ja: '境界性パーソナリティ障害ワークブック',
+          zh: '边缘性人格障碍工作手册'
+        },
+        description: {
+          ko: '감정 조절 기술 개발, 트리거 해결, BPD에 대한 자기 이해 향상',
+          en: 'Develop emotion regulation skills, resolve triggers, and improve self-understanding of BPD',
+          ja: '感情調節スキルの開発、トリガー解決、BPDへの自己理解向上',
+          zh: '发展情绪调节技能，解决触发因素，提高对BPD的自我理解'
+        },
+        price: 17500,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0r8uQ',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/ff5b/a481fa66a0a952903380ab81c156076c713eb9f57ac385358c3242b9fd8d.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '욱하는 성질 죽이기',
+          en: 'Killing the Quick Temper',
+          ja: '怒りっぽい性格を直す',
+          zh: '克服暴躁脾气'
+        },
+        description: {
+          ko: '충동적 분노를 조절하고 평온한 마음 되찾기',
+          en: 'Control impulsive anger and regain peace of mind',
+          ja: '衝動的な怒りをコントロールし平穏な心を取り戻す',
+          zh: '控制冲动性愤怒并恢复内心平静'
+        },
+        price: 16200,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0r8Ml',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/2025/01/13/14/2/87b97d8e-cc03-4b21-aa9e-6a4b318a5042.jpg',
+        category: 'book'
+      }
+    ],
     lastUpdated: new Date('2025-10-27'),
+    featured: false
+  },
+  // ===== 공황장애 =====
+  {
+    id: 'article-conditions-4',
+    category: 'conditions',
+    title: {
+      ko: '공황장애: 갑작스러운 두려움의 파도를 이해하고 극복하기',
+      en: 'Panic Disorder: Understanding and Overcoming Sudden Waves of Fear',
+      ja: 'パニック障害：突然の恐怖の波を理解し克服する',
+      zh: '恐慌症：理解并克服突如其来的恐惧浪潮'
+    },
+    summary: {
+      ko: '공황장애는 예상치 못한 공황 발작이 반복적으로 발생하는 불안장애입니다. 이 글에서는 공황 발작의 증상, 원인, 그리고 과학적으로 입증된 치료법에 대해 배웁니다.',
+      en: 'Panic disorder is an anxiety disorder characterized by recurrent unexpected panic attacks. This article explores panic attack symptoms, causes, and scientifically proven treatments.',
+      ja: 'パニック障害は、予期しないパニック発作が繰り返し発生する不安障害です。この記事では、パニック発作の症状、原因、科学的に証明された治療法について学びます。',
+      zh: '恐慌症是一种以反复发作的意外恐慌发作为特征的焦虑症。本文探讨恐慌发作的症状、原因和经科学验证的治疗方法。'
+    },
+    readTime: 15,
+    content: {
+      ko: [
+        {
+          heading: '공황 발작이란 무엇인가?',
+          paragraphs: [
+            '공황 발작은 극심한 공포감이 갑자기 몰려오는 경험입니다. 보통 10분 이내에 최고조에 달하며, 진짜 위험이 없는 상황에서도 발생할 수 있습니다.',
+            '공황 발작의 핵심 특징은 "예상치 못함"입니다. 언제, 어디서 발생할지 예측할 수 없기 때문에 많은 사람들이 다음 발작에 대한 두려움 속에서 살아갑니다.'
+          ]
+        },
+        {
+          heading: '공황 발작의 증상',
+          paragraphs: [
+            '공황 발작은 신체적, 정신적 증상이 동시에 나타납니다. 다음 중 4가지 이상의 증상이 갑자기 나타나면 공황 발작으로 진단할 수 있습니다:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              '심장이 두근거리거나 빠르게 뛰는 느낌 (심계항진)',
+              '땀이 나거나 몸이 떨림',
+              '숨이 가빠지거나 질식할 것 같은 느낌',
+              '가슴 통증이나 불편함',
+              '메스꺼움이나 복부 불편감',
+              '어지럽거나 쓰러질 것 같은 느낌',
+              '오한이나 열감',
+              '감각 이상 (저림이나 얼얼함)',
+              '비현실감 또는 자신과 분리된 느낌',
+              '통제력을 잃거나 미칠 것 같은 두려움',
+              '죽을 것 같은 두려움'
+            ]
+          }
+        },
+        {
+          paragraphs: [
+            '많은 사람들이 첫 공황 발작을 경험할 때 심장마비라고 생각하고 응급실을 찾습니다. 신체 검사 결과가 정상으로 나왔을 때 비로소 정신건강 문제일 수 있다는 것을 인식하게 됩니다.'
+          ]
+        },
+        {
+          heading: '공황 발작 vs 공황장애',
+          paragraphs: [
+            '공황 발작을 한 번 경험하는 것과 공황장애를 가진 것은 다릅니다:',
+            '• 공황 발작: 누구나 일생에 한 번쯤 경험할 수 있는 일회성 사건',
+            '• 공황장애: 반복적이고 예상치 못한 공황 발작을 경험하며, 다음 발작에 대한 지속적인 걱정과 행동 변화가 동반되는 진단'
+          ]
+        },
+        {
+          paragraphs: [
+            '공황장애 진단을 받으려면 다음 조건을 만족해야 합니다:',
+            '1) 예상치 못한 공황 발작이 반복적으로 발생',
+            '2) 발작 후 최소 1개월 이상 다음 중 하나 이상을 경험: 추가 발작에 대한 지속적인 걱정, 발작의 결과에 대한 걱정 (예: 통제력 상실, 심장마비), 발작과 관련된 의미 있는 행동 변화 (예: 회피 행동)'
+          ]
+        },
+        {
+          heading: '공황장애의 원인',
+          paragraphs: [
+            '공황장애의 정확한 원인은 아직 완전히 밝혀지지 않았지만, 여러 요인이 복합적으로 작용하는 것으로 알려져 있습니다:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              '유전적 요인: 가족력이 있는 경우 발생 위험이 높음',
+              '뇌 화학: 신경전달물질 (세로토닌, 노르에피네프린) 불균형',
+              '편도체 과민성: 뇌의 공포 중추가 과도하게 반응',
+              '주요 스트레스 사건: 큰 생활 변화, 트라우마, 중요한 상실',
+              '신체 감각에 대한 과민성: 정상적인 신체 변화를 위험 신호로 오해',
+              '특정 성격 특성: 불안에 취약한 기질'
+            ]
+          }
+        },
+        {
+          heading: '회피 행동과 광장공포증',
+          paragraphs: [
+            '공황장애가 있는 많은 사람들이 광장공포증을 동반하게 됩니다. 광장공포증은 다음과 같은 상황에서 탈출하기 어렵거나 도움을 받기 어려울 것 같은 장소나 상황을 두려워하고 회피하는 것입니다:',
+            '• 대중교통 이용 (버스, 지하철, 비행기)',
+            '• 넓은 공간 (주차장, 다리, 쇼핑몰)',
+            '• 폐쇄된 공간 (가게, 극장, 엘리베이터)',
+            '• 줄을 서거나 군중 속에 있는 것',
+            '• 집 밖에 혼자 있는 것'
+          ]
+        },
+        {
+          paragraphs: [
+            '회피 행동은 단기적으로는 안전하게 느껴지지만, 장기적으로는 삶의 질을 크게 떨어뜨립니다. 직장, 학교, 사회생활이 제한되고, 심한 경우 집 밖으로 나가지 못하게 됩니다.'
+          ]
+        },
+        {
+          heading: '효과적인 치료법',
+          paragraphs: [
+            '좋은 소식은 공황장애가 매우 효과적으로 치료될 수 있다는 것입니다. 과학적으로 입증된 치료법에는 심리치료, 약물치료, 그리고 두 가지의 병합이 있습니다.'
+          ]
+        },
+        {
+          heading: '1. 인지행동치료 (CBT)',
+          paragraphs: [
+            '인지행동치료는 공황장애 치료에 가장 효과적인 심리치료로 알려져 있습니다. 여러 구성 요소가 있습니다:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              '심리교육: 공황 발작이 무엇인지, 왜 발생하는지 이해하기',
+              '인지 재구성: 공황과 관련된 과장된 생각 (예: "심장마비가 올 것이다") 식별하고 도전하기',
+              '노출 치료: 두려운 신체 감각과 상황에 점진적으로 노출하여 두려움 줄이기',
+              '이완 기법: 호흡 훈련, 근육 이완 등'
+            ]
+          }
+        },
+        {
+          paragraphs: [
+            '내부 감각 노출 (Interoceptive Exposure)은 CBT의 강력한 요소입니다. 치료사와 함께 안전한 환경에서 공황 증상을 의도적으로 유발합니다 (예: 빠르게 달리기로 심장 박동 증가시키기, 빨대로 호흡하여 숨 가쁜 느낌 만들기). 이를 반복하면 이러한 감각이 위험하지 않다는 것을 배우게 됩니다.'
+          ]
+        },
+        {
+          heading: '2. 약물 치료',
+          paragraphs: [
+            '여러 종류의 약물이 공황장애 치료에 효과적입니다:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              'SSRI (선택적 세로토닌 재흡수 억제제): 일차 치료제, 예: 세르트랄린, 파록세틴',
+              'SNRI (세로토닌-노르에피네프린 재흡수 억제제): 벤라팍신',
+              '벤조디아제핀: 빠른 효과가 있지만 의존성 위험으로 단기간만 사용'
+            ]
+          }
+        },
+        {
+          paragraphs: [
+            '약물은 증상을 효과적으로 줄일 수 있지만, 심리치료와 병합하면 더 좋은 장기 결과를 보입니다. 약물만 사용할 경우 중단 후 재발률이 높기 때문입니다.'
+          ]
+        },
+        {
+          heading: '즉각적인 대처 전략',
+          paragraphs: [
+            '공황 발작이 시작될 때 사용할 수 있는 전략들:'
+          ]
+        },
+        {
+          heading: '1. 호흡 기법',
+          paragraphs: [
+            '공황 발작 중에는 과호흡이 발생하여 증상을 악화시킵니다. 천천히 호흡하는 연습을 하세요:',
+            '• 4초간 코로 숨을 들이마시기',
+            '• 4초간 숨 참기',
+            '• 6초간 입으로 천천히 내쉬기',
+            '• 몇 분간 반복하기'
+          ]
+        },
+        {
+          heading: '2. 접지 기법 (Grounding)',
+          paragraphs: [
+            '5-4-3-2-1 기법을 사용하여 현재 순간에 집중하세요:',
+            '• 눈으로 볼 수 있는 것 5가지 말하기',
+            '• 몸으로 느낄 수 있는 것 4가지 말하기',
+            '• 들을 수 있는 것 3가지 말하기',
+            '• 냄새 맡을 수 있는 것 2가지 말하기',
+            '• 맛볼 수 있는 것 1가지 말하기'
+          ]
+        },
+        {
+          heading: '3. 자기 대화',
+          paragraphs: [
+            '공황 발작이 시작되면 자신에게 상기시키세요:',
+            '• "이것은 공황 발작이다. 위험하지 않다"',
+            '• "곧 지나갈 것이다. 보통 10-20분이면 끝난다"',
+            '• "나는 전에도 이것을 견뎌냈다. 이번에도 할 수 있다"',
+            '• "불편하지만 해롭지 않다"'
+          ]
+        },
+        {
+          heading: '4. 그 자리에 머물기',
+          paragraphs: [
+            '도망가고 싶은 충동을 느끼지만, 가능하다면 그 자리에 머물러 보세요. 도망가면 단기적으로는 안도감을 느끼지만, 장기적으로는 회피 패턴을 강화시킵니다.'
+          ]
+        },
+        {
+          heading: '생활 습관 조정',
+          paragraphs: [
+            '일상적인 습관이 공황장애 관리에 도움이 됩니다:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              '카페인과 알코올 제한: 둘 다 불안을 악화시킬 수 있음',
+              '규칙적인 운동: 불안을 자연스럽게 줄이고 신체 감각에 대한 내성 증가',
+              '충분한 수면: 수면 부족은 불안을 증가시킴',
+              '규칙적인 식사: 혈당 변동이 공황 증상을 유발할 수 있음',
+              '스트레스 관리: 명상, 요가, 이완 기법 등',
+              '니코틴 피하기: 흡연은 공황 발작을 유발할 수 있음'
+            ]
+          }
+        },
+        {
+          heading: '회복의 희망',
+          paragraphs: [
+            '공황장애는 치료 가능합니다. 적절한 치료를 받으면 대부분의 사람들이 상당한 개선을 경험하거나 완전히 회복합니다.',
+            '회복은 직선적이지 않을 수 있습니다. 좋은 날과 어려운 날이 있을 것입니다. 그러나 꾸준한 치료와 연습을 통해 공황 발작의 빈도와 강도가 줄어들고, 발작에 대한 두려움이 감소하며, 삶의 통제력을 되찾을 수 있습니다.',
+            '혼자가 아니라는 것을 기억하세요. 많은 사람들이 공황장애를 극복하고 완전하고 충만한 삶을 살고 있습니다.'
+          ]
+        }
+      ],
+      en: [],
+      ja: [],
+      zh: []
+    },
+    tags: ['공황장애', '공황발작', '불안장애', '인지행동치료', '호흡법'],
+    sources: [
+      {
+        name: 'Panic Disorder: When Fear Overwhelms',
+        organization: 'National Institute of Mental Health (NIMH)',
+        url: 'https://www.nimh.nih.gov/health/publications/panic-disorder-when-fear-overwhelms',
+        accessDate: '2025-11-01'
+      },
+      {
+        name: 'Panic Attacks and Panic Disorder',
+        organization: 'Mayo Clinic',
+        url: 'https://www.mayoclinic.org/diseases-conditions/panic-attacks/symptoms-causes/syc-20376021',
+        accessDate: '2025-11-01'
+      },
+      {
+        name: 'Panic Disorder',
+        organization: 'Cleveland Clinic',
+        url: 'https://my.clevelandclinic.org/health/diseases/4451-panic-attack-panic-disorder',
+        accessDate: '2025-11-01'
+      }
+    ],
+    recommendedProducts: [
+      {
+        title: {
+          ko: '공황장애 극복하기',
+          en: 'Overcoming Panic Disorder',
+          ja: 'パニック障害を克服する',
+          zh: '克服恐慌症'
+        },
+        description: {
+          ko: '공황장애의 원인과 증상을 이해하고 실질적인 극복 방법을 제시하는 필독서',
+          en: 'Essential guide to understanding and overcoming panic disorder',
+          ja: 'パニック障害を理解し克服するための必読書',
+          zh: '理解和克服恐慌症的必读书'
+        },
+        price: 16500,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0qd2T',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/161c/d49c4997f08c41e051e7f26cbb54a6d52b874163ea229d47d7e3cc225df9.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '불안을 다스리는 도구상자',
+          en: 'Anxiety Toolbox',
+          ja: '不安をコントロールするツールボックス',
+          zh: '控制焦虑的工具箱'
+        },
+        description: {
+          ko: '불안과 공황을 관리하는 실용적인 기법들을 담은 워크북',
+          en: 'Practical techniques workbook for managing anxiety and panic',
+          ja: '不安とパニックを管理する実践的なワークブック',
+          zh: '管理焦虑和恐慌的实用技巧工作手册'
+        },
+        price: 19800,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0qemO',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/34bf/00003bdd83001d55ac3f2c2ce45b53cf1ab37fe2f9e936f6a51aab0afcba.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '공황장애 인지행동치료',
+          en: 'Cognitive Behavioral Therapy for Panic Disorder',
+          ja: 'パニック障害の認知行動療法',
+          zh: '恐慌症的认知行为疗法'
+        },
+        description: {
+          ko: '과학적으로 입증된 CBT 기법으로 공황장애를 치료하는 전문가 가이드',
+          en: 'Expert guide using evidence-based CBT for panic disorder',
+          ja: '科学的に証明されたCBT技法によるパニック障害治療ガイド',
+          zh: '使用循证CBT技术治疗恐慌症的专家指南'
+        },
+        price: 21000,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0qeE8',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail-product-api/A00077021/337662176/357461742/main/9791162264836_L.jpg',
+        category: 'book'
+      }
+    ],
+    lastUpdated: new Date('2025-11-01'),
+    featured: false
+  },
+  // ===== 사회불안장애 =====
+  {
+    id: 'article-conditions-5',
+    category: 'conditions',
+    title: {
+      ko: '사회불안장애: 타인의 시선에서 자유로워지기',
+      en: 'Social Anxiety Disorder: Finding Freedom from Others\' Judgement',
+      ja: '社交不安障害：他人の視線から自由になる',
+      zh: '社交焦虑症：从他人的目光中解放自己'
+    },
+    summary: {
+      ko: '사회불안장애는 사회적 상황에서 타인의 부정적 평가를 두려워하는 불안장애입니다. 이 글에서는 사회불안의 특징, 원인, 그리고 극복 방법을 배웁니다.',
+      en: 'Social anxiety disorder involves fear of negative evaluation in social situations. This article explores characteristics, causes, and methods to overcome social anxiety.',
+      ja: '社交不安障害は、社会的状況で他人の否定的評価を恐れる不安障害です。この記事では、社交不安の特徴、原因、克服方法を学びます。',
+      zh: '社交焦虑症涉及在社交场合害怕负面评价。本文探讨社交焦虑的特征、原因和克服方法。'
+    },
+    readTime: 14,
+    content: {
+      ko: [
+        {
+          heading: '사회불안장애란 무엇인가?',
+          paragraphs: [
+            '사회불안장애(Social Anxiety Disorder, SAD)는 사회적 상황에서 타인의 관찰이나 판단을 받을 때 극심한 불안과 두려움을 경험하는 정신건강 상태입니다.',
+            '단순히 "수줍음"이나 "내성적"인 것과는 다릅니다. 사회불안장애는 일상생활, 직장, 학교, 인간관계에 심각한 지장을 초래할 수 있는 임상적 진단입니다.'
+          ]
+        },
+        {
+          heading: '얼마나 흔한가요?',
+          paragraphs: [
+            '사회불안장애는 가장 흔한 불안장애 중 하나입니다:',
+            '• 미국 성인의 약 12-14%가 일생 동안 사회불안장애를 경험',
+            '• 청소년기에 가장 흔히 발병 (평균 발병 연령: 13세)',
+            '• 치료받지 않으면 만성화될 수 있음',
+            '• 그러나 치료를 받는 사람은 절반에 불과'
+          ]
+        },
+        {
+          heading: '주요 증상',
+          paragraphs: [
+            '사회불안장애는 다음과 같은 특징을 보입니다:'
+          ]
+        },
+        {
+          heading: '1. 과도한 두려움과 불안',
+          list: {
+            type: 'bullet',
+            items: [
+              '타인 앞에서 말하거나 발표하는 상황',
+              '권위 있는 사람과 대화하기',
+              '모르는 사람과 대화 시작하기',
+              '다른 사람 앞에서 먹거나 마시기',
+              '공개적인 장소에서 글쓰기나 서명하기',
+              '파티나 모임 참석하기',
+              '전화 통화하거나 화상 회의 참여'
+            ]
+          }
+        },
+        {
+          heading: '2. 핵심 두려움',
+          paragraphs: [
+            '사회불안장애의 근본에는 다음과 같은 두려움이 있습니다:',
+            '• 창피를 당하거나 굴욕을 느끼게 될 것',
+            '• 타인이 자신의 불안 증상(떨림, 땀, 얼굴 붉어짐)을 알아차릴 것',
+            '• 부정적으로 평가받거나 거부당할 것',
+            '• 다른 사람을 불쾌하게 하거나 화나게 할 것'
+          ]
+        },
+        {
+          heading: '3. 신체 증상',
+          paragraphs: [
+            '사회적 상황에서 다음과 같은 신체 반응이 나타납니다:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              '빠른 심장 박동',
+              '떨림 (손, 목소리)',
+              '과도한 발한',
+              '얼굴 붉어짐',
+              '메스꺼움이나 복통',
+              '숨가쁨',
+              '어지러움',
+              '근육 긴장',
+              '마음이 멍해지거나 말이 나오지 않음'
+            ]
+          }
+        },
+        {
+          heading: '4. 회피 행동',
+          paragraphs: [
+            '불안을 피하기 위해 사회적 상황을 회피하거나, 참석하더라도 극심한 고통을 느끼며 견딥니다. 이러한 회피는 단기적으로는 안도감을 주지만, 장기적으로는 문제를 악화시킵니다.'
+          ]
+        },
+        {
+          heading: '왜 발생하나요?',
+          paragraphs: [
+            '사회불안장애는 여러 요인의 조합으로 발생합니다:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              '유전적 소인: 가족력이 있는 경우 위험 증가',
+              '뇌 구조: 편도체(두려움 중추) 과활성화',
+              '환경적 요인: 과거의 창피한 경험, 괴롭힘, 거부 경험',
+              '양육 방식: 과보호적이거나 비판적인 양육',
+              '기질: 행동 억제나 수줍음이 많은 성향'
+            ]
+          }
+        },
+        {
+          heading: '사회불안의 악순환',
+          paragraphs: [
+            '사회불안장애는 자기 강화적인 패턴을 만듭니다:',
+            '1. 부정적 예상 → 2. 사전 걱정과 불안 → 3. 사회적 상황 진입 → 4. 강렬한 불안과 자의식 → 5. 안전 행동 (눈 맞춤 회피, 짧게 말하기) 또는 완전한 회피 → 6. 사후 반추 ("내가 바보처럼 보였을 거야") → 7. 부정적 신념 강화 → 1로 돌아감'
+          ]
+        },
+        {
+          paragraphs: [
+            '이 악순환을 깨는 것이 치료의 핵심입니다.'
+          ]
+        },
+        {
+          heading: '효과적인 치료법',
+          paragraphs: [
+            '사회불안장애는 매우 효과적으로 치료될 수 있습니다. 과학적으로 입증된 치료법:'
+          ]
+        },
+        {
+          heading: '1. 인지행동치료 (CBT)',
+          paragraphs: [
+            'CBT는 사회불안장애 치료의 1차 선택입니다. 주요 구성 요소:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              '인지 재구성: 부정적이고 비현실적인 생각 ("모두가 나를 판단할 것이다") 식별하고 도전하기',
+              '노출 치료: 두려운 사회적 상황에 점진적으로 노출. 회피를 줄이고 불안 내성 키우기',
+              '사회 기술 훈련: 필요한 경우 대화, 자기주장 등의 기술 연습',
+              '주의 재훈련: 자기 집중에서 외부 세계로 주의 전환'
+            ]
+          }
+        },
+        {
+          paragraphs: [
+            '노출 치료는 특히 강력합니다. 치료자와 함께 두려움의 계층을 만들고(가장 쉬운 것부터 가장 어려운 것까지), 각 상황에 반복적으로 노출됩니다. 예: 카페에서 직원에게 질문하기 → 동료와 점심 먹기 → 소그룹 회의에서 의견 말하기 → 대규모 발표하기'
+          ]
+        },
+        {
+          heading: '2. 약물 치료',
+          paragraphs: [
+            '다음 약물들이 효과적입니다:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              'SSRI (파록세틴, 서트랄린, 플루복사민): 일차 약물',
+              'SNRI (벤라팍신)',
+              '베타 차단제 (프로프라놀롤): 공개 발표 같은 특정 상황의 신체 증상 완화',
+              '벤조디아제핀: 의존성 위험으로 일반적으로 권장되지 않음'
+            ]
+          }
+        },
+        {
+          paragraphs: [
+            'CBT와 약물의 병합이 가장 효과적인 경우가 많습니다.'
+          ]
+        },
+        {
+          heading: '3. 집단 치료',
+          paragraphs: [
+            '사회불안을 위한 집단 치료는 특히 유용합니다:',
+            '• 비슷한 어려움을 겪는 다른 사람들과 만나 고립감 감소',
+            '• 안전한 환경에서 사회적 기술 연습',
+            '• 자신만 이런 것이 아님을 깨달음',
+            '• 실시간 노출 기회 (집단 안에서 말하기, 관심의 중심 되기)'
+          ]
+        },
+        {
+          heading: '자가 관리 전략',
+          paragraphs: [
+            '전문 치료와 함께 스스로 할 수 있는 것들:'
+          ]
+        },
+        {
+          heading: '1. 부정적 생각 도전하기',
+          paragraphs: [
+            '사회적 상황 전후로 떠오르는 생각을 적고 도전하세요:',
+            '• 부정적 생각: "발표 중 실수하면 모두가 나를 무능하다고 생각할 것이다"',
+            '• 도전: "한두 가지 실수로 전체 발표가 망가지지 않는다. 대부분의 사람들은 작은 실수를 기억조차 하지 못한다. 완벽하지 않아도 괜찮다"',
+            '• 균형 잡힌 생각: "최선을 다하면 된다. 작은 실수는 자연스러운 것이다"'
+          ]
+        },
+        {
+          heading: '2. 점진적 노출',
+          paragraphs: [
+            '작은 단계부터 시작하세요:',
+            '• 레벨 1: 낯선 사람에게 미소 짓기',
+            '• 레벨 2: 점원에게 "감사합니다" 말하기',
+            '• 레벨 3: 간단한 질문하기',
+            '• 레벨 4: 짧은 대화 시작하기',
+            '• 레벨 5: 소그룹 활동 참여하기',
+            '각 레벨에서 불안이 감소할 때까지 연습한 후 다음 단계로 넘어가세요.'
+          ]
+        },
+        {
+          heading: '3. 마음챙김과 이완',
+          paragraphs: [
+            '사회적 상황 전후로:',
+            '• 심호흡: 4초 들이쉬기, 7초 참기, 8초 내쉬기',
+            '• 마음챙김: 현재 순간에 집중, 생각을 판단 없이 관찰',
+            '• 점진적 근육 이완: 각 근육 그룹을 긴장시켰다 이완',
+            '• 긍정적 자기 대화: "나는 준비되었다", "불완벽해도 괜찮다"'
+          ]
+        },
+        {
+          heading: '4. 주의 전환',
+          paragraphs: [
+            '사회적 상황에서 자신에게 과도하게 집중하는 대신:',
+            '• 대화 상대나 환경에 집중',
+            '• 상대방이 말하는 내용에 진정으로 귀 기울이기',
+            '• "내가 어떻게 보이는가"가 아니라 "무엇을 배우거나 기여할 수 있는가"에 초점'
+          ]
+        },
+        {
+          heading: '5. 건강한 생활 습관',
+          list: {
+            type: 'bullet',
+            items: [
+              '충분한 수면',
+              '규칙적인 운동: 전반적인 불안 감소',
+              '카페인과 알코올 제한: 둘 다 불안을 악화시킬 수 있음',
+              '균형 잡힌 식사',
+              '사회적 활동 계속하기: 회피하지 않기'
+            ]
+          }
+        },
+        {
+          heading: '회복의 여정',
+          paragraphs: [
+            '사회불안장애 극복은 가능합니다. 치료를 받은 사람들의 대다수가 상당한 개선을 경험합니다.',
+            '회복은 완벽해지는 것이 아닙니다. 여전히 때때로 긴장할 수 있습니다. 목표는 불안이 삶을 통제하지 못하게 하는 것입니다.',
+            '작은 승리를 축하하세요. 전에는 피했던 사회적 상황에 참여한 것, 비록 불안했지만 끝까지 머문 것—이 모든 것이 진전입니다.',
+            '인내심을 가지세요. 오랜 시간 지속된 패턴은 바꾸는 데 시간이 걸립니다. 그러나 매 순간의 용기가 쌓여 진정한 변화를 만듭니다.'
+          ]
+        }
+      ],
+      en: [],
+      ja: [],
+      zh: []
+    },
+    tags: ['사회불안장애', '사회공포증', '대인기피', '인지행동치료', '노출치료'],
+    sources: [
+      {
+        name: 'Social Anxiety Disorder',
+        organization: 'American Psychiatric Association',
+        url: 'https://www.psychiatry.org/patients-families/anxiety-disorders',
+        accessDate: '2025-11-01'
+      },
+      {
+        name: 'Anxiety Disorders',
+        organization: 'World Health Organization',
+        url: 'https://www.who.int/news-room/fact-sheets/detail/anxiety-disorders',
+        accessDate: '2025-11-01'
+      },
+      {
+        name: 'Social Anxiety Disorder',
+        organization: 'Mayo Clinic',
+        url: 'https://www.mayoclinic.org/diseases-conditions/social-anxiety-disorder/diagnosis-treatment/drc-20353567',
+        accessDate: '2025-11-01'
+      }
+    ],
+    recommendedProducts: [
+      {
+        title: {
+          ko: '사회불안 이겨내기',
+          en: 'Overcoming Social Anxiety',
+          ja: '社会不安を克服する',
+          zh: '克服社交焦虑'
+        },
+        description: {
+          ko: '사회불안장애를 극복하고 자신감 있는 대인관계를 만드는 실천 가이드',
+          en: 'Practical guide to overcoming social anxiety and building confidence',
+          ja: '社会不安障害を克服し自信ある人間関係を築く実践ガイド',
+          zh: '克服社交焦虑症并建立自信人际关系的实践指南'
+        },
+        price: 17500,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0qe5P',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/e1b3/962856b2c64c245238793ba58c36653a8b7b2cc6e55b7886a5be9d8a2f3f.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '수줍음과 사회불안',
+          en: 'Shyness and Social Anxiety',
+          ja: '内気と社会不安',
+          zh: '害羞与社交焦虑'
+        },
+        description: {
+          ko: '수줍음에서 사회불안장애까지, 타인의 시선 극복하는 심리학적 접근',
+          en: 'Psychological approach to overcoming shyness and social anxiety',
+          ja: '内気から社会不安障害まで、他人の視線を克服する心理学的アプローチ',
+          zh: '从害羞到社交焦虑症，克服他人目光的心理学方法'
+        },
+        price: 18200,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0qfkj',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/46d4/759aff55e510dc460e9f13b711a3f85683fa4269963db997f31de7bf7a43.png',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '대인공포증 극복',
+          en: 'Overcoming Anthropophobia',
+          ja: '対人恐怖症の克服',
+          zh: '克服社交恐惧症'
+        },
+        description: {
+          ko: '대인관계 불안을 이해하고 건강한 사회생활로 나아가는 방법',
+          en: 'Understanding social anxiety and moving towards healthy social life',
+          ja: '対人不安を理解し健康的な社会生活に向かう方法',
+          zh: '理解社交焦虑并走向健康社交生活的方法'
+        },
+        price: 16800,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0qfEM',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/e313/d43293cd93e122ba2035a298d56479ca289c0c91cd266b7bcf4c979144fa.jpg',
+        category: 'book'
+      }
+    ],
+    lastUpdated: new Date('2025-11-01'),
+    featured: false
+  },
+  // ===== 감정 조절 기술 =====
+  {
+    id: 'article-management-3',
+    category: 'management',
+    title: {
+      ko: '감정 조절 기술: 압도적인 감정을 다스리는 법',
+      en: 'Emotion Regulation Skills: Managing Overwhelming Feelings',
+      ja: '感情調節スキル：圧倒的な感情をコントロールする方法',
+      zh: '情绪调节技能：管理压倒性情绪的方法'
+    },
+    summary: {
+      ko: '감정 조절은 강렬한 감정을 효과적으로 관리하는 능력입니다. 이 글에서는 DBT 기반의 실용적인 감정 조절 전략을 배웁니다.',
+      en: 'Emotion regulation is the ability to effectively manage intense emotions. This article teaches practical DBT-based emotion regulation strategies.',
+      ja: '感情調節は、強烈な感情を効果的に管理する能力です。この記事では、DBTベースの実用的な感情調節戦略を学びます。',
+      zh: '情绪调节是有效管理强烈情绪的能力。本文教授基于DBT的实用情绪调节策略。'
+    },
+    readTime: 13,
+    content: {
+      ko: [
+        {
+          heading: '감정 조절이란 무엇인가?',
+          paragraphs: [
+            '감정 조절(Emotion Regulation)은 감정을 억누르거나 없애는 것이 아닙니다. 오히려 감정을 인식하고, 이해하고, 건강한 방식으로 표현하고 관리하는 능력입니다.',
+            '강렬한 감정은 정상적이고 자연스러운 것입니다. 문제는 감정 자체가 아니라 감정에 어떻게 반응하느냐입니다.'
+          ]
+        },
+        {
+          heading: '왜 감정 조절이 중요한가?',
+          paragraphs: [
+            '효과적인 감정 조절은 다음을 가능하게 합니다:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              '충동적인 행동 감소 (분노 폭발, 과식, 자해 등)',
+              '더 나은 인간관계 유지',
+              '스트레스와 불안 감소',
+              '목표 달성을 위한 집중력 유지',
+              '전반적인 정신건강과 삶의 질 향상'
+            ]
+          }
+        },
+        {
+          heading: 'DBT 감정 조절 기술',
+          paragraphs: [
+            '변증법적 행동치료(DBT)는 감정 조절에 매우 효과적인 기술들을 제공합니다:'
+          ]
+        },
+        {
+          heading: '1. PLEASE 기술: 감정 취약성 줄이기',
+          paragraphs: [
+            'PLEASE는 신체 건강을 통해 감정 조절 능력을 높이는 기술입니다:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              'PL (Treat Physical iLlness): 신체 질병 치료하기',
+              'E (Balanced Eating): 균형 잡힌 식사',
+              'A (Avoid mood-altering drugs): 기분 변화 약물 피하기 (알코올, 불법 약물)',
+              'S (Sleep hygiene): 수면 위생: 매일 7-9시간',
+              'E (Exercise): 운동: 주 150분 이상'
+            ]
+          }
+        },
+        {
+          paragraphs: [
+            '신체와 마음은 연결되어 있습니다. 몸을 돌보면 감정 조절이 훨씬 쉬워집니다.'
+          ]
+        },
+        {
+          heading: '2. 감정 이름 붙이기',
+          paragraphs: [
+            '감정을 구체적으로 명명하는 것만으로도 강도가 줄어듭니다. 이를 "감정 라벨링(Affect Labeling)"이라고 합니다.',
+            '• 막연하게: "기분이 나쁘다"',
+            '• 구체적으로: "나는 지금 실망하고 있다. 그리고 약간의 분노와 슬픔도 느낀다"',
+            '뇌 연구에 따르면 감정에 이름을 붙이면 편도체(감정 중추)의 활동이 감소합니다.'
+          ]
+        },
+        {
+          heading: '3. 정반대 행동 (Opposite Action)',
+          paragraphs: [
+            '감정이 상황에 맞지 않거나 도움이 되지 않을 때, 감정의 충동과 반대로 행동하세요:',
+            '• 슬플 때 → 활동적인 일 하기 (운동, 친구 만나기)',
+            '• 부당하지 않은 분노 → 부드럽게 행동하기, 물러서기',
+            '• 정당하지 않은 두려움 → 두려운 상황에 접근하기',
+            '• 정당하지 않은 죄책감 → 계속 그 행동 하기',
+            '• 정당하지 않은 수치심 → 숨지 말고 드러내기'
+          ]
+        },
+        {
+          paragraphs: [
+            '주의: "정당하지 않은" 감정일 때만 사용하세요. 감정이 정당하다면 (예: 학대적 상황에서의 두려움) 그 감정이 전하는 메시지에 따라 행동해야 합니다.'
+          ]
+        },
+        {
+          heading: '4. 문제 해결',
+          paragraphs: [
+            '감정이 정당한 이유가 있을 때 (즉, 실제 문제가 있을 때):',
+            '1) 문제를 명확히 정의',
+            '2) 가능한 해결책 브레인스토밍',
+            '3) 각 해결책의 장단점 평가',
+            '4) 하나를 선택하고 실행',
+            '5) 효과가 없으면 다른 해결책 시도'
+          ]
+        },
+        {
+          heading: '5. 사전 대처 (Cope Ahead)',
+          paragraphs: [
+            '어려운 상황을 미리 예상하고 대처 계획을 세우세요:',
+            '1) 다가오는 스트레스 상황 식별',
+            '2) 어떤 감정이 생길지 예상',
+            '3) 어떤 대처 기술을 사용할지 결정 (호흡, 자기 대화 등)',
+            '4) 마음속으로 상황을 그려보며 대처 기술 사용 연습',
+            '예: 어려운 대화 전에 심호흡과 긍정적 자기 대화를 미리 연습'
+          ]
+        },
+        {
+          heading: '6. 자기 진정 (Self-Soothing)',
+          paragraphs: [
+            '5가지 감각을 사용하여 자신을 진정시키세요:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              '시각: 아름다운 것 보기 (자연, 예술, 사진)',
+              '청각: 좋아하는 음악 듣기, 빗소리, 파도 소리',
+              '후각: 좋아하는 향 맡기 (향초, 향수, 꽃)',
+              '미각: 좋아하는 음식이나 차 천천히 음미',
+              '촉각: 따뜻한 목욕, 부드러운 담요, 반려동물 쓰다듬기'
+            ]
+          }
+        },
+        {
+          heading: '7. 숙달 구축 (Building Mastery)',
+          paragraphs: [
+            '성취감을 느낄 수 있는 활동을 규칙적으로 하세요:',
+            '• 새로운 기술 배우기',
+            '• 취미 활동',
+            '• 도전적이지만 성취 가능한 목표 설정',
+            '성취 경험은 자신감을 높이고 감정적 회복탄력성을 증가시킵니다.'
+          ]
+        },
+        {
+          heading: '8. 긍정적 경험 축적',
+          paragraphs: [
+            '단기: 매일 작은 즐거움을 경험하세요',
+            '• 좋아하는 음악 듣기',
+            '• 산책하기',
+            '• 친구에게 연락하기',
+            '• 웃긴 영상 보기',
+            '장기: 의미 있는 목표를 향해 나아가세요',
+            '• 가치와 일치하는 삶 살기',
+            '• 관계 구축하기',
+            '• 목적 의식 가지기'
+          ]
+        },
+        {
+          heading: '9. 마음챙김 (Mindfulness)',
+          paragraphs: [
+            '현재 순간의 감정을 판단 없이 관찰하세요:',
+            '• "나는 지금 분노를 느끼고 있다" (vs "나는 화난 사람이다")',
+            '• 감정을 파도처럼 여기기: 올라왔다가 내려간다',
+            '• 감정에 휩쓸리지 않고 관찰자 입장 유지',
+            '마음챙김은 감정과 거리를 두면서도 거부하지 않게 합니다.'
+          ]
+        },
+        {
+          heading: '위기 생존 기술: TIP',
+          paragraphs: [
+            '극심한 감정적 고통 상황에서 빠르게 진정할 수 있는 기술:'
+          ]
+        },
+        {
+          heading: 'T - Temperature (온도)',
+          paragraphs: [
+            '차가운 물로 얼굴을 씻거나 얼음을 얼굴에 대세요. 이는 "잠수 반사"를 활성화하여 심박수를 낮추고 즉각적으로 진정시킵니다.'
+          ]
+        },
+        {
+          heading: 'I - Intense Exercise (격렬한 운동)',
+          paragraphs: [
+            '15-20분간 빠르게 걷거나 뛰세요. 운동은 아드레날린을 소진시켜 신체를 진정시킵니다.'
+          ]
+        },
+        {
+          heading: 'P - Paced Breathing (조절된 호흡)',
+          paragraphs: [
+            '들숨보다 날숨을 길게:',
+            '• 5초 들이마시기',
+            '• 7초 내쉬기',
+            '• 몇 분간 반복',
+            '이는 부교감 신경계를 활성화하여 "이완 반응"을 촉발합니다.'
+          ]
+        },
+        {
+          heading: '감정 조절 연습하기',
+          paragraphs: [
+            '감정 조절은 근육을 키우는 것과 같습니다. 연습이 필요합니다:',
+            '1. 작은 것부터 시작: 약한 감정으로 먼저 연습',
+            '2. 매일 연습: 평온할 때도 기술 연습 (위기 시에만 하면 효과 적음)',
+            '3. 자기 연민: 완벽하지 않아도 괜찮습니다',
+            '4. 일지 작성: 어떤 기술이 효과 있었는지 기록',
+            '시간이 지나면 감정의 강도와 지속 시간이 줄어들고, 더 빨리 회복할 수 있게 됩니다.'
+          ]
+        }
+      ],
+      en: [],
+      ja: [],
+      zh: []
+    },
+    tags: ['감정조절', 'DBT', '마음챙김', '대처기술', '정서조절'],
+    sources: [
+      {
+        name: 'DBT Emotional Regulation Skills',
+        organization: 'Positive Psychology',
+        url: 'https://positivepsychology.com/emotion-regulation-worksheets-strategies-dbt-skills/',
+        accessDate: '2025-11-01'
+      },
+      {
+        name: 'Emotion Regulation',
+        organization: 'DBT Self Help',
+        url: 'https://dbtselfhelp.com/dbt-skills-list/emotion-regulation/',
+        accessDate: '2025-11-01'
+      },
+      {
+        name: 'Caring for Your Mental Health',
+        organization: 'National Institute of Mental Health (NIMH)',
+        url: 'https://www.nimh.nih.gov/health/topics/caring-for-your-mental-health',
+        accessDate: '2025-11-01'
+      }
+    ],
+    recommendedProducts: [
+      {
+        title: {
+          ko: 'DBT 다이어렉티컬 행동치료',
+          en: 'DBT: Dialectical Behavior Therapy',
+          ja: 'DBT弁証法的行動療法',
+          zh: 'DBT辩证行为疗法'
+        },
+        description: {
+          ko: '감정 조절과 대인관계 개선을 위한 과학적 DBT 치료법 완벽 가이드',
+          en: 'Complete guide to evidence-based DBT for emotion regulation',
+          ja: '感情調節と対人関係改善のための科学的DBT療法ガイド',
+          zh: '情绪调节和人际关系改善的科学DBT疗法完整指南'
+        },
+        price: 22500,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0qjos',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/6e48/7c85683afcec2e14c2a628538d4d9ed918c1681594a82fc88dab5aee3c5e.png',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '감정조절 워크북',
+          en: 'Emotion Regulation Workbook',
+          ja: '感情調節ワークブック',
+          zh: '情绪调节工作手册'
+        },
+        description: {
+          ko: '일상에서 바로 실천할 수 있는 감정 조절 연습과 활동지',
+          en: 'Practical emotion regulation exercises for daily life',
+          ja: '日常ですぐに実践できる感情調節練習とワークシート',
+          zh: '日常生活中可以立即实践的情绪调节练习和活动册'
+        },
+        price: 19500,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0qjBh',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/7527433213753860-81f86702-0f9f-4f0a-9195-7dad4ee3b933.crdownload',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '마음챙김 기술',
+          en: 'Mindfulness Skills',
+          ja: 'マインドフルネススキル',
+          zh: '正念技能'
+        },
+        description: {
+          ko: '감정을 다스리는 마음챙김 명상과 실천 기법',
+          en: 'Mindfulness meditation and practices for emotional balance',
+          ja: '感情をコントロールするマインドフルネス瞑想と実践技法',
+          zh: '控制情绪的正念冥想和实践技巧'
+        },
+        price: 17800,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0qjX1',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/0b45/a2b278ea60718271b876180cb3d91e6e5a0a10c49bb7e3f8cd3c8820be50.jpg',
+        category: 'book'
+      }
+    ],
+    lastUpdated: new Date('2025-11-01'),
+    featured: false
+  },
+  // ===== 슬픔과 상실 다루기 =====
+  {
+    id: 'article-management-4',
+    category: 'management',
+    title: {
+      ko: '슬픔과 상실 다루기: 상처를 치유하는 여정',
+      en: 'Coping with Grief and Loss: The Journey of Healing',
+      ja: '悲しみと喪失への対処：癒しの旅',
+      zh: '应对悲伤和失落：治愈之旅'
+    },
+    summary: {
+      ko: '슬픔은 상실에 대한 자연스럽고 필수적인 반응입니다. 이 글에서는 슬픔의 과정을 이해하고 건강하게 애도하는 방법을 배웁니다.',
+      en: 'Grief is a natural and necessary response to loss. This article helps understand the grieving process and learn healthy ways to mourn.',
+      ja: '悲しみは喪失に対する自然で必要な反応です。この記事では、悲しみのプロセスを理解し、健康的に悼む方法を学びます。',
+      zh: '悲伤是对失落的自然而必要的反应。本文帮助理解悲伤过程并学习健康的哀悼方式。'
+    },
+    readTime: 12,
+    content: {
+      ko: [
+        {
+          heading: '슬픔이란 무엇인가?',
+          paragraphs: [
+            '슬픔(Grief)은 사랑하는 사람, 관계, 건강, 직업, 꿈 등 소중한 무언가를 잃었을 때 경험하는 자연스러운 감정적 반응입니다.',
+            '슬픔은 질병이 아닙니다. 사랑의 반영이며, 애착의 증거이고, 상실의 의미를 인정하는 과정입니다.'
+          ]
+        },
+        {
+          heading: '슬픔은 다양한 형태로 나타납니다',
+          paragraphs: [
+            '우리는 흔히 죽음과 슬픔을 연관시키지만, 많은 종류의 상실이 슬픔을 유발할 수 있습니다:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              '사랑하는 사람의 죽음',
+              '이혼이나 이별',
+              '건강 상실 (만성 질환 진단, 장애)',
+              '직업 상실',
+              '재정적 안정성 상실',
+              '애완동물의 죽음',
+              '우정의 종료',
+              '이사 (집, 도시, 국가)',
+              '정체성의 변화 (은퇴, 빈 둥지, 역할 변화)',
+              '미래에 대한 꿈의 상실'
+            ]
+          }
+        },
+        {
+          paragraphs: [
+            '어떤 상실이든, 그것이 당신에게 중요했다면 슬픔은 정당합니다.'
+          ]
+        },
+        {
+          heading: '슬픔의 감정들',
+          paragraphs: [
+            '슬픔은 하나의 감정이 아니라 여러 감정의 조합입니다. 다음을 경험할 수 있습니다:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              '슬픔과 비탄',
+              '분노와 좌절',
+              '죄책감 ("더 많이 할 수 있었는데", "마지막 말을 다르게 했어야")',
+              '안도감 (특히 긴 질병이나 어려운 관계 후)',
+              '무감각과 충격',
+              '두려움과 불안 (미래에 대한)',
+              '외로움과 그리움',
+              '후회',
+              '혼란과 방향 상실'
+            ]
+          }
+        },
+        {
+          paragraphs: [
+            '이 모든 감정이 정상입니다. 심지어 모순되는 감정을 동시에 느낄 수도 있습니다 (예: 슬픔과 안도감).'
+          ]
+        },
+        {
+          heading: '슬픔의 단계는 "정확하지" 않습니다',
+          paragraphs: [
+            '많은 사람들이 Kübler-Ross의 슬픔 5단계(부정, 분노, 협상, 우울, 수용)에 대해 들어봤을 것입니다. 그러나 중요한 것을 알아야 합니다:',
+            '• 모든 사람이 모든 단계를 경험하는 것은 아닙니다',
+            '• 단계는 순서대로 일어나지 않습니다',
+            '• 이전 단계로 되돌아갈 수 있습니다',
+            '• 일부 감정은 오래 지속되고 다른 감정은 짧습니다',
+            '슬픔은 깔끔한 직선 과정이 아니라 파도처럼 왔다 갔다 합니다.'
+          ]
+        },
+        {
+          heading: '건강한 슬픔 vs 복잡한 슬픔',
+          paragraphs: [
+            '대부분의 경우 슬픔은 시간이 지나면서 자연스럽게 치유됩니다. 그러나 때로는 슬픔이 "고착"될 수 있습니다.'
+          ]
+        },
+        {
+          heading: '복잡한 슬픔(Prolonged Grief Disorder)의 징후:',
+          list: {
+            type: 'bullet',
+            items: [
+              '상실 후 6개월 이상(사별의 경우 12개월) 지속되는 강렬한 슬픔',
+              '고인이나 상실에 대한 끊임없는 생각',
+              '일상 기능 불가능',
+              '삶의 의미 상실',
+              '정체성 혼란',
+              '사회적 철수',
+              '사별을 받아들이기 어려움',
+              '고인이 없는 미래를 상상하기 어려움',
+              '강렬한 외로움과 공허함'
+            ]
+          }
+        },
+        {
+          paragraphs: [
+            '이런 증상이 있다면 전문가의 도움을 받으세요. 복잡한 슬픔은 치료가 필요하고 효과적으로 치료될 수 있습니다.'
+          ]
+        },
+        {
+          heading: '건강하게 애도하는 방법',
+          paragraphs: [
+            '슬픔을 "고치거나" "극복"할 수는 없습니다. 대신, 슬픔과 함께 살아가는 법을 배웁니다:'
+          ]
+        },
+        {
+          heading: '1. 감정을 허용하세요',
+          paragraphs: [
+            '슬픔을 억누르지 마세요. 우는 것, 화를 내는 것, 슬퍼하는 것은 괜찮습니다.',
+            '• "강해야 한다"는 압박을 느끼지 마세요',
+            '• 감정이 파도처럼 올 때 허용하세요',
+            '• 감정을 느끼는 것이 약함이 아니라 용기입니다'
+          ]
+        },
+        {
+          heading: '2. 자기 돌봄',
+          paragraphs: [
+            '슬픔은 신체적으로도 지칩니다:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              '충분히 자기 (어려울 수 있지만 노력하기)',
+              '규칙적으로 먹기 (입맛이 없어도 영양 섭취)',
+              '가벼운 운동 (산책, 요가)',
+              '알코올이나 약물로 마비시키지 않기'
+            ]
+          }
+        },
+        {
+          heading: '3. 사회적 지지 받기',
+          paragraphs: [
+            '고립되지 마세요:',
+            '• 신뢰하는 친구나 가족에게 감정 이야기하기',
+            '• 슬픔 지원 그룹 참여 (비슷한 경험을 한 사람들)',
+            '• 필요하다면 치료사 만나기',
+            '• 혼자 있고 싶을 때와 연결이 필요할 때 균형 맞추기'
+          ]
+        },
+        {
+          heading: '4. 의식과 추모',
+          paragraphs: [
+            '상실을 기리는 의미 있는 방법 만들기:',
+            '• 장례식이나 추도식',
+            '• 메모리 북이나 사진 앨범 만들기',
+            '• 자선 기부나 봉사',
+            '• 특별한 날에 촛불 켜기',
+            '• 편지 쓰기 (고인에게, 또는 자신에게)',
+            '• 정원에 나무 심기'
+          ]
+        },
+        {
+          heading: '5. 시간 주기',
+          paragraphs: [
+            '슬픔에는 시간표가 없습니다. "이제 괜찮아져야 해"라는 압박을 느끼지 마세요.',
+            '좋은 날과 나쁜 날이 있을 것입니다. 기념일, 명절, 특별한 날에 슬픔이 되살아날 수 있습니다. 이것은 정상입니다.'
+          ]
+        },
+        {
+          heading: '6. 일상 유지하기',
+          paragraphs: [
+            '가능한 한 일상을 유지하세요:',
+            '• 구조와 예측 가능성이 안정감을 줍니다',
+            '• 작은 작업과 목표 설정',
+            '• 필요하면 책임 줄이기 (일, 사회적 의무)',
+            '• 서서히 정상적인 활동으로 돌아가기'
+          ]
+        },
+        {
+          heading: '7. 의미 찾기',
+          paragraphs: [
+            '시간이 지나면서 많은 사람들이 상실에서 의미를 찾습니다:',
+            '• 우선순위 재평가',
+            '• 관계의 가치 인식',
+            '• 자선 활동이나 옹호',
+            '• 영적 또는 철학적 성장',
+            '• 다른 사람들 돕기'
+          ]
+        },
+        {
+          heading: '도움이 되지 않는 것들',
+          paragraphs: [
+            '피해야 할 일반적인 함정:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              '"빨리 극복해"라는 압박',
+              '슬픔을 알코올이나 약물로 마비시키기',
+              '감정을 완전히 억누르기',
+              '주요 결정을 성급하게 내리기 (이사, 직업 변경)',
+              '혼자서 모든 것을 처리하려고 하기',
+              '다른 사람의 슬픔과 비교하기'
+            ]
+          }
+        },
+        {
+          heading: '다른 사람을 지원하는 방법',
+          paragraphs: [
+            '누군가가 슬퍼할 때 어떻게 도울 수 있을까요?'
+          ]
+        },
+        {
+          heading: '도움이 되는 것:',
+          list: {
+            type: 'bullet',
+            items: [
+              '그저 존재하기. 말이 필요 없습니다',
+              '경청하기. 판단하지 않기',
+              '"얼마나 힘들지 상상도 못해"처럼 공감하기',
+              '실질적 도움 제공 (식사 가져다주기, 집안일, 심부름)',
+              '고인의 이름 언급하기 (많은 사람들이 두려워하지만 대부분의 유족은 이야기하고 싶어 합니다)',
+              '기념일에 체크인하기 (사람들이 잊을 때쯤 여전히 중요함)'
+            ]
+          }
+        },
+        {
+          heading: '피해야 할 것:',
+          list: {
+            type: 'bullet',
+            items: [
+              '"적어도 고통받지 않아", "더 나은 곳에 있어"같은 말',
+              '"네 느낌 알아" (특히 비슷한 경험이 없다면)',
+              '"강해야 해"',
+              '상실을 최소화하기 ("적어도 자녀가 있어")',
+              '시간표 강요하기 ("이제 괜찮아져야지")',
+              '자신의 이야기로 주의 돌리기'
+            ]
+          }
+        },
+        {
+          heading: '슬픔과 함께 살아가기',
+          paragraphs: [
+            '슬픔은 "끝나지" 않습니다. 대신, 당신은 그것과 함께 살아가는 법을 배웁니다.',
+            '비유로 말하면: 처음에 슬픔은 당신 삶 전체를 차지하는 거대한 바위 같습니다. 시간이 지나면서 바위는 작아지지 않지만, 당신의 삶이 바위 주변으로 자라납니다. 슬픔은 여전히 거기 있지만 더 이상 모든 것을 차지하지 않습니다.',
+            '사랑했던 사람을 계속 사랑하면서도 기쁨을 다시 경험할 수 있습니다. 이것은 그들을 잊거나 배신하는 것이 아닙니다. 그들을 기리면서 계속 살아가는 것입니다.'
+          ]
+        }
+      ],
+      en: [],
+      ja: [],
+      zh: []
+    },
+    tags: ['슬픔', '상실', '애도', '치유', '지지'],
+    sources: [
+      {
+        name: 'Grief: Coping with Loss',
+        organization: 'Mayo Clinic',
+        url: 'https://www.mayoclinic.org/healthy-lifestyle/end-of-life/in-depth/grief/art-20047261',
+        accessDate: '2025-11-01'
+      },
+      {
+        name: 'Prolonged Grief Disorder',
+        organization: 'American Psychiatric Association',
+        url: 'https://www.psychiatry.org/patients-families/prolonged-grief-disorder',
+        accessDate: '2025-11-01'
+      },
+      {
+        name: 'Coping with Grief and Loss',
+        organization: 'HelpGuide',
+        url: 'https://www.helpguide.org/articles/grief/coping-with-grief-and-loss.htm',
+        accessDate: '2025-11-01'
+      }
+    ],
+    recommendedProducts: [
+      {
+        title: {
+          ko: '슬픔과 함께 걷기',
+          en: 'Walking with Grief',
+          ja: '悲しみと共に歩く',
+          zh: '与悲伤同行'
+        },
+        description: {
+          ko: '상실의 아픔을 이해하고 건강하게 애도하는 법을 배우는 치유 가이드',
+          en: 'Healing guide to understanding loss and healthy mourning',
+          ja: '喪失の痛みを理解し健康的に悼む方法を学ぶ癒しのガイド',
+          zh: '理解失落之痛并健康哀悼的治愈指南'
+        },
+        price: 15800,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0qlbx',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/8668/625c404a797a01a28b5db857a5b39b49262d336f7a6f4a3ad146bde9b38c.png',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '애도수업',
+          en: 'Lessons in Grief',
+          ja: '悲嘆の授業',
+          zh: '哀悼课程'
+        },
+        description: {
+          ko: '슬픔의 과정을 통과하며 다시 살아가는 법을 배우는 따뜻한 안내서',
+          en: 'Compassionate guide to navigating grief and finding life again',
+          ja: '悲しみのプロセスを通過し再び生きる方法を学ぶ温かいガイド',
+          zh: '通过悲伤过程重新学习生活的温暖指南'
+        },
+        price: 16200,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0qlne',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/2018/05/14/17/0/06533907-5e38-4c0a-bff8-4aa80e129214.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '상실수업',
+          en: 'Lessons in Loss',
+          ja: '喪失の授業',
+          zh: '失落课程'
+        },
+        description: {
+          ko: '사랑하는 이의 상실을 받아들이고 삶을 재건하는 여정의 이야기',
+          en: 'Journey of accepting loss and rebuilding life after loved ones',
+          ja: '愛する人の喪失を受け入れ人生を再建する旅の物語',
+          zh: '接受失去亲人并重建生活的旅程故事'
+        },
+        price: 17200,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0qlEC',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/f997/4fb2844d762c838edd11a6b486116d1643b44b67014b7d16334f280604b7.jpg',
+        category: 'book'
+      }
+    ],
+    lastUpdated: new Date('2025-11-01'),
+    featured: false
+  },
+  // ===== 전문가 도움 구하기 =====
+  {
+    id: 'article-basics-2',
+    category: 'basics',
+    title: {
+      ko: '전문가 도움 구하기: 언제, 어떻게 정신건강 치료를 시작할까',
+      en: 'Seeking Professional Help: When and How to Start Mental Health Treatment',
+      ja: '専門家の助けを求める：いつ、どのように精神健康治療を始めるか',
+      zh: '寻求专业帮助：何时以及如何开始心理健康治疗'
+    },
+    summary: {
+      ko: '정신건강 전문가의 도움을 구하는 것은 용기 있는 결정입니다. 이 글에서는 언제 도움이 필요한지, 어떤 전문가를 찾아야 하는지, 그리고 치료를 시작하는 방법을 배웁니다.',
+      en: 'Seeking mental health professional help is a courageous decision. This article explains when you need help, which professionals to seek, and how to start treatment.',
+      ja: '精神健康専門家の助けを求めることは勇気ある決断です。この記事では、いつ助けが必要か、どの専門家を探すべきか、治療を始める方法を学びます。',
+      zh: '寻求心理健康专业人士的帮助是一个勇敢的决定。本文解释何时需要帮助、应该寻求哪些专业人士以及如何开始治疗。'
+    },
+    readTime: 11,
+    content: {
+      ko: [
+        {
+          heading: '언제 전문가의 도움이 필요한가?',
+          paragraphs: [
+            '다음과 같은 경우 전문가의 도움을 고려해야 합니다:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              '증상이 2주 이상 지속되고 일상생활에 지장을 줌',
+              '수면, 식욕, 에너지 수준의 지속적인 변화',
+              '전에 즐겼던 활동에 흥미나 즐거움 상실',
+              '지속적인 슬픔, 불안, 또는 공허함',
+              '집중력, 기억력, 의사결정의 어려움',
+              '과민성, 분노 폭발, 또는 공격성 증가',
+              '자해나 자살에 대한 생각',
+              '알코올이나 약물 사용 증가',
+              '관계, 직장, 학교에서의 어려움',
+              '신체 증상이 있지만 의학적 원인을 찾을 수 없음'
+            ]
+          }
+        },
+        {
+          paragraphs: [
+            '중요: 자해나 자살 생각이 있다면 즉시 도움을 받으세요. 988 자살예방 상담전화(한국: 1393, 정신건강 위기상담전화)로 연락하거나 가까운 응급실을 방문하세요.'
+          ]
+        },
+        {
+          heading: '정신건강 전문가의 종류',
+          paragraphs: [
+            '다양한 종류의 전문가가 있으며, 각각 다른 역할을 합니다:'
+          ]
+        },
+        {
+          heading: '1. 정신과 의사 (Psychiatrist)',
+          paragraphs: [
+            '의사(MD) 학위를 가진 전문가로 정신건강 장애를 진단하고 약물을 처방할 수 있습니다. 복잡한 경우나 약물 치료가 필요한 경우 적합합니다.'
+          ]
+        },
+        {
+          heading: '2. 임상심리사 (Clinical Psychologist)',
+          paragraphs: [
+            '심리학 박사(PhD 또는 PsyD) 학위를 가진 전문가로 심리치료와 심리평가를 제공합니다. 약물은 처방할 수 없지만 다양한 치료 기법에 능숙합니다.'
+          ]
+        },
+        {
+          heading: '3. 상담심리사 (Counseling Psychologist)',
+          paragraphs: [
+            '석사 이상의 학위를 가진 전문가로 개인, 가족, 집단 상담을 제공합니다. 일상적인 스트레스, 관계 문제, 생활 조정 등을 다룹니다.'
+          ]
+        },
+        {
+          heading: '4. 사회복지사 (Social Worker)',
+          paragraphs: [
+            '사회복지 석사(MSW) 학위를 가진 전문가로 치료뿐만 아니라 자원 연결, 사례 관리도 제공합니다.'
+          ]
+        },
+        {
+          heading: '올바른 치료사 찾기',
+          paragraphs: [
+            '좋은 치료사를 찾는 방법:'
+          ],
+          list: {
+            type: 'numbered',
+            items: [
+              '보험 확인: 보험사에 연락하여 보장되는 제공자 목록 받기',
+              '추천 받기: 주치의, 친구, 가족에게 추천 요청',
+              '온라인 검색: 정신건강 전문가 디렉토리 활용',
+              '전문 분야 확인: 당신의 문제(불안, 우울, 트라우마 등)를 전문으로 하는지',
+              '첫 상담 예약: 대부분 초기 상담을 제공하여 적합성 확인'
+            ]
+          }
+        },
+        {
+          heading: '치료사와의 적합성',
+          paragraphs: [
+            '치료 효과는 치료사와의 관계에 크게 달려 있습니다. 좋은 적합성의 징후:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              '편안하고 안전하다고 느낌',
+              '경청받고 이해받는다고 느낌',
+              '판단받지 않음',
+              '치료사가 명확하게 설명하고 질문에 답함',
+              '치료 목표와 계획에 협력적으로 작업',
+              '진전을 느낌 (시간이 걸리지만)'
+            ]
+          }
+        },
+        {
+          paragraphs: [
+            '첫 치료사가 맞지 않으면 다른 사람을 찾아도 괜찮습니다. 적합한 치료사를 찾는 것이 중요합니다.'
+          ]
+        },
+        {
+          heading: '첫 상담 준비하기',
+          paragraphs: [
+            '첫 세션을 최대한 활용하는 방법:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              '증상 목록 작성: 언제 시작했는지, 얼마나 심한지',
+              '병력 정리: 과거 치료, 약물, 가족력',
+              '목표 생각하기: 치료를 통해 무엇을 달성하고 싶은지',
+              '질문 준비: 치료 접근법, 세션 빈도, 비용 등',
+              '솔직하게: 모든 것을 공유할 필요는 없지만 정직이 중요'
+            ]
+          }
+        },
+        {
+          heading: '치료의 종류',
+          paragraphs: [
+            '다양한 치료 접근법이 있습니다:'
+          ]
+        },
+        {
+          heading: '인지행동치료 (CBT)',
+          paragraphs: [
+            '생각, 감정, 행동 사이의 연결에 초점. 불안, 우울, PTSD 등에 효과적입니다.'
+          ]
+        },
+        {
+          heading: '변증법적 행동치료 (DBT)',
+          paragraphs: [
+            '감정 조절, 고통 감내, 마음챙김 기술 교육. 경계성 성격장애, 자해에 효과적입니다.'
+          ]
+        },
+        {
+          heading: '정신역동 치료',
+          paragraphs: [
+            '무의식적 패턴과 과거 경험 탐색. 장기적 성격 변화에 도움이 됩니다.'
+          ]
+        },
+        {
+          heading: '대인관계 치료 (IPT)',
+          paragraphs: [
+            '관계와 의사소통 개선에 초점. 우울증에 특히 효과적입니다.'
+          ]
+        },
+        {
+          heading: '비용과 접근성',
+          paragraphs: [
+            '치료 비용이 걱정된다면:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              '건강보험 활용: 많은 보험이 정신건강 서비스를 보장',
+              'sliding scale: 일부 치료사가 소득에 따라 요금 조정',
+              '지역사회 정신건강센터: 저렴하거나 무료 서비스',
+              '대학 상담센터: 대학원생 치료사가 감독하에 저렴한 서비스',
+              '온라인 치료: 대면보다 저렴할 수 있음',
+              '지원 그룹: 무료 또는 저렴한 동료 지원'
+            ]
+          }
+        },
+        {
+          heading: '온라인 vs 대면 치료',
+          paragraphs: [
+            '온라인 치료(원격 치료)는 팬데믹 이후 보편화되었습니다.'
+          ]
+        },
+        {
+          heading: '온라인 치료의 장점:',
+          list: {
+            type: 'bullet',
+            items: [
+              '편리함과 유연성',
+              '지리적 제약 없음',
+              '종종 더 저렴',
+              '집에서 편안함'
+            ]
+          }
+        },
+        {
+          heading: '단점:',
+          list: {
+            type: 'bullet',
+            items: [
+              '기술 문제',
+              '일부 사람에게는 덜 개인적으로 느껴짐',
+              '위기 상황에서 제한적',
+              '프라이버시 확보 필요'
+            ]
+          }
+        },
+        {
+          heading: '약물 치료',
+          paragraphs: [
+            '약물은 많은 정신건강 상태에 효과적일 수 있습니다:',
+            '• 항우울제: 우울증, 불안장애',
+            '• 항불안제: 불안장애, 공황장애',
+            '• 기분 안정제: 양극성 장애',
+            '• 항정신병 약물: 정신증, 양극성 장애',
+            '약물은 심리치료와 병합할 때 가장 효과적인 경우가 많습니다. 정신과 의사가 적절한 약물과 복용량을 결정할 수 있습니다.'
+          ]
+        },
+        {
+          heading: '장벽 극복하기',
+          paragraphs: [
+            '많은 사람들이 도움을 구하는 것을 주저합니다. 일반적인 장벽과 극복 방법:'
+          ]
+        },
+        {
+          heading: '장벽 1: 낙인',
+          paragraphs: [
+            '"정신건강 치료를 받으면 약하다고 생각될까봐"',
+            '극복: 도움을 구하는 것은 강함의 표시입니다. 신체 건강을 위해 의사를 만나는 것처럼 정신건강도 마찬가지입니다.'
+          ]
+        },
+        {
+          heading: '장벽 2: 비용',
+          paragraphs: [
+            '"너무 비싸다"',
+            '극복: 위의 저렴한 옵션 탐색. 치료하지 않은 정신건강 문제의 장기적 비용이 더 클 수 있습니다.'
+          ]
+        },
+        {
+          heading: '장벽 3: 시간',
+          paragraphs: [
+            '"너무 바빠서"',
+            '극복: 정신건강은 우선순위입니다. 저녁이나 주말 약속, 온라인 치료 옵션을 찾아보세요.'
+          ]
+        },
+        {
+          heading: '장벽 4: 부정',
+          paragraphs: [
+            '"그렇게 나쁘지 않아"',
+            '극복: 문제가 악화되기 전에 조기 개입이 더 효과적입니다.'
+          ]
+        },
+        {
+          heading: '회복의 여정',
+          paragraphs: [
+            '치료는 마법이 아닙니다. 시간, 노력, 인내가 필요합니다.',
+            '진전은 직선적이지 않습니다. 좋은 날과 어려운 날이 있을 것입니다.',
+            '그러나 적절한 지원으로 회복은 가능합니다. 수백만 명의 사람들이 정신건강 치료를 통해 더 행복하고 건강한 삶을 살고 있습니다.',
+            '도움을 구하는 첫걸음이 가장 어렵습니다. 하지만 그 한 걸음이 당신의 삶을 바꿀 수 있습니다.'
+          ]
+        }
+      ],
+      en: [],
+      ja: [],
+      zh: []
+    },
+    tags: ['정신건강', '치료', '상담', '심리치료', '도움구하기'],
+    sources: [
+      {
+        name: 'My Mental Health: Do I Need Help?',
+        organization: 'National Institute of Mental Health (NIMH)',
+        url: 'https://www.nimh.nih.gov/health/publications/my-mental-health-do-i-need-help',
+        accessDate: '2025-11-01'
+      },
+      {
+        name: 'Psychotherapies',
+        organization: 'National Institute of Mental Health (NIMH)',
+        url: 'https://www.nimh.nih.gov/health/topics/psychotherapies',
+        accessDate: '2025-11-01'
+      },
+      {
+        name: 'How to Choose a Psychologist',
+        organization: 'American Psychological Association',
+        url: 'https://www.apa.org/topics/therapy/choose-therapist',
+        accessDate: '2025-11-01'
+      }
+    ],
+    recommendedProducts: [
+      {
+        title: {
+          ko: '심리치료 받기 전에 알아야 할 것들',
+          en: 'What You Need to Know Before Therapy',
+          ja: '心理療法を受ける前に知っておくべきこと',
+          zh: '接受心理治疗前需要了解的事项'
+        },
+        description: {
+          ko: '치료를 시작하기 전 알아두면 좋은 정보와 현명한 선택을 위한 가이드',
+          en: 'Essential information and guide for making wise therapy choices',
+          ja: '治療を始める前に知っておくべき情報と賢明な選択のためのガイド',
+          zh: '开始治疗前应了解的信息和明智选择指南'
+        },
+        price: 18500,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0qoLv',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail-product-api/A00077021/1027461/1793831/main/9788920031229_L.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '나는 정신과 의사입니다',
+          en: 'I Am a Psychiatrist',
+          ja: '私は精神科医です',
+          zh: '我是精神科医生'
+        },
+        description: {
+          ko: '정신과 의사가 들려주는 정신건강 치료의 모든 것',
+          en: 'Everything about mental health treatment from a psychiatrist',
+          ja: '精神科医が語る精神健康治療のすべて',
+          zh: '精神科医生讲述的心理健康治疗全貌'
+        },
+        price: 16800,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0qo08',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/rs_quotation_api/ialytcgh/ad346763501349a68f93e851cabf5912.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '상담의 기술',
+          en: 'The Art of Counseling',
+          ja: 'カウンセリングの技術',
+          zh: '咨询的艺术'
+        },
+        description: {
+          ko: '효과적인 상담을 위한 전문가의 노하우와 실전 가이드',
+          en: 'Expert know-how and practical guide for effective counseling',
+          ja: '効果的なカウンセリングのための専門家のノウハウと実践ガイド',
+          zh: '有效咨询的专家诀窍和实践指南'
+        },
+        price: 24500,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0qpeE',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/3026/d53754078e9e97b491b60d6a8dfbd9db8ecb218a657b88465be617aee9cc.png',
+        category: 'book'
+      }
+    ],
+    lastUpdated: new Date('2025-11-01'),
+    featured: false
+  },
+  // ===== 디지털 웰빙 =====
+  {
+    id: 'article-lifestyle-4',
+    category: 'lifestyle',
+    title: {
+      ko: '디지털 웰빙: 스크린 타임과 정신건강의 균형',
+      en: 'Digital Wellbeing: Balancing Screen Time and Mental Health',
+      ja: 'デジタルウェルビーイング：スクリーンタイムと精神健康のバランス',
+      zh: '数字健康：平衡屏幕时间与心理健康'
+    },
+    summary: {
+      ko: '디지털 기기는 우리 삶의 필수품이지만 과도한 사용은 정신건강에 영향을 줄 수 있습니다. 이 글에서는 건강한 디지털 습관을 만드는 방법을 배웁니다.',
+      en: 'Digital devices are essential to our lives, but excessive use can impact mental health. This article teaches how to create healthy digital habits.',
+      ja: 'デジタルデバイスは生活に不可欠ですが、過度な使用は精神健康に影響を与える可能性があります。この記事では、健康的なデジタル習慣を作る方法を学びます。',
+      zh: '数字设备是我们生活的必需品，但过度使用会影响心理健康。本文教授如何养成健康的数字习惯。'
+    },
+    readTime: 10,
+    content: {
+      ko: [
+        {
+          heading: '디지털 시대의 정신건강',
+          paragraphs: [
+            '평균적으로 사람들은 하루 6-7시간을 스크린 앞에서 보냅니다. 청소년의 50%는 하루 4시간 이상 스크린을 봅니다.',
+            '디지털 기기는 많은 이점을 제공하지만 과도한 사용은 정신건강에 부정적 영향을 줄 수 있습니다.'
+          ]
+        },
+        {
+          heading: '과도한 스크린 타임의 영향',
+          list: {
+            type: 'bullet',
+            items: [
+              '수면 문제: 블루라이트가 멜라토닌 생산을 방해',
+              '불안과 우울증 증가: 특히 소셜미디어 과다 사용',
+              '주의력 감소: 지속적인 알림과 멀티태스킹',
+              '사회적 고립: 대면 상호작용 감소',
+              '신체 활동 부족',
+              '눈의 피로와 두통',
+              'FOMO (Fear of Missing Out): 놓칠까봐 두려움'
+            ]
+          }
+        },
+        {
+          heading: '소셜미디어와 정신건강',
+          paragraphs: [
+            '소셜미디어는 특히 복잡한 영향을 미칩니다:'
+          ]
+        },
+        {
+          heading: '부정적 영향:',
+          list: {
+            type: 'bullet',
+            items: [
+              '사회적 비교: "모두가 나보다 더 행복해 보인다"',
+              '자존감 저하: 좋아요, 팔로워 수에 의존',
+              '사이버 괴롭힘',
+              '현실 왜곡: 완벽하게 큐레이션된 삶만 보임',
+              '중독성: 도파민 보상 시스템',
+              '정치적 양극화와 부정적 뉴스 노출'
+            ]
+          }
+        },
+        {
+          heading: '긍정적 영향:',
+          list: {
+            type: 'bullet',
+            items: [
+              '연결과 커뮤니티 (특히 소외된 그룹)',
+              '정보와 교육 접근',
+              '자기 표현과 창의성',
+              '지원 그룹과 정신건강 리소스'
+            ]
+          }
+        },
+        {
+          paragraphs: [
+            '핵심은 균형입니다. 소셜미디어를 완전히 피할 필요는 없지만 의식적으로 사용해야 합니다.'
+          ]
+        },
+        {
+          heading: '건강한 스크린 타임 습관',
+          list: {
+            type: 'numbered',
+            items: [
+              '스크린 타임 추적: 먼저 현재 사용량 파악. 스마트폰의 디지털 웰빙 기능 활용',
+              '목표 설정: 현실적인 일일 스크린 타임 한도 (예: 레크리에이션 스크린 타임 3시간 이하)',
+              '스크린 프리 존 만들기: 침실, 식탁은 스크린 없는 공간으로',
+              '디지털 커튜: 자기 전 1-2시간은 스크린 보지 않기',
+              '알림 끄기: 중요하지 않은 앱 알림 비활성화',
+              '일괄 처리: 이메일, 메시지를 특정 시간에만 확인',
+              '대체 활동: 스크린 대신 책 읽기, 운동, 취미 활동'
+            ]
+          }
+        },
+        {
+          heading: '소셜미디어 건강하게 사용하기',
+          list: {
+            type: 'bullet',
+            items: [
+              '언팔로우/뮤트: 부정적 감정을 유발하는 계정 제거',
+              '타이머 설정: 앱 사용 시간 제한',
+              '수동적 스크롤 줄이기: 목적 없이 피드 넘기지 않기',
+              '참여 증가: 단순히 보기보다는 의미 있는 상호작용',
+              '현실 체크: 소셜미디어는 하이라이트 릴. 완전한 이야기가 아님',
+              '비교 중단: 자신의 여정에 집중',
+              '정기적 휴식: 주기적으로 소셜미디어 디톡스'
+            ]
+          }
+        },
+        {
+          heading: '디지털 디톡스',
+          paragraphs: [
+            '디지털 디톡스는 일정 기간 디지털 기기 사용을 의도적으로 줄이거나 중단하는 것입니다.'
+          ]
+        },
+        {
+          heading: '디톡스 방법:',
+          list: {
+            type: 'bullet',
+            items: [
+              '미니 디톡스: 하루 저녁이나 주말 아침 스크린 프리',
+              '주말 디톡스: 금요일 저녁부터 일요일 저녁까지',
+              '휴가 디톡스: 휴가 중 스마트폰 최소화',
+              '앱별 디톡스: 특정 앱(예: 소셜미디어)만 중단'
+            ]
+          }
+        },
+        {
+          heading: '성공적인 디톡스 팁:',
+          list: {
+            type: 'bullet',
+            items: [
+              '미리 계획: 언제, 어떻게 할지 결정',
+              '다른 사람에게 알리기: 책임감 증가',
+              '대체 활동 준비: 무엇을 할지 계획',
+              '필요한 연락은 유지: 완전 차단이 아니라 의도적 사용'
+            ]
+          }
+        },
+        {
+          heading: '자녀의 스크린 타임 관리',
+          paragraphs: [
+            '부모를 위한 가이드라인:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              '연령별 권장: 2세 미만은 스크린 노출 피하기, 2-5세는 1시간 이하, 6세 이상은 일관된 제한',
+              '질적 콘텐츠: 교육적이고 연령에 맞는 콘텐츠 선택',
+              '함께 시청: 가능한 한 자녀와 함께 시청하고 대화',
+              '모범 보이기: 부모도 건강한 디지털 습관 실천',
+              '스크린 프리 시간: 가족 식사, 놀이 시간',
+              '침실에서 제외: 수면 향상을 위해',
+              '대화 유지: 온라인에서 무엇을 하는지, 누구와 대화하는지 이야기'
+            ]
+          }
+        },
+        {
+          heading: '기술을 도구로 활용',
+          paragraphs: [
+            '역설적이게도 기술을 사용하여 디지털 웰빙을 개선할 수 있습니다:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              '스크린 타임 앱: 사용 패턴 추적',
+              '집중 모드: 방해 요소 차단',
+              '명상 앱: Calm, Headspace',
+              '운동 앱: 신체 활동 격려',
+              '수면 앱: 수면 패턴 모니터링',
+              '블루라이트 필터: 저녁에 자동 활성화'
+            ]
+          }
+        },
+        {
+          heading: '직장에서의 디지털 경계',
+          paragraphs: [
+            '재택근무 시대에 일과 개인 생활의 경계가 흐려졌습니다:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              '명확한 근무 시간 설정',
+              '퇴근 후 업무 이메일 확인 안 하기',
+              '별도의 업무 기기 또는 프로필 사용',
+              '물리적 경계: 가능하면 별도의 업무 공간',
+              '일과 종료 루틴: 하루를 마무리하는 의식'
+            ]
+          }
+        },
+        {
+          heading: '디지털 웰빙의 징후',
+          paragraphs: [
+            '건강한 디지털 관계를 맺고 있다는 징후:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              '기기 없이 편안함',
+              '대면 관계가 강함',
+              '취미와 관심사가 다양함',
+              '잘 잠',
+              '현재 순간에 존재',
+              '소셜미디어가 기분에 크게 영향 주지 않음',
+              '의도적으로 기술 사용 (무의식적 습관이 아님)'
+            ]
+          }
+        },
+        {
+          heading: '변화 시작하기',
+          paragraphs: [
+            '작게 시작하세요. 한 번에 모든 것을 바꾸려 하지 마세요.',
+            '하나의 습관을 선택하세요 (예: 침실에 휴대폰 두지 않기). 그것이 자동이 될 때까지 연습한 후 다음으로 넘어가세요.',
+            '완벽을 기대하지 마세요. 가끔 과도하게 사용하는 날이 있을 것입니다. 괜찮습니다. 다음 날 다시 시작하세요.',
+            '기술은 도구입니다. 우리가 기술을 통제해야지, 기술이 우리를 통제해서는 안 됩니다.'
+          ]
+        }
+      ],
+      en: [],
+      ja: [],
+      zh: []
+    },
+    tags: ['디지털웰빙', '스크린타임', '소셜미디어', '디지털디톡스', '기술중독'],
+    sources: [
+      {
+        name: 'Digital Wellbeing and Screen Time',
+        organization: 'World Health Organization',
+        url: 'https://www.who.int/europe/publications/i/item/WHO-EURO-2025-12187-51959-79685',
+        accessDate: '2025-11-01'
+      },
+      {
+        name: 'Screen Time and Mental Health',
+        organization: 'Nature Mental Health Research',
+        url: 'https://www.nature.com/articles/s44184-022-00015-6',
+        accessDate: '2025-11-01'
+      },
+      {
+        name: 'Social Media and Youth Mental Health',
+        organization: 'American Psychological Association',
+        url: 'https://www.apa.org/topics/social-media-internet/health-advisory-adolescent-social-media-use',
+        accessDate: '2025-11-01'
+      }
+    ],
+    recommendedProducts: [
+      {
+        title: {
+          ko: '청소년 스마트폰 디톡스',
+          en: 'Teen Smartphone Detox',
+          ja: '青少年スマートフォンデトックス',
+          zh: '青少年智能手机排毒'
+        },
+        description: {
+          ko: '정서건강을 위한 청소년 디지털 중독과 예방의 모든 것',
+          en: 'Complete guide to teen digital addiction and prevention for emotional health',
+          ja: '情緒健康のための青少年デジタル中毒と予防のすべて',
+          zh: '青少年数字成瘾和预防的全面指南'
+        },
+        price: 15900,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0rJn5',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/526461879667769-f3aa8866-4394-46a0-8515-14ccbac8d729.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '디지털 잠시 멈춤',
+          en: 'Digital Pause',
+          ja: 'デジタル一時停止',
+          zh: '数字暂停'
+        },
+        description: {
+          ko: '가장 소중한 것에 커넥트하기 위한 20년 디지털 중독자의 디지털 디톡스 체험',
+          en: '20-year digital addict\'s digital detox experience for connecting to what matters most',
+          ja: '最も大切なものに繋がるための20年デジタル中毒者のデジタルデトックス体験',
+          zh: '20年数字成瘾者的数字排毒体验'
+        },
+        price: 16500,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0rJQG',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/2652889231464589-40b2896a-ee0b-4236-9689-3252a7246882.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '디지털 디톡스가 필요한 시간',
+          en: 'Time for Digital Detox',
+          ja: 'デジタルデトックスが必要な時間',
+          zh: '需要数字排毒的时间'
+        },
+        description: {
+          ko: '내 삶을 아날로그로 채워보는 습관',
+          en: 'Habits for filling your life with analog experiences',
+          ja: '人生をアナログで満たす習慣',
+          zh: '用模拟体验填充生活的习惯'
+        },
+        price: 17800,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0rKpe',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/c9e9/f24a7c38c24ff54c64b6fa25e7684bfb765d0eeedeb79804377befbc0583.jpg',
+        category: 'book'
+      }
+    ],
+    lastUpdated: new Date('2025-11-01'),
+    featured: false
+  },
+  // ===== 자기 돌봄 =====
+  {
+    id: 'article-lifestyle-5',
+    category: 'lifestyle',
+    title: {
+      ko: '자기 돌봄: 정신건강을 위한 일상적 실천',
+      en: 'Self-Care: Daily Practices for Mental Health',
+      ja: 'セルフケア：精神健康のための日常的実践',
+      zh: '自我照顾：心理健康的日常实践'
+    },
+    summary: {
+      ko: '자기 돌봄은 이기적인 것이 아니라 정신건강을 유지하기 위한 필수 활동입니다. 이 글에서는 실천 가능한 자기 돌봄 방법을 배웁니다.',
+      en: 'Self-care is not selfish but essential for maintaining mental health. This article teaches practical self-care methods.',
+      ja: 'セルフケアは利己的ではなく、精神健康を維持するために必要な活動です。この記事では、実践可能なセルフケア方法を学びます。',
+      zh: '自我照顾不是自私，而是维持心理健康的必要活动。本文教授可实践的自我照顾方法。'
+    },
+    readTime: 9,
+    content: {
+      ko: [
+        {
+          heading: '자기 돌봄이란 무엇인가?',
+          paragraphs: [
+            '자기 돌봄(Self-Care)은 신체적, 정신적, 감정적 건강을 유지하고 향상시키기 위해 의도적으로 취하는 행동입니다.',
+            '자기 돌봄은 사치나 이기심이 아닙니다. 지속 가능한 삶을 위한 필수입니다. 비행기의 산소 마스크처럼—다른 사람을 돕기 전에 먼저 자신을 돌봐야 합니다.'
+          ]
+        },
+        {
+          heading: '자기 돌봄의 차원',
+          paragraphs: [
+            '자기 돌봄은 여러 영역을 포함합니다:'
+          ]
+        },
+        {
+          heading: '1. 신체적 자기 돌봄',
+          list: {
+            type: 'bullet',
+            items: [
+              '충분한 수면 (7-9시간)',
+              '영양가 있는 음식 먹기',
+              '규칙적인 운동',
+              '충분한 수분 섭취',
+              '정기 건강 검진',
+              '아플 때 쉬기'
+            ]
+          }
+        },
+        {
+          heading: '2. 정서적 자기 돌봄',
+          list: {
+            type: 'bullet',
+            items: [
+              '감정 인정하고 표현하기',
+              '일기 쓰기',
+              '치료나 상담',
+              '건강한 경계 설정',
+              '자기 연민 실천',
+              '"아니요"라고 말하기'
+            ]
+          }
+        },
+        {
+          heading: '3. 사회적 자기 돌봄',
+          list: {
+            type: 'bullet',
+            items: [
+              '의미 있는 관계 유지',
+              '사랑하는 사람과 시간 보내기',
+              '새로운 사람 만나기',
+              '독성 관계에서 거리 두기',
+              '지원 요청하기',
+              '커뮤니티 참여'
+            ]
+          }
+        },
+        {
+          heading: '4. 정신적/지적 자기 돌봄',
+          list: {
+            type: 'bullet',
+            items: [
+              '새로운 것 배우기',
+              '독서',
+              '창의적 활동',
+              '퍼즐이나 게임',
+              '호기심 추구',
+              '자극적인 대화'
+            ]
+          }
+        },
+        {
+          heading: '5. 영적 자기 돌봄',
+          list: {
+            type: 'bullet',
+            items: [
+              '명상이나 기도',
+              '자연에서 시간 보내기',
+              '가치관 성찰',
+              '의미와 목적 찾기',
+              '감사 연습',
+              '마음챙김'
+            ]
+          }
+        },
+        {
+          heading: '일상에 자기 돌봄 통합하기',
+          paragraphs: [
+            '자기 돌봄은 스파 데이나 큰 이벤트일 필요가 없습니다. 작은 일상적 실천이 더 중요합니다:'
+          ]
+        },
+        {
+          heading: '아침 루틴',
+          list: {
+            type: 'bullet',
+            items: [
+              '스마트폰 확인 전에 10분 마음챙김이나 스트레칭',
+              '건강한 아침 식사',
+              '긍정적인 의도 설정',
+              '감사한 것 3가지 적기'
+            ]
+          }
+        },
+        {
+          heading: '하루 중',
+          list: {
+            type: 'bullet',
+            items: [
+              '규칙적인 휴식 (2시간마다 5-10분)',
+              '점심시간에 산책',
+              '수분 섭취',
+              '심호흡 연습',
+              '작은 기쁨 찾기 (좋아하는 음악, 햇빛, 좋은 대화)'
+            ]
+          }
+        },
+        {
+          heading: '저녁 루틴',
+          list: {
+            type: 'bullet',
+            items: [
+              '스크린 타임 줄이기 (자기 1시간 전)',
+              '긴장 풀기 활동 (독서, 목욕, 부드러운 음악)',
+              '내일 준비 (옷, 가방)',
+              '감사 일기',
+              '일관된 취침 시간'
+            ]
+          }
+        },
+        {
+          heading: '자기 돌봄의 장벽',
+          paragraphs: [
+            '많은 사람들이 자기 돌봄을 실천하기 어려워합니다. 일반적인 장벽과 해결책:'
+          ]
+        },
+        {
+          heading: '장벽 1: "시간이 없어"',
+          paragraphs: [
+            '해결: 자기 돌봄은 시간을 찾는 것이 아니라 만드는 것입니다. 5분도 충분합니다. 양치질처럼 협상 불가능한 일정에 포함시키세요.'
+          ]
+        },
+        {
+          heading: '장벽 2: "이기적인 것 같아"',
+          paragraphs: [
+            '해결: 자기 돌봄은 이기적이지 않습니다. 스스로를 돌볼 때 다른 사람을 더 잘 돌볼 수 있습니다. 빈 컵으로는 다른 컵을 채울 수 없습니다.'
+          ]
+        },
+        {
+          heading: '장벽 3: "어떻게 시작해야 할지 모르겠어"',
+          paragraphs: [
+            '해결: 작게 시작하세요. 하나의 간단한 습관 선택 (예: 매일 5분 산책). 그것이 자동이 될 때까지 연습하고 점진적으로 추가하세요.'
+          ]
+        },
+        {
+          heading: '장벽 4: "돈이 들어"',
+          paragraphs: [
+            '해결: 대부분의 자기 돌봄은 무료입니다. 산책, 심호흡, 스트레칭, 친구와 대화, 일기 쓰기—모두 무료입니다.'
+          ]
+        },
+        {
+          heading: '자기 돌봄 vs 자기 방종',
+          paragraphs: [
+            '자기 돌봄과 자기 방종을 구별하는 것이 중요합니다:'
+          ]
+        },
+        {
+          heading: '자기 돌봄:',
+          paragraphs: [
+            '• 장기적 웰빙에 기여',
+            '• 의도적이고 계획적',
+            '• 나중에 더 기분 좋게 느낌',
+            '• 예: 충분한 수면, 건강한 식사, 운동'
+          ]
+        },
+        {
+          heading: '자기 방종:',
+          paragraphs: [
+            '• 즉각적 만족',
+            '• 충동적',
+            '• 나중에 죄책감이나 후회',
+            '• 예: 과식, 과음, 과도한 쇼핑',
+            '때로는 자기 방종도 괜찮습니다. 하지만 그것이 자기 돌봄을 대체해서는 안 됩니다.'
+          ]
+        },
+        {
+          heading: '자기 돌봄 계획 만들기',
+          paragraphs: [
+            '개인화된 자기 돌봄 계획을 만드세요:'
+          ],
+          list: {
+            type: 'numbered',
+            items: [
+              '현재 상태 평가: 어떤 영역(신체적, 정서적, 사회적 등)이 부족한가?',
+              '활동 목록: 각 차원에서 당신에게 효과가 있는 것 브레인스토밍',
+              '우선순위: 가장 영향력 있는 2-3가지 선택',
+              '일정 잡기: 캘린더에 구체적으로 언제 할지 기입',
+              '책임감: 친구에게 말하거나 리마인더 설정',
+              '조정: 효과 없으면 다른 것 시도. 자기 돌봄은 개인적'
+            ]
+          }
+        },
+        {
+          heading: '긴급 상황의 자기 돌봄',
+          paragraphs: [
+            '스트레스가 높거나 위기 상황에서는 자기 돌봄이 더욱 중요하지만 더 어렵습니다. 기본에 집중하세요:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              '먹기: 간단하고 영양가 있는 것',
+              '자기: 가능한 한',
+              '움직이기: 짧은 산책이라도',
+              '연결: 한 사람에게라도 연락',
+              '호흡: 하루에 여러 번 심호흡',
+              '친절: 자신에게 연민 베풀기'
+            ]
+          }
+        },
+        {
+          heading: '자기 돌봄의 장기적 이점',
+          paragraphs: [
+            '일관된 자기 돌봄 실천의 이점:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              '스트레스와 불안 감소',
+              '기분과 에너지 향상',
+              '더 나은 신체 건강',
+              '향상된 관계',
+              '증가된 생산성과 집중력',
+              '더 큰 회복탄력성',
+              '전반적인 삶의 질 향상'
+            ]
+          }
+        },
+        {
+          heading: '시작하세요',
+          paragraphs: [
+            '자기 돌봄은 하나의 목적지가 아니라 지속적인 연습입니다.',
+            '완벽을 추구하지 마세요. 어떤 날은 모든 것을 할 수 있고, 어떤 날은 생존만 해도 괜찮습니다.',
+            '자기 돌봄에 투자하는 것은 자신에게 투자하는 것입니다. 당신은 그럴 가치가 있습니다.',
+            '오늘 작은 한 가지로 시작하세요. 5분 산책? 좋아하는 차 한 잔? 친구에게 문자? 무엇이든 괜찮습니다. 시작이 중요합니다.'
+          ]
+        }
+      ],
+      en: [],
+      ja: [],
+      zh: []
+    },
+    tags: ['자기돌봄', '셀프케어', '정신건강', '웰빙', '일상습관'],
+    sources: [
+      {
+        name: 'Caring for Your Mental Health',
+        organization: 'National Institute of Mental Health (NIMH)',
+        url: 'https://www.nimh.nih.gov/health/topics/caring-for-your-mental-health',
+        accessDate: '2025-11-01'
+      },
+      {
+        name: 'Self-Care',
+        organization: 'World Health Organization',
+        url: 'https://www.who.int/news-room/events/detail/2025/06/24/default-calendar/self-care-month-2025',
+        accessDate: '2025-11-01'
+      },
+      {
+        name: 'The Importance of Self-Care',
+        organization: 'Mental Health America',
+        url: 'https://www.mhanational.org/taking-good-care-yourself',
+        accessDate: '2025-11-01'
+      }
+    ],
+    recommendedProducts: [
+      {
+        title: {
+          ko: '나를 돌보는 시간',
+          en: 'Time for Self-Care',
+          ja: '自分を大切にする時間',
+          zh: '照顾自己的时间'
+        },
+        description: {
+          ko: '아무도 모르는 내 마음의 소리를 듣는 시간',
+          en: 'Time to listen to the voice of your heart that no one knows',
+          ja: '誰も知らない心の声を聞く時間',
+          zh: '倾听无人知晓的内心声音的时间'
+        },
+        price: 14800,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0rKTS',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/2018/08/22/16/2/8028a1ce-53e8-4720-8971-ecb59306176d.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '컴패셔닛 캐피털리즘',
+          en: 'Compassionate Capitalism',
+          ja: 'コンパッショネート・キャピタリズム',
+          zh: '同情心资本主义'
+        },
+        description: {
+          ko: '더불어 사는 자본주의, 스스로를 돌보며 성장하는 방법',
+          en: 'Capitalism that lives together, growing while taking care of yourself',
+          ja: '共に生きる資本主義、自分を大切にしながら成長する方法',
+          zh: '共同生活的资本主义，照顾自己同时成长的方法'
+        },
+        price: 19200,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0rLqa',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/3033948054545800-6dc2c0f4-0f99-4f0a-885f-214e433fddbc.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '자기 돌봄',
+          en: 'Self-Care',
+          ja: 'セルフケア',
+          zh: '自我照顾'
+        },
+        description: {
+          ko: '누구보다 사랑하고 싶은 나를 위한 자기 치유법',
+          en: 'Self-healing method for the person you want to love most',
+          ja: '誰よりも愛したい自分のための自己治癒法',
+          zh: '为最想爱的自己准备的自我治愈法'
+        },
+        price: 16500,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0rLKy',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/2018/04/13/15/8/c2906342-245d-40fb-a9df-d6264477fade.jpg',
+        category: 'book'
+      }
+    ],
+    lastUpdated: new Date('2025-11-01'),
+    featured: false
+  },
+
+  // ===== 청소년 정신건강 (Adolescent Health) =====
+  {
+    id: 'article-adolescent-1',
+    category: 'adolescent',
+    title: {
+      ko: '청소년 우울증: 10대의 마음을 이해하고 돕기',
+      en: 'Adolescent Depression: Understanding and Supporting Teens',
+      ja: '青少年のうつ病：10代の心を理解し支援する',
+      zh: '青少年抑郁症：理解和帮助青少年'
+    },
+    summary: {
+      ko: '청소년기 우울증은 단순한 사춘기가 아닙니다. 미국에서는 5명 중 1명의 청소년이 주요 우울증을 경험하며, 한국 청소년의 우울감 경험률도 27.7%에 달합니다. 청소년 우울증의 특징, 증상, 그리고 효과적인 도움 방법을 알아봅니다.',
+      en: 'Adolescent depression is more than just teenage mood swings. Learn about the signs, symptoms, and effective ways to help.',
+      ja: '青少年期のうつ病は単なる思春期ではありません。特徴、症状、効果的な支援方法について学びます。',
+      zh: '青少年抑郁症不仅仅是青春期情绪波动。了解特征、症状和有效的帮助方法。'
+    },
+    readTime: 14,
+    content: {
+      ko: [
+        {
+          heading: '청소년 우울증이란?',
+          paragraphs: [
+            '청소년 우울증은 단순히 기분이 나쁜 것을 넘어서는 심각한 정신건강 상태입니다. 미국 국립정신건강연구소(NIMH)에 따르면, 2021년 기준 12-17세 청소년 중 약 20%(5명 중 1명)가 주요 우울증 에피소드를 경험했습니다.',
+            '한국의 상황은 더욱 심각합니다. 2024년 청소년건강행태조사에 따르면, 청소년의 우울감 경험률이 27.7%로 전년 대비 증가했으며, 스트레스 인지율은 42.3%로 20년 조사 이래 최대 증가폭을 기록했습니다.',
+            '특히 주목할 점은 청소년 우울증이 13년 연속 청소년 사망 원인 1위인 자살과 밀접하게 연관되어 있다는 것입니다. 2023년 기준 청소년 10만 명당 11.7명이 자살로 사망했습니다.'
+          ]
+        },
+        {
+          heading: '청소년 우울증의 특별한 점',
+          paragraphs: [
+            '청소년 우울증은 성인 우울증과 다른 특징을 보입니다. 청소년들은 슬픔보다는 짜증, 분노, 적대감으로 우울증을 표현하는 경우가 많습니다. "왜 항상 화가 나 있니?"라는 질문이 실제로는 우울증의 신호일 수 있습니다.',
+            '또한 청소년들은 신체 증상으로 호소하는 경우가 많습니다. 두통, 복통, 피로감 등이 반복되지만 의학적으로 명확한 원인을 찾을 수 없다면 우울증을 의심해볼 필요가 있습니다.'
+          ]
+        },
+        {
+          heading: '주요 증상과 경고 신호',
+          paragraphs: [
+            '청소년 우울증의 주요 증상들을 인식하는 것이 중요합니다:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              '지속적인 슬픔, 공허감, 또는 과도한 짜증',
+              '이전에 즐기던 활동(게임, 운동, 친구 만남)에 대한 흥미 상실',
+              '수면 패턴의 큰 변화 - 너무 많이 자거나 불면증',
+              '식욕과 체중의 현저한 변화',
+              '집중력 저하와 학업 성적 하락',
+              '자살이나 죽음에 대한 생각이나 언급',
+              '자해 행동',
+              '친구들로부터의 고립',
+              '에너지 부족과 지속적인 피로감'
+            ]
+          }
+        },
+        {
+          heading: '왜 청소년들이 더 취약한가?',
+          paragraphs: [
+            '청소년기는 뇌가 급격히 발달하는 시기이며, 특히 감정 조절을 담당하는 전전두엽 피질이 아직 완전히 성숙하지 않았습니다. 이는 청소년들이 스트레스에 더 취약하고 감정적 반응이 더 강렬할 수 있음을 의미합니다.',
+            '한국 청소년의 경우 특히 학업 스트레스가 주요 요인입니다. 2025년 조사에 따르면 12-17세의 62.0%가 스트레스를 느끼며, 학업 부담이 주요 원인으로 지적되었습니다.',
+            '또한 소셜미디어의 영향도 큽니다. 2007년부터 2023년까지 사이버불링을 경험한 청소년 비율이 18.8%에서 54.6%로 두 배 이상 증가했으며, 이는 우울증 위험을 크게 높입니다.'
+          ]
+        },
+        {
+          heading: '부모와 교사가 할 수 있는 것',
+          paragraphs: [
+            '청소년 우울증에 대처하는 가장 중요한 첫 걸음은 대화입니다. 하지만 "왜 그러니?" "네가 뭐가 힘들어?"와 같은 질문은 오히려 역효과를 낼 수 있습니다.'
+          ],
+          list: {
+            type: 'numbered',
+            items: [
+              '판단하지 않고 경청하기: "요즘 많이 힘들어 보이는데, 내가 도울 수 있는 게 있을까?" 같은 열린 질문으로 시작하세요.',
+              '일상 유지하기: 규칙적인 식사, 수면, 운동 루틴을 함께 지키도록 도와주세요.',
+              '작은 목표 설정: 한 번에 하나씩, 달성 가능한 작은 목표를 함께 세워보세요.',
+              '전문가 도움 구하기: 증상이 2주 이상 지속되거나 자해/자살 생각이 있다면 즉시 정신건강 전문가의 도움을 받아야 합니다.',
+              '학교와 협력하기: 담임교사나 상담교사와 소통하여 학교에서도 적절한 지원을 받을 수 있도록 합니다.'
+            ]
+          }
+        },
+        {
+          heading: '효과적인 치료 방법',
+          paragraphs: [
+            '청소년 우울증은 치료 가능한 질환입니다. 연구에 따르면 적절한 치료를 받은 청소년의 약 60-70%가 상당한 호전을 보입니다.',
+            '인지행동치료(CBT)는 청소년 우울증 치료에 가장 효과적인 것으로 입증된 심리치료입니다. CBT는 청소년들이 부정적인 사고 패턴을 인식하고 바꾸도록 돕습니다.',
+            '중등도에서 중증 우울증의 경우, 항우울제 약물 치료가 필요할 수 있습니다. 2016년부터 2022년 사이 12-25세의 항우울제 처방률이 66.3% 증가했으며, 이는 치료에 대한 접근성이 개선되고 있음을 보여줍니다.',
+            '가족치료도 중요한 역할을 합니다. 가족 구성원들이 청소년의 우울증을 이해하고 지지하는 방법을 배우는 것이 회복에 큰 도움이 됩니다.'
+          ]
+        },
+        {
+          heading: '청소년 스스로 할 수 있는 것',
+          paragraphs: [
+            '만약 당신이 우울증을 겪고 있는 청소년이라면, 다음을 기억하세요:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              '혼자가 아닙니다: 5명 중 1명이 같은 경험을 하고 있으며, 도움을 구하는 것은 약함이 아니라 용기입니다.',
+              '신뢰할 수 있는 어른에게 말하기: 부모, 교사, 상담교사, 또는 다른 믿을 수 있는 어른에게 당신의 감정을 공유하세요.',
+              '규칙적인 생활 유지: 가능한 한 같은 시간에 자고 일어나며, 하루에 세 끼를 먹으려 노력하세요.',
+              '신체 활동: 하루 20-30분의 가벼운 운동(산책, 스트레칭)도 기분 개선에 도움이 됩니다.',
+              '위기 상황 시: 자살 생각이 들 때는 즉시 1388(청소년사이버상담센터), 1577-0199(희망의 전화), 또는 109(자살예방상담전화)로 전화하세요.'
+            ]
+          }
+        },
+        {
+          heading: '예방과 조기 발견의 중요성',
+          paragraphs: [
+            '청소년 우울증은 예방이 가능하며, 조기 발견이 핵심입니다. 학교와 가정에서 정기적인 정신건강 검진을 실시하고, 청소년들이 자신의 감정을 편하게 표현할 수 있는 환경을 만드는 것이 중요합니다.',
+            '미국소아과학회(AAP)는 12세 이상의 모든 청소년에게 매년 우울증 선별검사를 권장하고 있습니다. 한국에서도 학교 기반 정신건강 검진이 확대되고 있으며, 이는 조기 발견과 개입에 큰 도움이 됩니다.',
+            '청소년 우울증은 방치하면 성인기까지 이어질 수 있으며, 학업 중단, 약물 남용, 자살 위험을 높입니다. 하지만 적절한 도움을 받으면 대부분의 청소년이 회복되고 건강한 성인으로 성장할 수 있습니다.'
+          ]
+        }
+      ],
+      en: [],
+      ja: [],
+      zh: []
+    },
+    tags: ['청소년', '우울증', '10대', '정신건강', '자살예방', '학업스트레스'],
+    sources: [
+      {
+        name: 'Child and Adolescent Mental Health',
+        organization: 'National Institute of Mental Health (NIMH)',
+        url: 'https://www.nimh.nih.gov/health/topics/child-and-adolescent-mental-health',
+        accessDate: '2025-11-01'
+      },
+      {
+        name: 'Mental Health for Adolescents',
+        organization: 'HHS Office of Population Affairs',
+        url: 'https://opa.hhs.gov/adolescent-health/mental-health-adolescents',
+        accessDate: '2025-11-01'
+      },
+      {
+        name: '청소년 정신건강 악화... 스트레스 많다 증가폭, 20년 조사 이래 최대',
+        organization: '한국일보',
+        url: 'https://www.hankookilbo.com/News/Read/A2024112213240001979',
+        accessDate: '2025-11-01'
+      },
+      {
+        name: 'Advances in the prevalence and treatment of depression for adolescents',
+        organization: 'PMC - National Library of Medicine',
+        url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC12096414/',
+        accessDate: '2025-11-01'
+      }
+    ],
+    recommendedProducts: [
+      {
+        title: {
+          ko: '10대의 뇌',
+          en: 'The Teenage Brain',
+          ja: '10代の脳',
+          zh: '青少年的大脑'
+        },
+        description: {
+          ko: '인간의 뇌는 어떻게 성장하는가, 청소년기 뇌 발달의 모든 것',
+          en: 'How the human brain grows - everything about teenage brain development',
+          ja: '人間の脳はどのように成長するか、青少年期の脳発達のすべて',
+          zh: '人类大脑如何成长 - 青少年大脑发育的一切'
+        },
+        price: 17900,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0rOqq',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail-product-api/A00077021/1896299/3100744/main/9788901228761_L.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '중2병이 아니라 우울증입니다',
+          en: 'It\'s Not Middle School Syndrome, It\'s Depression',
+          ja: '中二病ではなくうつ病です',
+          zh: '不是中二病，是抑郁症'
+        },
+        description: {
+          ko: '청소년 우울증에서 완벽하게 벗어나는 법',
+          en: 'How to completely overcome adolescent depression',
+          ja: '青少年うつ病から完全に抜け出す方法',
+          zh: '如何完全摆脱青少年抑郁症'
+        },
+        price: 15500,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0rOR2',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/438460722140803-962b9711-d43f-4212-8426-8ca085592e12.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '사춘기라 그런 게 아니라 우울해서 그런 거예요',
+          en: 'It\'s Not Puberty, It\'s Depression',
+          ja: '思春期だからではなく憂鬱だからです',
+          zh: '不是青春期，是抑郁'
+        },
+        description: {
+          ko: '십 대들의 우울한 마음을 보듬어주고 자존감을 키우는 법',
+          en: 'How to comfort the depressed hearts of teens and build self-esteem',
+          ja: '十代の憂鬱な心を慰め自尊心を育てる方法',
+          zh: '如何安慰青少年的抑郁心灵并建立自尊'
+        },
+        price: 16800,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0rPa4',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/accc/0ffe20273960c3fb61932bfb9af9dab24a34ccc0dcee7c5bd02b9354fe89.jpg',
+        category: 'book'
+      }
+    ],
+    lastUpdated: new Date('2025-11-01'),
+    featured: false
+  },
+  {
+    id: 'article-adolescent-2',
+    category: 'adolescent',
+    title: {
+      ko: '청소년 학업 스트레스: 건강하게 관리하는 법',
+      en: 'Academic Stress in Teens: Healthy Management Strategies',
+      ja: '青少年の学業ストレス：健康的な管理方法',
+      zh: '青少年学业压力：健康管理方法'
+    },
+    summary: {
+      ko: '한국 청소년의 62%가 학업 스트레스를 경험하며, 이는 OECD 국가 중 최하위 수준의 행복도로 이어집니다. 학업 스트레스를 건강하게 관리하는 실질적인 방법과, 부모와 교사가 지원할 수 있는 방법을 알아봅니다.',
+      en: '62% of Korean teens experience academic stress. Learn practical strategies to manage it healthily.',
+      ja: '韓国の青少年の62%が学業ストレスを経験しています。健康的に管理する実践的な方法を学びます。',
+      zh: '62%的韩国青少年经历学业压力。学习健康管理的实用方法。'
+    },
+    readTime: 13,
+    content: {
+      ko: [
+        {
+          heading: '한국 청소년의 학업 스트레스 실태',
+          paragraphs: [
+            '2025년 조사에 따르면, 12-17세 한국 청소년의 62.0%가 스트레스를 느끼며, 학업 부담이 주요 원인으로 지적되었습니다. 전체 청소년의 스트레스 인지율은 42.3%로, 전년 대비 5%포인트 증가하여 20년 조사 이래 최대 증가폭을 기록했습니다.',
+            '더욱 심각한 것은 한국 청소년의 행복 수준이 OECD 국가 중 최하위권이라는 점입니다. 2025년 기준 고등학생의 71.9%가 낮은 행복감을 느끼며, 학업과 사회적 기대를 동시에 받는 것이 주요 원인으로 분석됩니다.',
+            '학업 스트레스는 단순히 "공부가 힘들다"는 수준을 넘어 청소년의 전반적인 정신건강을 위협합니다. 13년 연속 청소년 사망 원인 1위가 자살이며, 2023년 기준 10만 명당 11.7명이 자살로 사망했습니다.'
+          ]
+        },
+        {
+          heading: '학업 스트레스가 몸과 마음에 미치는 영향',
+          paragraphs: [
+            '학업 스트레스는 다양한 방식으로 청소년의 건강에 영향을 미칩니다:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              '신체 증상: 두통, 복통, 근육 긴장, 수면 장애, 식욕 변화',
+              '정서적 증상: 불안, 우울, 짜증, 무기력, 집중력 저하',
+              '행동 변화: 성적 하락 (역설적으로), 친구 관계 소홀, 취미 활동 포기',
+              '장기적 영향: 번아웃, 만성 불안장애, 우울증, 자존감 저하'
+            ]
+          }
+        },
+        {
+          paragraphs: [
+            '특히 주목할 점은 "과도한 공부가 오히려 성적을 떨어뜨린다"는 연구 결과입니다. 만성적인 스트레스는 기억과 학습을 담당하는 해마를 손상시켜 학습 효율을 떨어뜨립니다.'
+          ]
+        },
+        {
+          heading: '학업 스트레스의 주요 원인',
+          paragraphs: [
+            '한국 청소년들이 경험하는 학업 스트레스의 주요 원인을 이해하는 것이 해결의 첫걸음입니다:'
+          ],
+          list: {
+            type: 'numbered',
+            items: [
+              '과도한 학업량과 사교육: 학교 수업 후 학원으로 이어지는 긴 학습 시간',
+              '입시 경쟁: 대입을 향한 치열한 경쟁과 "한 번의 기회"라는 인식',
+              '부모의 기대: 부모의 높은 기대와 성적에 대한 압박',
+              '비교와 평가: 끊임없는 등수와 성적 비교',
+              '진로 불확실성: "좋은 대학=성공적인 인생"이라는 사회적 믿음',
+              '시간 부족: 수면, 운동, 여가 시간의 부족',
+              '자율성 결여: 스스로 선택할 수 있는 영역의 부재'
+            ]
+          }
+        },
+        {
+          heading: '청소년 스스로 할 수 있는 스트레스 관리법',
+          paragraphs: [
+            '학업 스트레스를 완전히 없앨 수는 없지만, 건강하게 관리하는 것은 가능합니다. 다음은 연구로 입증된 효과적인 방법들입니다:'
+          ]
+        },
+        {
+          heading: '1. 시간 관리와 우선순위 설정',
+          list: {
+            type: 'bullet',
+            items: [
+              '포모도로 기법: 25분 집중 + 5분 휴식을 반복. 연구에 따르면 집중력과 학습 효율이 향상됩니다.',
+              '중요도-긴급도 매트릭스: 모든 일을 다 완벽하게 할 수 없습니다. 중요하고 긴급한 것부터 하세요.',
+              '현실적 목표 설정: "오늘은 수학 5문제만 풀자" 같은 달성 가능한 작은 목표를 세우세요.',
+              '멀티태스킹 피하기: 한 번에 하나씩. 동시에 여러 과목을 하면 효율이 40% 떨어집니다.'
+            ]
+          }
+        },
+        {
+          heading: '2. 신체 건강 챙기기',
+          list: {
+            type: 'bullet',
+            items: [
+              '충분한 수면: 청소년은 하루 8-10시간의 수면이 필요합니다. 수면이 1시간 부족하면 인지 능력이 2년 뒤처진 것과 같은 영향을 받습니다.',
+              '규칙적인 운동: 하루 30분의 중등도 운동은 스트레스 호르몬을 줄이고 기분을 개선합니다. 산책, 자전거, 댄스 등 즐길 수 있는 것으로 충분합니다.',
+              '건강한 식습관: 아침을 거르지 말고, 과도한 카페인(에너지 드링크, 커피)을 피하세요. 뇌는 안정적인 혈당이 필요합니다.',
+              '규칙적인 식사 시간: 일정한 시간에 식사하면 신체 리듬이 안정되고 스트레스 반응이 줄어듭니다.'
+            ]
+          }
+        },
+        {
+          heading: '3. 정서적 대처 전략',
+          list: {
+            type: 'bullet',
+            items: [
+              '호흡 운동: 4초 들이마시고, 4초 멈추고, 4초 내쉬기. 시험 전이나 불안할 때 즉시 효과가 있습니다.',
+              '완벽주의 버리기: "100점 아니면 의미 없다"는 생각을 "최선을 다했으면 충분하다"로 바꾸세요.',
+              '긍정적 자기 대화: "나는 못해"가 아니라 "아직 못하지만 노력하고 있어"라고 말하세요.',
+              '감정 일기: 하루 5분, 자신의 감정을 쓰는 것만으로도 스트레스가 감소합니다.'
+            ]
+          }
+        },
+        {
+          heading: '4. 사회적 지지 활용',
+          paragraphs: [
+            '혼자 견디지 마세요. 연구에 따르면 사회적 지지는 스트레스의 부정적 영향을 50% 이상 완화합니다:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              '친구와 대화하기: 같은 고민을 하는 친구들과 나누면 "나만 그런 게 아니구나"라는 안도감을 얻습니다.',
+              '부모님과 솔직하게 대화: "성적이 걱정되요"보다 "요즘 스트레스가 많아서 힘들어요"라고 감정을 표현하세요.',
+              '상담 선생님 찾기: 학교 상담교사나 Wee센터를 이용하세요. 비밀이 보장됩니다.',
+              '온라인 지원: 1388 청소년사이버상담센터에서 24시간 채팅 상담을 제공합니다.'
+            ]
+          }
+        },
+        {
+          heading: '부모가 할 수 있는 것',
+          paragraphs: [
+            '부모의 역할은 압박이 아니라 지지입니다. 다음은 연구 기반의 효과적인 부모 역할입니다:'
+          ],
+          list: {
+            type: 'numbered',
+            items: [
+              '성적보다 노력 인정하기: "왜 90점밖에 못 받았어?"가 아니라 "열심히 공부했구나, 수고했어"',
+              '현실적 기대 갖기: 모든 아이가 서울대에 갈 수는 없습니다. 내 아이의 강점과 관심사를 존중하세요.',
+              '휴식 권장하기: "공부 좀 쉬어"라는 말이 때로는 "공부해"보다 중요합니다.',
+              '함께 시간 보내기: 일주일에 한 번, 공부와 관계없는 대화를 나누세요. "오늘 학교에서 재미있었던 일 있어?"',
+              '스트레스 신호 알아차리기: 수면 패턴 변화, 식욕 감소, 친구 만남 감소 등을 주의 깊게 관찰하세요.',
+              '진로 다양성 인정: "명문대만이 성공의 길이 아니다"를 보여주세요. 다양한 직업과 진로를 함께 탐색하세요.'
+            ]
+          }
+        },
+        {
+          heading: '학교와 교육 시스템의 역할',
+          paragraphs: [
+            '개인의 노력만으로는 한계가 있습니다. 학교와 사회의 변화도 필요합니다:',
+            '과도한 학업량 조정: 연구에 따르면 하루 2시간 이상의 숙제는 학습 효과가 없으며 오히려 스트레스만 증가시킵니다.',
+            '정신건강 교육 강화: 많은 국가에서 정신건강을 정규 교과로 가르칩니다. 한국도 확대가 필요합니다.',
+            '상담 인력 확충: 한국의 학교상담사 1인당 학생 수는 OECD 평균의 2배입니다.',
+            '평가 방식 다양화: 단일 시험이 아닌 과정 평가, 프로젝트 기반 학습 등 다양한 평가 방식이 스트레스를 줄입니다.'
+          ]
+        },
+        {
+          heading: '위기 상황: 언제 전문가 도움이 필요한가?',
+          paragraphs: [
+            '다음 증상이 2주 이상 지속되면 반드시 전문가의 도움을 받아야 합니다:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              '자살이나 자해에 대한 생각',
+              '극심한 불안으로 학교에 가지 못함',
+              '공황 발작 (갑작스러운 심한 불안, 호흡곤란, 심장 두근거림)',
+              '우울증 증상 (2주 이상의 우울한 기분, 흥미 상실)',
+              '수면 장애 (잠들지 못하거나 과도하게 잠)',
+              '식욕 변화와 급격한 체중 변화',
+              '학업 성적의 급격한 하락',
+              '친구들과 완전히 단절'
+            ]
+          }
+        },
+        {
+          paragraphs: [
+            '위기 상황 시 연락처: 1388(청소년사이버상담센터), 1577-0199(희망의 전화), 109(자살예방상담전화), 지역 청소년상담복지센터'
+          ]
+        },
+        {
+          heading: '건강한 학업 문화를 위하여',
+          paragraphs: [
+            '학업 스트레스는 개인의 문제가 아니라 사회 구조적 문제입니다. "공부는 중요하지만 건강보다 중요하지 않다"는 인식의 전환이 필요합니다.',
+            '핀란드, 덴마크 같은 교육 선진국들은 학업 부담을 줄이고 학생들의 행복과 창의성을 높였을 때 오히려 학업 성취도가 향상되었습니다.',
+            '당신의 가치는 성적으로 결정되지 않습니다. 당신은 시험 점수 이상의 존재입니다. 스트레스를 건강하게 관리하면서 자신만의 속도로 나아가세요.'
+          ]
+        }
+      ],
+      en: [],
+      ja: [],
+      zh: []
+    },
+    tags: ['학업스트레스', '청소년', '시험불안', '입시', '공부', '학교', '정신건강'],
+    sources: [
+      {
+        name: '2025년 청소년 정신건강 위기와 교육환경: 학업 스트레스',
+        organization: 'Goover AI Report',
+        url: 'https://seo.goover.ai/report/202507/go-public-report-ko-7af7013c-e14c-4217-8c12-2952b8741c32-0-0.html',
+        accessDate: '2025-11-01'
+      },
+      {
+        name: '한국 청소년 행복지수: 현황·요인·정책 방향 종합 분석',
+        organization: 'Goover AI Report',
+        url: 'https://seo.goover.ai/report/202506/go-public-report-ko-5294d96e-bc90-4ae3-9f76-567f1d867317-0-0.html',
+        accessDate: '2025-11-01'
+      },
+      {
+        name: '청소년 정신건강 악화... 스트레스 많다 증가폭, 20년 조사 이래 최대',
+        organization: '한국일보',
+        url: 'https://www.hankookilbo.com/News/Read/A2024112213240001979',
+        accessDate: '2025-11-01'
+      },
+      {
+        name: 'Mental Health for Adolescents',
+        organization: 'HHS Office of Population Affairs',
+        url: 'https://opa.hhs.gov/adolescent-health/mental-health-adolescents',
+        accessDate: '2025-11-01'
+      }
+    ],
+    recommendedProducts: [
+      {
+        title: {
+          ko: '다시 공부머리 독서법',
+          en: 'Study Brain Reading Method Again',
+          ja: '再び勉強脳読書法',
+          zh: '重新学习大脑阅读法'
+        },
+        description: {
+          ko: '학업 스트레스를 줄이고 효과적으로 공부하는 독서 기술',
+          en: 'Reading techniques to reduce academic stress and study effectively',
+          ja: '学業ストレスを減らし効果的に勉強する読書技術',
+          zh: '减少学业压力并有效学习的阅读技巧'
+        },
+        price: 18500,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0rTFN',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/e29c/01e86d4abb840e616cca37c995ae714be7e46e7bebe5b593d7aeadc60348.png',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '공부하는 이유',
+          en: 'Why We Study',
+          ja: '勉強する理由',
+          zh: '学习的理由'
+        },
+        description: {
+          ko: '학업의 의미를 찾고 동기를 부여하는 청소년 필독서',
+          en: 'Essential reading for teens to find meaning in studies and get motivated',
+          ja: '学業の意味を見つけ動機を与える青少年必読書',
+          zh: '帮助青少年找到学习意义并获得动力的必读书'
+        },
+        price: 16900,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0rT7W',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/rs_quotation_api/yyxodhhf/e5b86dbf90aa48789382524cc48dc92f.png',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '이런 세상에서 지혜롭게 산다는 것',
+          en: 'Living Wisely in This World',
+          ja: 'この世界で賢く生きるということ',
+          zh: '在这个世界上明智地生活'
+        },
+        description: {
+          ko: '불확실한 상황 속 흔들리지 않고 나를 지키는 힘',
+          en: 'The power to stay unshaken and protect yourself in uncertain situations',
+          ja: '不確実な状況で揺るがず自分を守る力',
+          zh: '在不确定的情况下保持稳定并保护自己的力量'
+        },
+        price: 17500,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0rUsb',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/2021/03/09/10/2/38bbcb7b-6b53-495a-be6d-38bd72f09d11.jpg',
+        category: 'book'
+      }
+    ],
+    lastUpdated: new Date('2025-11-01'),
+    featured: false
+  },
+  {
+    id: 'article-adolescent-3',
+    category: 'adolescent',
+    title: {
+      ko: '괴롭힘과 사이버불링: 청소년이 알아야 할 대응법',
+      en: 'Bullying and Cyberbullying: What Teens Need to Know',
+      ja: 'いじめとサイバーいじめ：青少年が知るべき対処法',
+      zh: '欺凌和网络欺凌：青少年需要知道的应对方法'
+    },
+    summary: {
+      ko: '2007년부터 2023년까지 사이버불링 경험률이 18.8%에서 54.6%로 급증했습니다. 피해자는 자살 시도 위험이 4배 높으며, 우울증과 불안장애에 시달립니다. 괴롭힘의 유형, 정신건강 영향, 그리고 효과적인 대응 방법을 알아봅니다.',
+      en: 'Cyberbullying rates have more than doubled. Learn the types, mental health impacts, and effective response strategies.',
+      ja: 'サイバーいじめの発生率が2倍以上に増加しました。種類、精神的健康への影響、効果的な対処法を学びます。',
+      zh: '网络欺凌率翻了一番以上。了解类型、心理健康影响和有效应对策略。'
+    },
+    readTime: 15,
+    content: {
+      ko: [
+        {
+          heading: '괴롭힘의 심각한 현실',
+          paragraphs: [
+            '2021-2022 학년도 기준, 미국 학생의 21% 이상이 온라인이나 문자를 통한 괴롭힘을 경험했습니다. 한국도 상황이 심각합니다. 13-17세 청소년의 사이버불링 경험률이 2007년 18.8%에서 2023년 54.6%로 두 배 이상 증가했으며, 최근 30일 내 경험률도 26.5%에 달합니다.',
+            '더욱 충격적인 것은 괴롭힘이 정신건강에 미치는 영향입니다. 사이버불링 피해자는 자살 생각이나 시도를 할 가능성이 4배 높으며, 우울증, 불안, 외로움, 자해 행동의 위험이 크게 증가합니다.',
+            '2024년 연구에 따르면, 사이버불링은 약물 실험 가능성도 높입니다. 초기 청소년 코호트 연구에서 사이버불링 경험이 향후 약물 남용과 유의미한 연관성을 보였습니다.'
+          ]
+        },
+        {
+          heading: '괴롭힘의 종류 이해하기',
+          paragraphs: [
+            '괴롭힘은 다양한 형태로 나타나며, 각각을 인식하는 것이 중요합니다:'
+          ]
+        },
+        {
+          heading: '전통적 괴롭힘',
+          list: {
+            type: 'bullet',
+            items: [
+              '신체적 괴롭힘: 때리기, 밀기, 물건 뺏기',
+              '언어적 괴롭힘: 놀림, 욕설, 위협',
+              '관계적 괴롭힘: 따돌림, 소문 퍼뜨리기, 의도적 배제',
+              '성적 괴롭힘: 성적 농담, 부적절한 접촉, 외모 비하'
+            ]
+          }
+        },
+        {
+          heading: '사이버불링',
+          paragraphs: [
+            '디지털 시대의 괴롭힘은 24시간 계속되며 더 광범위한 피해를 줄 수 있습니다:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              '온라인 괴롭힘: SNS, 게임 채팅, 커뮤니티에서의 모욕과 협박',
+              '사진/영상 유포: 동의 없이 창피한 사진이나 영상 공유',
+              '신상 털기 (Doxing): 개인정보를 온라인에 공개',
+              '아웃팅: 본인이 숨기고 싶은 정보(성적 지향, 건강 상태 등) 폭로',
+              '가짜 계정: 타인을 사칭하여 평판 훼손',
+              '집단 공격: 여러 사람이 한 명을 집중적으로 괴롭힘'
+            ]
+          }
+        },
+        {
+          paragraphs: [
+            '사이버불링의 특징은 "영원성"입니다. 온라인에 올라간 내용은 삭제해도 이미 퍼져 있을 수 있으며, 피해자는 집에서도 괴롭힘을 피할 수 없습니다.'
+          ]
+        },
+        {
+          heading: '괴롭힘이 정신건강에 미치는 영향',
+          paragraphs: [
+            '체계적 문헌고찰과 메타분석에 따르면, 괴롭힘 경험은 다음과 같은 정신건강 문제와 연관됩니다:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              '우울증: 지속적인 슬픔, 무기력, 흥미 상실',
+              '불안장애: 과도한 걱정, 공황 발작, 사회불안',
+              '신체화 증상: 두통, 복통, 수면 장애 등 스트레스로 인한 신체 증상',
+              '자해와 자살: 자해 행동 증가, 자살 생각 및 시도',
+              '약물 남용: 고통을 회피하기 위한 알코올이나 약물 사용',
+              '학업 문제: 집중력 저하, 결석 증가, 성적 하락',
+              '대인관계 어려움: 타인에 대한 불신, 친밀감 형성의 어려움'
+            ]
+          }
+        },
+        {
+          paragraphs: [
+            '특히 주목할 점은 괴롭힘의 영향이 단기적이지 않다는 것입니다. 청소년기 괴롭힘 경험은 성인기까지 이어져 만성적인 정신건강 문제를 야기할 수 있습니다.'
+          ]
+        },
+        {
+          heading: '내가 괴롭힘을 당하고 있다면',
+          paragraphs: [
+            '먼저, 당신의 잘못이 아닙니다. 어떤 이유로도 괴롭힘이 정당화될 수 없습니다. 다음은 효과적인 대응 방법입니다:'
+          ]
+        },
+        {
+          heading: '즉각적 대응',
+          list: {
+            type: 'numbered',
+            items: [
+              '안전 확보: 신체적 위험이 있다면 즉시 그 장소를 벗어나고 안전한 어른에게 알립니다.',
+              '증거 보존: 사이버불링의 경우 스크린샷, 메시지, 영상 등 모든 증거를 저장합니다. 날짜와 시간도 기록하세요.',
+              '차단하기: 가해자를 SNS, 메신저, 게임에서 차단합니다.',
+              '신고하기: 플랫폼의 신고 기능을 사용합니다. 대부분의 SNS는 괴롭힘 신고 시스템이 있습니다.'
+            ]
+          }
+        },
+        {
+          heading: '신뢰할 수 있는 어른에게 말하기',
+          paragraphs: [
+            '"고자질한다"는 생각에 말하지 못하는 청소년이 많습니다. 하지만 도움을 구하는 것은 용기 있는 행동입니다:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              '부모나 보호자: 처음에는 어려울 수 있지만, 대부분의 부모는 도와주고 싶어 합니다.',
+              '학교 상담교사: 비밀이 보장되며, 학교 내 개입을 도울 수 있습니다.',
+              '담임교사: 괴롭힘이 학교에서 일어난다면 담임교사에게 알립니다.',
+              '신뢰하는 다른 어른: 친척, 코치, 종교 지도자 등 누구든 괜찮습니다.',
+              '전문 상담: 117(학교폭력신고센터), 1388(청소년사이버상담센터) 활용'
+            ]
+          }
+        },
+        {
+          heading: '대응 전략',
+          list: {
+            type: 'bullet',
+            items: [
+              '반응하지 않기: 가해자는 당신의 반응을 원합니다. 침착하게 무시하는 것이 때로는 최선입니다.',
+              '단호하게 거부: 만약 대응한다면, 짧고 단호하게 "그만해"라고 말하고 자리를 떠납니다.',
+              '혼자 있지 않기: 가능한 한 친구들과 함께 다닙니다. 괴롭힘은 혼자 있을 때 더 자주 일어납니다.',
+              '자신감 유지: 어깨를 펴고 눈을 마주치며 걷습니다. 자신감 있는 태도는 표적이 될 가능성을 줄입니다.'
+            ]
+          }
+        },
+        {
+          heading: '정서적 회복',
+          paragraphs: [
+            '괴롭힘의 감정적 상처를 치유하는 것도 중요합니다:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              '자신을 비난하지 않기: "내가 이상해서 그런가?"라는 생각은 사실이 아닙니다.',
+              '지지 그룹 찾기: 비슷한 경험을 한 사람들과 이야기 나누기',
+              '좋아하는 활동 계속하기: 취미, 운동, 창의적 활동으로 정체성 유지',
+              '전문 상담 받기: 심리치료는 트라우마 회복에 큰 도움이 됩니다.',
+              '자기 돌봄: 충분한 수면, 건강한 식사, 규칙적인 운동'
+            ]
+          }
+        },
+        {
+          heading: '친구가 괴롭힘을 당한다면',
+          paragraphs: [
+            '방관자가 아닌 지지자가 되는 것은 큰 차이를 만듭니다:'
+          ],
+          list: {
+            type: 'numbered',
+            items: [
+              '함께 있어주기: "네 편이야"라고 말하고 실제로 보여줍니다.',
+              '경청하기: 조언하려 하지 말고 먼저 듣습니다. "정말 힘들겠다"라고 공감해주세요.',
+              '도움 찾도록 격려: 어른에게 말하도록 격려하고, 원한다면 함께 가줍니다.',
+              '함께 신고하기: 당신도 목격자로서 신고할 수 있습니다.',
+              '소셜미디어에서 지지: 사이버불링을 보면 "이건 잘못됐어"라고 말하거나, 피해자에게 개인적으로 지지 메시지를 보냅니다.',
+              '가해자와 거리두기: 괴롭힘에 참여하지 않고, 가해자에게 그것이 잘못됐음을 (안전하다면) 말합니다.'
+            ]
+          }
+        },
+        {
+          heading: '부모와 교사가 할 수 있는 것',
+          paragraphs: [
+            '어른들의 적극적인 개입이 필수적입니다. 2024년 정부 가이드라인은 다단계 접근을 권장합니다:'
+          ]
+        },
+        {
+          heading: '예방과 교육',
+          list: {
+            type: 'bullet',
+            items: [
+              '긍정적 학교 문화 조성: 존중과 포용의 가치를 강조',
+              '사회정서 학습: 공감, 갈등 해결, 감정 조절 기술 교육',
+              '명확한 행동 기준: 괴롭힘이 무엇이며 결과가 무엇인지 명확히 전달',
+              '디지털 시민의식 교육: 온라인에서도 책임 있게 행동하도록 가르침'
+            ]
+          }
+        },
+        {
+          heading: '즉각적 대응',
+          list: {
+            type: 'bullet',
+            items: [
+              '심각하게 받아들이기: "애들이 다 그래" 식으로 무시하지 않기',
+              '즉시 개입: 괴롭힘을 목격하면 즉시 중단시키고 피해자 보호',
+              '적절한 조치: 가해자에게 명확한 결과를 제시하되, 교육적 접근도 병행',
+              '지속적 모니터링: 한 번의 개입으로 끝나지 않고 계속 관찰'
+            ]
+          }
+        },
+        {
+          heading: '가해자도 도움이 필요합니다',
+          paragraphs: [
+            '괴롭힘을 하는 청소년도 종종 도움이 필요한 상태입니다. 연구에 따르면 가해자의 많은 수가:',
+            '- 자신도 과거에 괴롭힘이나 학대를 경험했습니다\n- 가정 문제나 정신건강 문제를 겪고 있습니다\n- 공감 능력과 사회적 기술이 부족합니다\n- 힘과 통제를 잘못된 방식으로 추구합니다',
+            '처벌만이 아닌 교육과 상담을 통해 가해자가 행동을 바꾸도록 돕는 것이 재발 방지에 효과적입니다.'
+          ]
+        },
+        {
+          heading: '법적 보호와 제도',
+          paragraphs: [
+            '한국에는 괴롭힘 피해자를 보호하는 여러 법과 제도가 있습니다:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              '학교폭력예방법: 학교 내 괴롭힘에 대한 법적 대응 근거',
+              '117 학교폭력신고센터: 24시간 신고 및 상담',
+              '학교폭력대책자치위원회: 사건 조사 및 조치 결정',
+              '피해학생 보호: 심리상담, 일시보호, 치료 및 치료를 위한 요양 등',
+              '가해학생 조치: 서면사과, 접촉 금지, 출석정지, 전학 등',
+              '사이버명예훼손죄: 온라인 괴롭힘도 형사처벌 가능'
+            ]
+          }
+        },
+        {
+          heading: '위기 상황 시 즉시 연락할 곳',
+          list: {
+            type: 'bullet',
+            items: [
+              '117: 학교폭력신고센터 (24시간)',
+              '1388: 청소년사이버상담센터 (24시간)',
+              '112: 경찰 (긴급 상황)',
+              '1577-0199: 희망의 전화 (자살예방)',
+              '107: 여성긴급전화 (성폭력 관련)',
+              '학교 Wee클래스/Wee센터: 학교 기반 상담'
+            ]
+          }
+        },
+        {
+          heading: '함께 만드는 안전한 환경',
+          paragraphs: [
+            '괴롭힘 없는 환경은 한 사람의 노력으로 만들어지지 않습니다. 피해자, 가해자, 방관자, 부모, 교사, 그리고 사회 전체의 노력이 필요합니다.',
+            '연구에 따르면, 괴롭힘 예방 프로그램은 효과가 있습니다. 학교 전체가 참여하는 포괄적 접근은 괴롭힘을 20-30% 감소시킵니다.',
+            '당신은 혼자가 아닙니다. 도움을 구하는 것은 약함이 아니라 강함의 표시입니다. 존중과 친절의 문화를 함께 만들어갑시다.'
+          ]
+        }
+      ],
+      en: [],
+      ja: [],
+      zh: []
+    },
+    tags: ['괴롭힘', '사이버불링', '학교폭력', '청소년', '따돌림', '정신건강', '자살예방'],
+    sources: [
+      {
+        name: 'Cyberbullying and mental health: past, present and future',
+        organization: 'PMC - National Library of Medicine',
+        url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC10823540/',
+        accessDate: '2025-11-01'
+      },
+      {
+        name: 'Cyberbullying, mental health, and substance use experimentation among early adolescents',
+        organization: 'The Lancet Regional Health – Americas',
+        url: 'https://www.thelancet.com/journals/lanam/article/PIIS2667-193X(25)00012-2/fulltext',
+        accessDate: '2025-11-01'
+      },
+      {
+        name: 'Bullying and Cyberbullying Prevention Strategies and Resources',
+        organization: 'SchoolSafety.gov',
+        url: 'https://schoolsafety.gov/bullying-prevention',
+        accessDate: '2025-11-01'
+      },
+      {
+        name: 'Traditional bullying and cyberbullying in the digital age',
+        organization: 'European Child & Adolescent Psychiatry',
+        url: 'https://link.springer.com/article/10.1007/s00787-022-02128-x',
+        accessDate: '2025-11-01'
+      }
+    ],
+    recommendedProducts: [
+      {
+        title: {
+          ko: '현직 경찰관이 알려주는 학교폭력 대처법',
+          en: 'School Violence Response from Active Police Officers',
+          ja: '現職警察官が教える学校暴力対処法',
+          zh: '现职警察教你应对校园暴力'
+        },
+        description: {
+          ko: '학교폭력과 괴롭힘에 대처하는 실질적인 법적 가이드',
+          en: 'Practical legal guide to dealing with school violence and bullying',
+          ja: '学校暴力といじめに対処する実践的な法的ガイド',
+          zh: '应对校园暴力和欺凌的实用法律指南'
+        },
+        price: 16800,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0rUID',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/4e7a/0e2d785f46b35c666f5d12f9f1b49d80929f03b2a7e5a22e27b00f21ce19.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '사이버불링의 이해와 대책',
+          en: 'Understanding and Responding to Cyberbullying',
+          ja: 'サイバーいじめの理解と対策',
+          zh: '理解和应对网络欺凌'
+        },
+        description: {
+          ko: '온라인 괴롭힘의 본질을 이해하고 예방하는 전문가 가이드',
+          en: 'Expert guide to understanding and preventing online harassment',
+          ja: 'オンラインハラスメントを理解し予防する専門家ガイド',
+          zh: '理解和预防网络骚扰的专家指南'
+        },
+        price: 15500,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0rVvY',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/d675/f4f534a59be31a56b9a69c685f8533e3ff790d5079dc16500f0473654db1.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '무심코 댓글을 달았던 십대에게',
+          en: 'To Teens Who Carelessly Commented',
+          ja: '何気なくコメントを書いた十代に',
+          zh: '给随意评论的青少年'
+        },
+        description: {
+          ko: '온라인 괴롭힘은 어떻게 죄가 될까? 사이버불링의 법적 책임',
+          en: 'How does online harassment become a crime? Legal responsibility for cyberbullying',
+          ja: 'オンラインハラスメントはどう罪になるか？サイバーいじめの法的責任',
+          zh: '网络骚扰如何成为犯罪？网络欺凌的法律责任'
+        },
+        price: 14900,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0rV79',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail-product-api/A00077021/216596226/233570621/main/9791168102170_L.jpg',
+        category: 'book'
+      }
+    ],
+    lastUpdated: new Date('2025-11-01'),
+    featured: false
+  },
+  {
+    id: 'article-adolescent-4',
+    category: 'adolescent',
+    title: {
+      ko: '청소년과 소셜미디어: 건강한 디지털 관계 맺기',
+      en: 'Teens and Social Media: Building Healthy Digital Relationships',
+      ja: '青少年とソーシャルメディア：健康的なデジタル関係を築く',
+      zh: '青少年与社交媒体：建立健康的数字关系'
+    },
+    summary: {
+      ko: '소셜미디어는 청소년 정신건강의 주요 위험 요인으로 떠올랐습니다. Z세대의 불안 수준은 이전 세 세대보다 현저히 높으며, SNS 중독은 우울증, 수면 장애, 자존감 저하와 연관됩니다. 건강하게 소셜미디어를 사용하는 방법을 알아봅니다.',
+      en: 'Social media is a major risk factor for teen mental health. Learn how to use it healthily.',
+      ja: 'ソーシャルメディアは青少年のメンタルヘルスの主要なリスク要因です。健康的な使用方法を学びます。',
+      zh: '社交媒体是青少年心理健康的主要风险因素。学习如何健康使用。'
+    },
+    readTime: 12,
+    content: {
+      ko: [
+        {
+          heading: '청소년과 소셜미디어의 관계',
+          paragraphs: [
+            '오늘날 청소년에게 소셜미디어는 단순한 앱이 아닙니다. 친구와 연결되고, 자신을 표현하고, 세상을 이해하는 주요 수단입니다. 한국 청소년의 90% 이상이 하루에 여러 시간을 SNS에 소비합니다.',
+            '하지만 2024년 스탠포드 법학대학원 연구에 따르면, 소셜미디어 중독이 청소년 웰빙에 대한 주요 우려로 떠올랐습니다. Z세대의 불안 수준은 이전 세 세대(밀레니얼, X세대, 베이비붐 세대)보다 현저히 높습니다.',
+            '문제는 소셜미디어 자체가 아니라 "어떻게" 사용하느냐입니다. 연구에 따르면 적절히 사용하면 유익하지만, 과도하거나 부정적인 방식으로 사용하면 정신건강을 해칩니다.'
+          ]
+        },
+        {
+          heading: '소셜미디어가 청소년 뇌에 미치는 영향',
+          paragraphs: [
+            '청소년기는 뇌 발달의 중요한 시기입니다. 특히 도파민 시스템이 매우 활발하여 "좋아요"와 댓글 같은 즉각적 보상에 강하게 반응합니다.',
+            '소셜미디어는 이러한 보상 시스템을 지속적으로 자극합니다. 알림이 올 때마다 도파민이 분비되고, 이는 점점 더 자주 확인하게 만드는 중독성 패턴을 만듭니다.',
+            '또한 청소년은 자아 정체성을 형성하는 시기로, 타인의 평가에 매우 민감합니다. "내 게시물에 좋아요가 몇 개나 왔을까?"는 단순한 호기심이 아니라 자기 가치를 확인하는 행동이 됩니다.'
+          ]
+        },
+        {
+          heading: '소셜미디어와 정신건강: 무엇이 문제인가?',
+          paragraphs: [
+            '연구에서 밝혀진 주요 위험 요인들:'
+          ]
+        },
+        {
+          heading: '1. 사회적 비교와 자존감 저하',
+          paragraphs: [
+            '인스타그램, 틱톡 등에서는 사람들이 자신의 "가장 좋은 순간"만 공유합니다. 여행, 파티, 완벽한 외모, 성공적인 순간들. 하지만 보는 사람은 이것이 편집된 현실임을 잊고 자신과 비교합니다.',
+            '"왜 나만 재미없는 삶을 살고 있지?" "내 외모는 왜 이렇게 못생겼지?" 같은 생각은 자존감을 떨어뜨립니다. 연구에 따르면 하루 3시간 이상 SNS를 사용하는 청소년은 우울증과 불안장애 위험이 2배 높습니다.'
+          ]
+        },
+        {
+          heading: '2. FOMO (Fear of Missing Out - 소외 공포)',
+          paragraphs: [
+            '"친구들은 다 같이 놀고 있는데 나만 빠졌어." 이런 감정은 청소년에게 특히 고통스럽습니다. 소셜미디어는 24시간 타인의 활동을 보여주기 때문에 FOMO가 심해집니다.',
+            '한 연구에서 71%의 청소년이 SNS를 통해 FOMO를 경험한다고 답했으며, 이는 불안과 우울증의 주요 원인이었습니다.'
+          ]
+        },
+        {
+          heading: '3. 수면 부족',
+          paragraphs: [
+            '많은 청소년이 잠자리에 들어서도 스마트폰을 손에서 놓지 않습니다. "조금만 더"가 2시간이 되고, 충분한 수면을 취하지 못합니다.',
+            '블루라이트는 멜라토닌 분비를 억제하여 수면의 질을 떨어뜨립니다. 청소년은 하루 8-10시간의 수면이 필요한데, SNS 과다 사용은 이를 방해합니다. 수면 부족은 다시 우울증, 불안, 집중력 저하, 면역력 감소로 이어집니다.'
+          ]
+        },
+        {
+          heading: '4. 사이버불링',
+          paragraphs: [
+            '앞서 다룬 사이버불링은 대부분 소셜미디어를 통해 일어납니다. 익명성과 거리감은 사람들을 더 공격적으로 만듭니다.',
+            '2007년부터 2023년까지 사이버불링 경험률이 18.8%에서 54.6%로 급증했으며, 이는 주로 SNS 사용 증가와 관련이 있습니다.'
+          ]
+        },
+        {
+          heading: '5. 주의력 분산과 학업 문제',
+          paragraphs: [
+            '공부하면서 SNS를 확인하면 집중력이 크게 떨어집니다. 한 번 집중이 깨지면 다시 원래 수준으로 돌아가는 데 평균 23분이 걸립니다.',
+            '알림을 끄지 않고 공부하는 것은 사실상 공부를 하지 않는 것과 비슷한 효과를 냅니다.'
+          ]
+        },
+        {
+          heading: '건강한 소셜미디어 사용법',
+          paragraphs: [
+            '소셜미디어를 완전히 끊는 것은 현실적이지도, 필요하지도 않습니다. 중요한 것은 "건강한 경계"를 설정하는 것입니다:'
+          ]
+        },
+        {
+          heading: '시간 관리',
+          list: {
+            type: 'bullet',
+            items: [
+              '사용 시간 확인: 스마트폰의 스크린 타임 기능으로 실제 사용 시간을 확인하세요. 생각보다 훨씬 많이 사용하고 있을 수 있습니다.',
+              '일일 한도 설정: 하루 1-2시간으로 제한합니다. 앱 사용 시간 제한 기능을 활용하세요.',
+              '특정 시간대 금지: 식사 시간, 공부 시간, 잠자기 1시간 전에는 사용하지 않습니다.',
+              '알림 끄기: 모든 SNS 알림을 끕니다. 당신이 원할 때 확인하세요, 앱이 요구할 때가 아니라.'
+            ]
+          }
+        },
+        {
+          heading: '콘텐츠 선별',
+          list: {
+            type: 'bullet',
+            items: [
+              '부정적 계정 언팔로우: 당신을 기분 나쁘게 만드는 계정은 과감히 끊으세요.',
+              '긍정적 콘텐츠 구독: 교육적, 영감을 주는, 즐거운 콘텐츠를 선택합니다.',
+              '비교 멈추기: "이건 편집된 현실이다"라고 스스로에게 상기시킵니다.',
+              '"좋아요" 숫자에 연연하지 않기: 좋아요 숫자가 당신의 가치를 결정하지 않습니다.'
+            ]
+          }
+        },
+        {
+          heading: '의도적 사용',
+          list: {
+            type: 'bullet',
+            items: [
+              '목적 있게 사용: "심심해서" 무작정 스크롤하지 말고, "친구 생일 축하하기" 같은 구체적 목적으로 사용하세요.',
+              '수동 소비보다 능동 참여: 계속 피드를 넘기기보다는 의미 있는 댓글로 진짜 소통하세요.',
+              '오프라인 연결 우선: SNS로 대화하는 것보다 직접 만나서 이야기하는 것이 훨씬 의미 있습니다.'
+            ]
+          }
+        },
+        {
+          heading: '디지털 디톡스',
+          paragraphs: [
+            '때때로 완전히 끊어보는 것도 필요합니다:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              '주말 디톡스: 토요일이나 일요일 하루는 SNS를 완전히 사용하지 않습니다.',
+              '앱 삭제: 가장 많이 사용하는 SNS 앱을 일주일간 삭제해보세요. 처음엔 불편하지만 곧 자유로움을 느낄 것입니다.',
+              '대안 활동: SNS 대신 할 수 있는 것들 목록을 만드세요. 책 읽기, 운동, 악기 연주, 친구 만나기 등.',
+              '자연과 시간 보내기: 연구에 따르면 자연에서 시간을 보내는 것은 스크린 중독을 줄이고 정신건강을 개선합니다.'
+            ]
+          }
+        },
+        {
+          heading: '부모가 할 수 있는 것',
+          paragraphs: [
+            '청소년의 SNS 사용을 무조건 금지하는 것은 효과가 없습니다. 대신 함께 건강한 사용법을 배우세요:'
+          ],
+          list: {
+            type: 'numbered',
+            items: [
+              '모범 보이기: 부모 자신도 식사 중 스마트폰을 보지 않는 등 모범을 보입니다.',
+              '열린 대화: "SNS 그만해!"가 아니라 "요즘 SNS에서 뭐 재미있는 거 봤어?"로 대화를 시작하세요.',
+              '함께 규칙 만들기: 일방적 금지가 아닌, 함께 사용 규칙을 정합니다. 청소년이 참여해서 만든 규칙은 더 잘 지켜집니다.',
+              '기술 활용: 자녀보호 기능, 스크린 타임 제한 등을 활용하되, 감시가 아닌 지원으로 접근합니다.',
+              '대안 활동 제공: 가족 여행, 보드게임, 스포츠 등 스마트폰 없이 즐길 수 있는 활동을 함께 합니다.',
+              '정서적 필요 채우기: 청소년이 SNS에서 찾는 것(소속감, 인정, 재미)을 오프라인에서도 충족할 수 있도록 도와줍니다.'
+            ]
+          }
+        },
+        {
+          heading: '중독 신호 알아차리기',
+          paragraphs: [
+            '다음 증상이 나타나면 전문가의 도움이 필요할 수 있습니다:'
+          ],
+          list: {
+            type: 'bullet',
+            items: [
+              'SNS 없이는 불안하거나 초조함',
+              '사용 시간을 줄이려 해도 계속 실패함',
+              '학업, 취미, 친구 관계를 소홀히 함',
+              '수면 패턴이 심각하게 망가짐 (새벽까지 SNS)',
+              '현실보다 온라인 세계를 더 중요하게 여김',
+              'SNS 사용을 숨기거나 거짓말함',
+              '우울증이나 불안 증상이 함께 나타남'
+            ]
+          }
+        },
+        {
+          heading: '소셜미디어의 긍정적 측면',
+          paragraphs: [
+            '모든 것이 부정적인 것은 아닙니다. 건강하게 사용하면 소셜미디어는:',
+            '- 먼 곳의 친구들과 연결을 유지할 수 있게 해줍니다\n- 같은 관심사를 가진 사람들과 커뮤니티를 형성할 수 있습니다\n- 창의성을 표현하고 재능을 공유할 플랫폼을 제공합니다\n- 사회 문제에 대한 인식을 높이고 긍정적 변화를 만들 수 있습니다\n- 정보와 학습 자료에 쉽게 접근할 수 있게 합니다',
+            '핵심은 "균형"입니다. 소셜미디어가 당신의 삶을 지배하지 않고, 당신이 의도적으로 선택해서 사용하는 도구가 되어야 합니다.'
+          ]
+        },
+        {
+          heading: '현실 세계를 기억하세요',
+          paragraphs: [
+            '가장 중요한 것은 온라인이 아닌 현실에서 일어납니다. 직접 만나서 나누는 대화, 함께 웃는 순간, 자연 속 산책, 책 한 권을 읽는 고요한 시간.',
+            '스마트폰을 내려놓았을 때 비로소 보이는 것들이 있습니다. 가족의 미소, 친구의 진짜 표정, 하늘의 구름, 자신의 진짜 감정.',
+            '소셜미디어는 도구입니다. 좋은 도구이지만, 당신의 삶 자체가 아닙니다. 온라인 "좋아요"보다 중요한 것은 당신이 당신 자신을 얼마나 좋아하는가입니다.'
+          ]
+        }
+      ],
+      en: [],
+      ja: [],
+      zh: []
+    },
+    tags: ['소셜미디어', 'SNS', '청소년', '디지털웰빙', '스마트폰중독', '정신건강', '스크린타임'],
+    sources: [
+      {
+        name: 'Social Media Addiction and Mental Health: The Growing Concern for Youth Well-Being',
+        organization: 'Stanford Law School - Law and Biosciences Blog',
+        url: 'https://law.stanford.edu/2024/05/20/social-media-addiction-and-mental-health-the-growing-concern-for-youth-well-being/',
+        accessDate: '2025-11-01'
+      },
+      {
+        name: 'Mental Health By the Numbers',
+        organization: 'National Alliance on Mental Illness (NAMI)',
+        url: 'https://www.nami.org/about-mental-illness/mental-health-by-the-numbers/',
+        accessDate: '2025-11-01'
+      },
+      {
+        name: 'Child and Adolescent Mental Health',
+        organization: 'National Institute of Mental Health (NIMH)',
+        url: 'https://www.nimh.nih.gov/health/topics/child-and-adolescent-mental-health',
+        accessDate: '2025-11-01'
+      },
+      {
+        name: 'More Teens Are Struggling With Mental Health in 2025',
+        organization: "Avery's House",
+        url: 'https://www.averyshouse.com/teen-mental-health-in-2025/',
+        accessDate: '2025-11-01'
+      }
+    ],
+    recommendedProducts: [
+      {
+        title: {
+          ko: '디지털 네이티브 그들은 어떻게 배우는가',
+          en: 'Digital Natives: How They Learn',
+          ja: 'デジタルネイティブ：彼らはどう学ぶか',
+          zh: '数字原住民：他们如何学习'
+        },
+        description: {
+          ko: '디지털 시대 청소년의 학습 방식과 소셜미디어 활용법',
+          en: 'Learning methods and social media usage of teens in the digital age',
+          ja: 'デジタル時代の青少年の学習方法とソーシャルメディア活用法',
+          zh: '数字时代青少年的学习方法和社交媒体使用'
+        },
+        price: 18900,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0rWq5',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/994e/7738d57fae04185aa1fe2360c82bee8d2d71900d3a23bff1a001a71824fb.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '휴대폰에서 나를 구해줘!',
+          en: 'Save Me From My Phone!',
+          ja: '携帯電話から私を救って！',
+          zh: '从手机中救救我！'
+        },
+        description: {
+          ko: '스마트폰 중독에서 벗어나 건강한 디지털 생활 찾기',
+          en: 'Breaking free from smartphone addiction for healthy digital life',
+          ja: 'スマホ中毒から抜け出し健康的なデジタル生活を見つける',
+          zh: '摆脱智能手机成瘾，找到健康的数字生活'
+        },
+        price: 14500,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0rWNk',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/795a/383db15b8bb90ada609f6f11c1ea4945c2568b173089b8be02e06c6f131d.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: 'SNS 가족',
+          en: 'SNS Family',
+          ja: 'SNS家族',
+          zh: 'SNS家庭'
+        },
+        description: {
+          ko: '소셜미디어 시대, 가족 관계와 청소년 정신건강',
+          en: 'Family relationships and teen mental health in the social media era',
+          ja: 'ソーシャルメディア時代、家族関係と青少年の精神健康',
+          zh: '社交媒体时代的家庭关系和青少年心理健康'
+        },
+        price: 16200,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/c0rXyD',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/5315837679388059-260d4d05-1c1e-4d6f-ba13-aee7b9c1d357.jpg',
+        category: 'book'
+      }
+    ],
+    lastUpdated: new Date('2025-11-01'),
     featured: false
   },
 ]

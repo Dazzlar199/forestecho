@@ -18,7 +18,6 @@ import {
   generateChatTitle,
 } from '@/lib/firebase/chat-sessions'
 import ChatHistory from './ChatHistory'
-import LiveAnalysisSidebar from './LiveAnalysisSidebar'
 import type { ChatSession } from '@/types/chat'
 
 export default function ChatInterface() {
@@ -39,13 +38,6 @@ export default function ChatInterface() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const { user, isPremium} = useAuth()
-
-  // 가장 최근 assistant 메시지의 메타데이터 추출 (useMemo로 최적화)
-  const latestAnalysis = useMemo(() => {
-    return messages
-      .filter(m => m.role === 'assistant' && m.metadata)
-      .slice(-1)[0]?.metadata || null
-  }, [messages])
 
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -97,11 +89,15 @@ export default function ChatInterface() {
     setInput('')
     setIsLoading(true)
 
-    try {
-      // 30초 타임아웃 설정
-      const controller = new AbortController()
-      const timeoutId = setTimeout(() => controller.abort(), 30000)
+    // 스트리밍 메시지를 위한 임시 assistant 메시지 추가
+    const tempAssistantMessage: Message = {
+      role: 'assistant',
+      content: '',
+      timestamp: new Date(),
+    }
+    setMessages((prev) => [...prev, tempAssistantMessage])
 
+    try {
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
@@ -114,46 +110,83 @@ export default function ChatInterface() {
           })),
           language,
           counselingMode,
-          responseTone, // 이성-감정 비율 전달
+          responseTone,
         }),
-        signal: controller.signal,
       })
-
-      clearTimeout(timeoutId)
 
       if (!response.ok) {
         throw new Error('응답을 받는데 실패했습니다')
       }
 
-      const data = await response.json()
+      const reader = response.body?.getReader()
+      const decoder = new TextDecoder()
 
-      // 위기 상황 감지 시 모달 표시
-      if (data.metadata?.isCrisis) {
-        setShowCrisisModal(true)
+      if (!reader) {
+        throw new Error('스트림을 읽을 수 없습니다')
       }
 
-      const assistantMessage: Message = {
-        role: 'assistant',
-        content: data.message,
-        timestamp: new Date(),
-        metadata: data.metadata, // Structured Output 메타데이터 포함
+      let fullContent = ''
+      let metadata: any = null
+
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
+
+        const chunk = decoder.decode(value)
+        const lines = chunk.split('\n')
+
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            try {
+              const data = JSON.parse(line.slice(6))
+
+              if (data.content) {
+                fullContent += data.content
+                // 실시간으로 메시지 업데이트
+                setMessages((prev) => {
+                  const newMessages = [...prev]
+                  newMessages[newMessages.length - 1] = {
+                    ...newMessages[newMessages.length - 1],
+                    content: fullContent,
+                  }
+                  return newMessages
+                })
+              }
+
+              if (data.done) {
+                metadata = data.metadata
+                // 위기 상황 감지 시 모달 표시
+                if (metadata?.isCrisis) {
+                  setShowCrisisModal(true)
+                }
+              }
+            } catch (e) {
+              // JSON 파싱 에러 무시
+            }
+          }
+        }
       }
 
+      // 최종 메시지 업데이트
       let latestMessages: Message[] = []
       setMessages((prev) => {
-        latestMessages = [...prev, assistantMessage]
-        return latestMessages
+        const newMessages = [...prev]
+        newMessages[newMessages.length - 1] = {
+          ...newMessages[newMessages.length - 1],
+          content: fullContent,
+          metadata: metadata,
+        }
+        latestMessages = newMessages
+        return newMessages
       })
 
       // Firestore에 대화 저장 (비동기로 백그라운드에서 처리)
       if (user) {
         const allMessages: Message[] = latestMessages;
 
-        // Promise를 await 없이 실행 - UI를 블로킹하지 않음
         (async () => {
           try {
             if (!currentSessionId) {
-              // 새 세션 생성
               const title = generateChatTitle(allMessages)
               const sessionId = await createChatSession({
                 userId: user.uid,
@@ -164,12 +197,10 @@ export default function ChatInterface() {
               setCurrentSessionId(sessionId)
               localStorage.setItem('currentChatSessionId', sessionId)
             } else {
-              // 기존 세션 업데이트
               await updateChatSession(currentSessionId, allMessages)
             }
           } catch (saveError) {
             console.error('Error saving chat session:', saveError)
-            // 저장 실패해도 대화는 계속 진행
           }
         })()
       }
@@ -182,24 +213,14 @@ export default function ChatInterface() {
         errorMessage = '⏱️ 응답 시간이 초과되었습니다. 네트워크 연결을 확인하고 다시 시도해주세요.'
       } else if (error.message?.includes('Failed to fetch') || error.message?.includes('NetworkError')) {
         errorMessage = '🌐 네트워크 연결에 실패했습니다. 인터넷 연결을 확인해주세요.'
-      } else if (error.response) {
-        // 서버에서 반환한 에러 메시지 사용
-        const errorData = await error.response.json().catch(() => ({}))
-        errorMessage = errorData.error || errorMessage
-
-        // Rate limit 에러 특별 처리
-        if (errorData.errorCode === 'RATE_LIMIT_EXCEEDED') {
-          errorMessage = `⚠️ ${errorData.error}\n잠시 후 다시 시도해주세요. (약 ${errorData.retryAfter || 60}초 후)`
-        }
       }
 
       alert(errorMessage)
 
-      // 에러 발생 시 마지막 메시지 제거
-      setMessages((prev) => prev.slice(0, -1))
+      // 에러 발생 시 마지막 2개 메시지 제거 (user + temp assistant)
+      setMessages((prev) => prev.slice(0, -2))
     } finally {
       setIsLoading(false)
-      // 응답 후 입력창 포커스 복원
       requestAnimationFrame(() => {
         if (textareaRef.current) {
           textareaRef.current.focus()
@@ -237,9 +258,6 @@ export default function ChatInterface() {
 
   return (
     <div className="flex h-screen">
-      {/* Live Analysis Sidebar (왼쪽) */}
-      <LiveAnalysisSidebar latestMetadata={latestAnalysis} />
-
       {/* Main Chat Area (중앙) */}
       <div className="flex-1 flex flex-col py-2 sm:py-8 px-3 sm:px-6 max-w-4xl mx-auto w-full">
         {/* Mode Selector */}

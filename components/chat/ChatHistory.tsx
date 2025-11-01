@@ -101,31 +101,31 @@ export default function ChatHistory({ currentSessionId, onSelectSession, onNewCh
 
   return (
     <>
-      {/* Toggle Button (모바일 전용) */}
+      {/* Toggle Button (왼쪽 아래) */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`lg:hidden fixed top-24 right-8 z-40 p-3 border transition-all ${
+        className={`fixed bottom-8 left-8 z-40 p-3 border transition-all ${
           theme === 'dark'
             ? 'bg-black/60 border-white/10 hover:bg-black/80 text-gray-300'
             : 'bg-white/60 border-gray-300 hover:bg-white/80 text-gray-700'
         }`}
         style={{ borderRadius: '2px' }}
       >
-        {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        {isOpen ? <X className="w-5 h-5" /> : <MessageSquare className="w-5 h-5" />}
       </button>
 
-      {/* Overlay (모바일 전용) */}
+      {/* Overlay */}
       {isOpen && (
         <div
-          className="lg:hidden fixed inset-0 z-30 backdrop-blur-sm bg-black/40"
+          className="fixed inset-0 z-30 backdrop-blur-sm bg-black/40"
           onClick={() => setIsOpen(false)}
         />
       )}
 
-      {/* Sidebar Content */}
+      {/* Sidebar Content (왼쪽에서 슬라이드) */}
       <div
-        className={`fixed lg:relative top-0 right-0 bottom-0 z-40 w-72 bg-black/20 backdrop-blur-xl border-l border-white/10 overflow-y-auto transition-transform ${
-          isOpen ? 'translate-x-0' : 'translate-x-full lg:translate-x-0'
+        className={`fixed top-0 left-0 bottom-0 z-40 w-80 bg-black/20 backdrop-blur-xl border-r border-white/10 overflow-y-auto transition-transform ${
+          isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         <div className="h-full">

@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import openai from '@/lib/openai/config'
-import { ADVANCED_COUNSELOR_PROMPT, CBT_THOUGHT_RECORD_PROMPT } from '@/lib/openai/advanced-prompts'
+import { ADVANCED_COUNSELOR_PROMPT } from '@/lib/openai/advanced-prompts'
 import {
   detectCrisisKeywords,
-  analyzeEmotions,
-  detectCognitiveDistortions,
   generateContextualSystemMessage,
   checkResponseQuality,
   type Message,
@@ -12,7 +10,6 @@ import {
 import { enhanceWithResearch } from '@/lib/search/tavily'
 import { COUNSELING_MODES, type CounselingMode } from '@/lib/openai/counseling-modes'
 import { rateLimit } from '@/lib/rate-limit'
-import { getCounselingResponseJsonSchema, type CounselingResponse } from '@/lib/openai/structured-schemas'
 
 const languageInstructions = {
   ko: '한국어로 답변하세요.',
@@ -104,10 +101,6 @@ export async function POST(request: NextRequest) {
     const latestUserMessage = messages.filter((m: Message) => m.role === 'user').slice(-1)[0]?.content || ''
     const isCrisis = detectCrisisKeywords(latestUserMessage)
 
-    // 감정 및 인지 왜곡 분석
-    const emotions = analyzeEmotions(latestUserMessage)
-    const distortions = detectCognitiveDistortions(latestUserMessage)
-
     // 맥락 기반 시스템 메시지
     const contextualGuidance = generateContextualSystemMessage(messages, {
       riskLevel: isCrisis ? 'high' : 'low',
@@ -116,9 +109,6 @@ export async function POST(request: NextRequest) {
     // 심리학 연구 및 이론 검색 (Tavily API)
     const conversationContext = messages.slice(-3).map((m: Message) => m.content).join(' ')
     const researchKnowledge = await enhanceWithResearch(latestUserMessage, conversationContext)
-
-    // CBT 기법 적용 여부 판단
-    const useCBT = distortions.length > 0 && messages.length > 6
 
     // 선택한 상담 모드의 프롬프트 사용
     const modePrompt = COUNSELING_MODES[counselingMode as CounselingMode]?.prompt || ADVANCED_COUNSELOR_PROMPT
@@ -133,15 +123,6 @@ export async function POST(request: NextRequest) {
     const toneGuidance = getToneGuidance(responseTone)
     systemPrompt += `\n\n**답변 스타일 가이드**: ${toneGuidance}`
 
-    if (useCBT) {
-      systemPrompt += '\n\n' + CBT_THOUGHT_RECORD_PROMPT
-      systemPrompt += `\n\n감지된 인지 왜곡: ${distortions.join(', ')}`
-    }
-
-    if (emotions.length > 0) {
-      systemPrompt += `\n\n현재 감지된 감정: ${emotions.join(', ')}`
-    }
-
     if (isCrisis) {
       systemPrompt += `\n\n⚠️ 위기 상황 감지됨. 안전 최우선 프로토콜 적용.`
     }
@@ -151,44 +132,9 @@ export async function POST(request: NextRequest) {
       systemPrompt += `\n\n## 관련 심리학 연구 및 이론:\n${researchKnowledge}\n\n위 연구 결과를 참고하여 증거 기반의 조언을 제공하세요. 적절한 경우 "연구에 따르면..." 등으로 인용하세요.`
     }
 
-    // Structured Output 추가 지시사항
-    systemPrompt += `\n\n## 응답 형식 지침
-
-반드시 다음 JSON 구조로 응답하세요:
-
-1. **message**: 내담자에게 전달할 따뜻하고 전문적인 메시지 (${language === 'ko' ? '한국어' : language === 'en' ? 'English' : language === 'ja' ? '日本語' : '中文'})
-   - 공감과 이해를 표현하세요
-   - 구체적 예시나 비유를 포함하세요
-   - 심리학적 근거와 실용적 조언을 포함하세요
-   - 탐색적 질문을 포함하세요
-
-2. **analysis**: 내담자의 심리 상태 분석
-   - emotions: 감지된 감정들 배열 (각 감정: name(문자열), intensity(0-10 숫자))
-   - coreIssue: 핵심 문제 한 문장 요약 (문자열)
-
-3. **riskAssessment**: 위험 평가
-   - level: "low", "medium", "high" 중 하나
-   - recommendProfessionalHelp: true 또는 false
-
-예시:
-{
-  "message": "힘든 시기를 보내고 계시는군요...",
-  "analysis": {
-    "emotions": [
-      {"name": "불안", "intensity": 7},
-      {"name": "우울", "intensity": 5}
-    ],
-    "coreIssue": "직장에서의 과도한 업무 부담으로 인한 번아웃 위험"
-  },
-  "riskAssessment": {
-    "level": "medium",
-    "recommendProfessionalHelp": false
-  }
-}`
-
-    // OpenAI API 호출 - Structured Output 사용
-    const completion = await openai.chat.completions.create({
-      model: 'gpt-4o-2024-08-06', // Structured Outputs 지원 모델
+    // OpenAI API 호출 - 스트리밍 응답 (gpt-4o-mini)
+    const stream = await openai.chat.completions.create({
+      model: 'gpt-4o-mini',
       messages: [
         {
           role: 'system',
@@ -197,60 +143,51 @@ export async function POST(request: NextRequest) {
         ...messages,
       ],
       temperature: 0.7,
-      max_tokens: 2000, // 구조화된 응답을 위해 증가
+      max_tokens: 1000,
       presence_penalty: 0.7,
       frequency_penalty: 0.4,
       top_p: 0.95,
-      response_format: {
-        type: "json_schema",
-        json_schema: getCounselingResponseJsonSchema()
-      }
+      stream: true,
     })
 
-    const responseContent = completion.choices[0]?.message?.content
+    // 스트리밍 응답을 위한 ReadableStream 생성
+    const encoder = new TextEncoder()
+    const readableStream = new ReadableStream({
+      async start(controller) {
+        let fullResponse = ''
 
-    if (!responseContent) {
-      throw new Error('응답 생성에 실패했습니다.')
-    }
+        try {
+          for await (const chunk of stream) {
+            const content = chunk.choices[0]?.delta?.content || ''
+            if (content) {
+              fullResponse += content
+              // 클라이언트로 청크 전송
+              controller.enqueue(encoder.encode(`data: ${JSON.stringify({ content })}\n\n`))
+            }
+          }
 
-    // JSON 파싱
-    let structuredResponse: CounselingResponse
-    try {
-      structuredResponse = JSON.parse(responseContent)
-    } catch (parseError) {
-      console.error('JSON parsing error:', parseError)
-      // Fallback: 일반 텍스트 응답으로 처리
-      return NextResponse.json({
-        message: responseContent,
-        usage: completion.usage,
-        metadata: {
-          emotions,
-          distortions,
-          isCrisis,
-          quality: checkResponseQuality(responseContent),
-          parseError: true
-        },
-      })
-    }
+          // 스트림 종료 시 메타데이터 전송
+          const quality = checkResponseQuality(fullResponse)
+          controller.enqueue(
+            encoder.encode(
+              `data: ${JSON.stringify({
+                done: true,
+                metadata: { isCrisis, quality }
+              })}\n\n`
+            )
+          )
+          controller.close()
+        } catch (error) {
+          controller.error(error)
+        }
+      },
+    })
 
-    // 응답 품질 체크
-    const quality = checkResponseQuality(structuredResponse.message)
-
-    // 풍부한 메타데이터와 함께 반환
-    return NextResponse.json({
-      message: structuredResponse.message,
-      usage: completion.usage,
-      metadata: {
-        // 기존 분석 데이터
-        emotions: emotions,
-        distortions: distortions,
-        isCrisis: isCrisis,
-        quality: quality,
-
-        // Structured Output으로 얻은 풍부한 데이터
-        analysis: structuredResponse.analysis,
-        suggestions: structuredResponse.suggestions,
-        riskAssessment: structuredResponse.riskAssessment,
+    return new Response(readableStream, {
+      headers: {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
       },
     })
   } catch (error: any) {
