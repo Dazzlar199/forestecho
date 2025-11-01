@@ -9,6 +9,10 @@ interface MessageInsightsProps {
 }
 
 export default function MessageInsights({ metadata }: MessageInsightsProps) {
+  // 오른쪽 사이드바에 표시되므로 메시지 아래에는 표시하지 않음
+  return null
+
+  /* 기존 코드 주석 처리 - 오른쪽 사이드바로 대체됨
   const [isExpanded, setIsExpanded] = useState(false)
 
   // 표시할 인사이트가 없으면 렌더링하지 않음

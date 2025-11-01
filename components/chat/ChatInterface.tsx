@@ -18,6 +18,7 @@ import {
   generateChatTitle,
 } from '@/lib/firebase/chat-sessions'
 import ChatHistory from './ChatHistory'
+import LiveAnalysisSidebar from './LiveAnalysisSidebar'
 import type { ChatSession } from '@/types/chat'
 
 export default function ChatInterface() {
@@ -38,6 +39,11 @@ export default function ChatInterface() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const { user, isPremium} = useAuth()
+
+  // 가장 최근 assistant 메시지의 메타데이터 추출
+  const latestAnalysis = messages
+    .filter(m => m.role === 'assistant' && m.metadata)
+    .slice(-1)[0]?.metadata || null
 
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -215,8 +221,8 @@ export default function ChatInterface() {
   }, [])
 
   return (
-    <div className="max-w-4xl mx-auto py-2 sm:py-8 px-3 sm:px-6">
-      {/* Chat History Sidebar */}
+    <div className="flex h-screen">
+      {/* Chat History Sidebar (왼쪽) */}
       {user && (
         <ChatHistory
           currentSessionId={currentSessionId}
@@ -225,65 +231,71 @@ export default function ChatInterface() {
         />
       )}
 
-      {/* Mode Selector */}
-      <div className="mb-3 sm:mb-4">
-        <ModeSelector selectedMode={counselingMode} onModeChange={setCounselingMode} />
-      </div>
-
-      {/* Tone Slider */}
-      <div className="mb-4 sm:mb-6">
-        <ToneSlider value={responseTone} onChange={setResponseTone} />
-      </div>
-
-      <div className="h-[calc(100vh-450px)] sm:h-[65vh] flex flex-col bg-black/20 backdrop-blur-xl border border-white/10 rounded-lg overflow-hidden">
-        {/* Chat Messages */}
-        <div className="flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-6 md:px-10 md:py-12 space-y-4 sm:space-y-6 md:space-y-8">
-          {messages.map((message, index) => (
-            <ChatMessage key={index} message={message} />
-          ))}
-
-          {isLoading && (
-            <div className="flex items-center gap-3 text-gray-400">
-              <Loader2 className="w-5 h-5 animate-spin" />
-              <span style={{ fontWeight: 300, letterSpacing: '0.02em' }}>{t('listening')}</span>
-            </div>
-          )}
-
-          <div ref={messagesEndRef} />
+      {/* Main Chat Area (중앙) */}
+      <div className="flex-1 flex flex-col py-2 sm:py-8 px-3 sm:px-6 max-w-4xl mx-auto w-full">
+        {/* Mode Selector */}
+        <div className="mb-3 sm:mb-4">
+          <ModeSelector selectedMode={counselingMode} onModeChange={setCounselingMode} />
         </div>
 
-        {/* Input Area */}
-        <div className="border-t border-white/10 bg-black/30 px-4 py-4 sm:px-6 sm:py-6 md:px-10 md:py-8">
-          <div className="flex gap-2 sm:gap-4">
-            <textarea
-              ref={textareaRef}
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder={t('placeholder')}
-              className="flex-1 resize-none border-0 bg-transparent px-0 py-2 sm:py-3 focus:outline-none focus:ring-0 text-gray-200 placeholder-gray-600 text-sm sm:text-base"
-              style={{ fontWeight: 300, fontSize: '16px', lineHeight: 1.8, letterSpacing: '0.02em' }}
-              rows={2}
-              disabled={isLoading}
-            />
-            <button
-              onClick={handleSend}
-              disabled={isLoading || !input.trim()}
-              className="self-end p-2 sm:p-3 text-gray-500 hover:text-gray-300 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-            >
-              <Send className="w-5 h-5" />
-            </button>
+        {/* Tone Slider */}
+        <div className="mb-4 sm:mb-6">
+          <ToneSlider value={responseTone} onChange={setResponseTone} />
+        </div>
+
+        <div className="flex-1 flex flex-col bg-black/20 backdrop-blur-xl border border-white/10 rounded-lg overflow-hidden">
+          {/* Chat Messages */}
+          <div className="flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-6 md:px-10 md:py-12 space-y-4 sm:space-y-6 md:space-y-8">
+            {messages.map((message, index) => (
+              <ChatMessage key={index} message={message} />
+            ))}
+
+            {isLoading && (
+              <div className="flex items-center gap-3 text-gray-400">
+                <Loader2 className="w-5 h-5 animate-spin" />
+                <span style={{ fontWeight: 300, letterSpacing: '0.02em' }}>{t('listening')}</span>
+              </div>
+            )}
+
+            <div ref={messagesEndRef} />
+          </div>
+
+          {/* Input Area */}
+          <div className="border-t border-white/10 bg-black/30 px-4 py-4 sm:px-6 sm:py-6 md:px-10 md:py-8">
+            <div className="flex gap-2 sm:gap-4">
+              <textarea
+                ref={textareaRef}
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder={t('placeholder')}
+                className="flex-1 resize-none border-0 bg-transparent px-0 py-2 sm:py-3 focus:outline-none focus:ring-0 text-gray-200 placeholder-gray-600 text-sm sm:text-base"
+                style={{ fontWeight: 300, fontSize: '16px', lineHeight: 1.8, letterSpacing: '0.02em' }}
+                rows={2}
+                disabled={isLoading}
+              />
+              <button
+                onClick={handleSend}
+                disabled={isLoading || !input.trim()}
+                className="self-end p-2 sm:p-3 text-gray-500 hover:text-gray-300 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+              >
+                <Send className="w-5 h-5" />
+              </button>
+            </div>
           </div>
         </div>
+
+        {/* Premium Analysis */}
+        {messages.length > 3 && (
+          <AnalysisReport messages={messages} isPremium={isPremium} sessionId={currentSessionId} />
+        )}
       </div>
 
-    {/* Premium Analysis */}
-    {messages.length > 3 && (
-      <AnalysisReport messages={messages} isPremium={isPremium} sessionId={currentSessionId} />
-    )}
+      {/* Live Analysis Sidebar (오른쪽) */}
+      <LiveAnalysisSidebar latestMetadata={latestAnalysis} />
 
       {/* Crisis Modal */}
       <CrisisModal isOpen={showCrisisModal} onClose={() => setShowCrisisModal(false)} />
-  </div>
+    </div>
   )
 }
