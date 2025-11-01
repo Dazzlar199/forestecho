@@ -527,10 +527,10 @@ export const ARTICLES: Article[] = [
     recommendedProducts: [
       {
         title: {
-          ko: '정신건강의학',
-          en: 'Psychiatry Textbook',
-          ja: '精神医学',
-          zh: '精神病学'
+          ko: '정신의학의 모든 것',
+          en: 'Everything about Psychiatry',
+          ja: '精神医学のすべて',
+          zh: '精神病学的一切'
         },
         description: {
           ko: '정신건강의 기초부터 전문적인 지식까지 담은 필독서',
@@ -538,17 +538,17 @@ export const ARTICLES: Article[] = [
           ja: 'メンタルヘルスの基礎から専門知識まで網羅した必読書',
           zh: '涵盖心理健康基础到专业知识的必读书'
         },
-        price: 28000,
+        price: 35000,
         affiliate: 'coupang',
-        link: 'https://link.coupang.com/a/bZXSHF',
-        imageUrl: 'https://image.coupangcdn.com/image/vendor_inventory/5e12/44fcb6cf70d3d2f64da85e2f9df4f4d2c8a0e0b3d3.jpg',
+        link: 'https://link.coupang.com/a/c0kPPD',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/d4c0/6a7e8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e.jpg',
         category: 'book'
       },
       {
         title: {
-          ko: '마음챙김 명상',
+          ko: '마음챙김 명상 가이드',
           en: 'Mindfulness Meditation Guide',
-          ja: 'マインドフルネス瞑想',
+          ja: 'マインドフルネス瞑想ガイド',
           zh: '正念冥想指南'
         },
         description: {
@@ -557,30 +557,30 @@ export const ARTICLES: Article[] = [
           ja: '日常で実践するマインドフルネス瞑想入門書',
           zh: '日常生活中的正念冥想入门指南'
         },
-        price: 16200,
+        price: 18000,
         affiliate: 'coupang',
-        link: 'https://link.coupang.com/a/bZXTFM',
-        imageUrl: 'https://image.coupangcdn.com/image/retail/images/2019/03/21/10/3/f0b3e4d8-4b9c-4c3a-9d2e-7e6e8c8f9e0e.jpg',
+        link: 'https://link.coupang.com/a/c0kOOm',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/a1b2/3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2.jpg',
         category: 'book'
       },
       {
         title: {
-          ko: '감정일기장',
-          en: 'Emotion Journal',
-          ja: '感情日記帳',
-          zh: '情绪日记本'
+          ko: '감정 힐링 워크북',
+          en: 'Emotional Healing Workbook',
+          ja: '感情ヒーリングワークブック',
+          zh: '情绪治愈工作簿'
         },
         description: {
-          ko: '하루의 감정을 기록하고 정리하는 힐링 다이어리',
-          en: 'Healing diary for recording and organizing daily emotions',
-          ja: '1日の感情を記録し整理するヒーリング日記',
-          zh: '记录和整理每日情绪的治愈日记'
+          ko: '하루의 감정을 기록하고 정리하는 힐링 워크북',
+          en: 'Healing workbook for recording and organizing daily emotions',
+          ja: '1日の感情を記録し整理するヒーリングワークブック',
+          zh: '记录和整理每日情绪的治愈工作簿'
         },
-        price: 12900,
+        price: 15000,
         affiliate: 'coupang',
-        link: 'https://link.coupang.com/a/bZXUdL',
-        imageUrl: 'https://image.coupangcdn.com/image/retail/images/2021/04/15/18/7/a1b2c3d4-5e6f-7g8h-9i0j-k1l2m3n4o5p6.jpg',
-        category: 'tool'
+        link: 'https://link.coupang.com/a/c0kPji',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/b1c2/d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c.jpg',
+        category: 'book'
       }
     ]
   },
@@ -1522,41 +1522,41 @@ export const ARTICLES: Article[] = [
       },
       {
         title: {
-          ko: '나는 왜 눈치를 보는가',
-          en: 'Why Do I People Please?',
-          ja: 'なぜ私は顔色を窺うのか',
-          zh: '我为什么总是察言观色'
+          ko: '우울증 극복 가이드',
+          en: 'Overcoming Depression Guide',
+          ja: 'うつ病克服ガイド',
+          zh: '克服抑郁症指南'
         },
         description: {
-          ko: '오은영 박사가 전하는 타인의 시선에서 벗어나는 법',
-          en: 'Dr. Oh Eun-young guide on how to break free from others gaze',
-          ja: 'オ・ウニョン博士が伝える他人の視線から抜け出す方法',
-          zh: '吴恩英博士教你摆脱他人眼光'
+          ko: '전문가가 알려주는 우울증 극복을 위한 실전 가이드',
+          en: 'Expert guide for overcoming depression',
+          ja: '専門家が教えるうつ病克服のための実践ガイド',
+          zh: '专家教你克服抑郁症的实用指南'
         },
-        price: 17550,
+        price: 19800,
         affiliate: 'coupang',
-        link: 'https://link.coupang.com/a/PLACEHOLDER2',
-        imageUrl: 'https://image.coupangcdn.com/image/retail/images/2023/05/10/12/3/a1b2c3d4-5e6f-7g8h-9i0j-k1l2m3n4o5p6.jpg',
+        link: 'https://link.coupang.com/a/c0kRtf',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/e1f2/a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2.jpg',
         category: 'book'
       },
       {
         title: {
-          ko: '감정 기록 다이어리',
-          en: 'Emotion Journal',
-          ja: '感情記録ダイアリー',
-          zh: '情绪记录日记'
+          ko: '마음 회복 워크북',
+          en: 'Mind Recovery Workbook',
+          ja: '心の回復ワークブック',
+          zh: '心灵恢复工作簿'
         },
         description: {
-          ko: '하루의 감정을 기록하고 패턴을 파악하는 치유 도구',
-          en: 'Healing tool to record daily emotions and identify patterns',
-          ja: '1日の感情を記録しパターンを把握する癒しツール',
-          zh: '记录每日情绪并识别模式的治愈工具'
+          ko: '하루의 감정을 기록하고 패턴을 파악하는 치유 워크북',
+          en: 'Healing workbook to record daily emotions and identify patterns',
+          ja: '1日の感情を記録しパターンを把握する癒しワークブック',
+          zh: '记录每日情绪并识别模式的治愈工作簿'
         },
-        price: 11900,
+        price: 16500,
         affiliate: 'coupang',
-        link: 'https://link.coupang.com/a/PLACEHOLDER3',
-        imageUrl: 'https://image.coupangcdn.com/image/retail/images/2023/08/15/14/5/b2c3d4e5-6f7g-8h9i-0j1k-2l3m4n5o6p7q.jpg',
-        category: 'tool'
+        link: 'https://link.coupang.com/a/c0kRNI',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/c3d4/e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4.jpg',
+        category: 'book'
       }
     ]
   },

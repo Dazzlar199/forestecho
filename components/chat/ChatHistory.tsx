@@ -101,10 +101,10 @@ export default function ChatHistory({ currentSessionId, onSelectSession, onNewCh
 
   return (
     <>
-      {/* Toggle Button */}
+      {/* Toggle Button (모바일 전용) */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed top-24 left-8 z-40 p-3 border transition-all ${
+        className={`lg:hidden fixed top-24 right-8 z-40 p-3 border transition-all ${
           theme === 'dark'
             ? 'bg-black/60 border-white/10 hover:bg-black/80 text-gray-300'
             : 'bg-white/60 border-gray-300 hover:bg-white/80 text-gray-700'
@@ -114,24 +114,21 @@ export default function ChatHistory({ currentSessionId, onSelectSession, onNewCh
         {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
       </button>
 
-      {/* Sidebar */}
+      {/* Overlay (모바일 전용) */}
       {isOpen && (
-        <>
-          {/* Overlay */}
-          <div
-            className="fixed inset-0 z-30 backdrop-blur-sm bg-black/40"
-            onClick={() => setIsOpen(false)}
-          />
+        <div
+          className="lg:hidden fixed inset-0 z-30 backdrop-blur-sm bg-black/40"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
 
-          {/* Sidebar Content */}
-          <div
-            className={`fixed top-0 left-0 bottom-0 z-40 w-80 border-r backdrop-blur-xl overflow-y-auto ${
-              theme === 'dark'
-                ? 'bg-black/90 border-white/10'
-                : 'bg-white/95 border-gray-300'
-            }`}
-          >
-            <div className="p-6">
+      {/* Sidebar Content */}
+      <div
+        className={`fixed lg:relative top-0 right-0 bottom-0 z-40 w-72 bg-black/20 backdrop-blur-xl border-l border-white/10 overflow-y-auto transition-transform ${
+          isOpen ? 'translate-x-0' : 'translate-x-full lg:translate-x-0'
+        }`}
+      >
+        <div className="h-full">
               {/* Header */}
               <div className="mb-6">
                 <h2
@@ -283,10 +280,8 @@ export default function ChatHistory({ currentSessionId, onSelectSession, onNewCh
                   ))}
                 </div>
               )}
-            </div>
-          </div>
-        </>
-      )}
+        </div>
+      </div>
     </>
   )
 }

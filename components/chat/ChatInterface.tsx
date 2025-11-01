@@ -237,14 +237,8 @@ export default function ChatInterface() {
 
   return (
     <div className="flex h-screen">
-      {/* Chat History Sidebar (왼쪽) */}
-      {user && (
-        <ChatHistory
-          currentSessionId={currentSessionId}
-          onSelectSession={handleSelectSession}
-          onNewChat={handleNewChat}
-        />
-      )}
+      {/* Live Analysis Sidebar (왼쪽) */}
+      <LiveAnalysisSidebar latestMetadata={latestAnalysis} />
 
       {/* Main Chat Area (중앙) */}
       <div className="flex-1 flex flex-col py-2 sm:py-8 px-3 sm:px-6 max-w-4xl mx-auto w-full">
@@ -306,8 +300,14 @@ export default function ChatInterface() {
         )}
       </div>
 
-      {/* Live Analysis Sidebar (오른쪽) */}
-      <LiveAnalysisSidebar latestMetadata={latestAnalysis} />
+      {/* Chat History Sidebar (오른쪽) */}
+      {user && (
+        <ChatHistory
+          currentSessionId={currentSessionId}
+          onSelectSession={handleSelectSession}
+          onNewChat={handleNewChat}
+        />
+      )}
 
       {/* Crisis Modal */}
       <CrisisModal isOpen={showCrisisModal} onClose={() => setShowCrisisModal(false)} />
