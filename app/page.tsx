@@ -1,6 +1,7 @@
 'use client'
 
 import dynamic from 'next/dynamic'
+import Script from 'next/script'
 import { Loader2 } from 'lucide-react'
 import ForestBackground from '@/components/layout/ForestBackground'
 import { useChatContext } from '@/contexts/ChatContext'
@@ -33,19 +34,61 @@ const OnboardingTour = dynamic(() => import('@/components/onboarding/OnboardingT
 export default function Home() {
   const { showChat, setShowChat } = useChatContext()
 
-  return (
-    <main className="min-h-screen relative">
-      <ForestBackground />
-      <BGMPlayer />
-      <OnboardingTour onComplete={() => {}} />
+  // JSON-LD for homepage
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: '숲울림',
+    alternateName: 'ForestEcho',
+    url: 'https://forestecho.app',
+    description: '24시간 AI 심리상담 및 정신건강 케어 플랫폼',
+    sameAs: [
+      // SNS 링크가 있다면 여기에 추가
+    ],
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'Customer Service',
+      availableLanguage: ['Korean', 'English', 'Japanese', 'Chinese'],
+    },
+    areaServed: {
+      '@type': 'Country',
+      name: 'South Korea',
+    },
+    offers: {
+      '@type': 'Offer',
+      category: 'Mental Health Service',
+      itemOffered: {
+        '@type': 'Service',
+        name: 'AI 심리상담 서비스',
+        description: '우울증, 불안장애, 스트레스 관리를 위한 24시간 AI 상담 및 정신건강 교육',
+        provider: {
+          '@type': 'Organization',
+          name: '숲울림',
+        },
+      },
+    },
+  }
 
-      {!showChat ? (
-        <WelcomeScreen onStartChat={() => setShowChat(true)} />
-      ) : (
-        <div className="container mx-auto px-4 py-8">
-          <ChatInterface />
-        </div>
-      )}
-    </main>
+  return (
+    <>
+      <Script
+        id="organization-jsonld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <main className="min-h-screen relative">
+        <ForestBackground />
+        <BGMPlayer />
+        <OnboardingTour onComplete={() => {}} />
+
+        {!showChat ? (
+          <WelcomeScreen onStartChat={() => setShowChat(true)} />
+        ) : (
+          <div className="container mx-auto px-4 py-8">
+            <ChatInterface />
+          </div>
+        )}
+      </main>
+    </>
   )
 }

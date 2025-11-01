@@ -20,9 +20,30 @@ const nanumMyeongjo = Nanum_Myeongjo({
 })
 
 export const metadata: Metadata = {
-  title: '숲울림 - 심리상담',
-  description: '전문 심리상담 서비스. 24시간 언제든지 당신의 이야기를 들어드립니다.',
-  keywords: ['심리상담', '상담', '멘탈케어', '심리치료', '정신건강', '마음치유', '숲울림'],
+  title: '숲울림 - AI 심리상담 및 정신건강 케어 플랫폼',
+  description: '24시간 AI 심리상담, 감정 기록, 우울증·불안장애 자가진단, 정신건강 교육 콘텐츠를 제공하는 종합 멘탈케어 플랫폼. 전문적이고 신뢰할 수 있는 심리 지원 서비스.',
+  keywords: [
+    '심리상담',
+    'AI 상담',
+    '정신건강',
+    '멘탈케어',
+    '우울증',
+    '불안장애',
+    '스트레스 관리',
+    '감정 기록',
+    '자가진단',
+    '심리치료',
+    '마음건강',
+    '온라인 상담',
+    '24시간 상담',
+    '청소년 상담',
+    '직장인 상담',
+    '심리교육',
+    '정신건강 정보',
+    '감정 조절',
+    '숲울림',
+    'ForestEcho',
+  ],
   authors: [{ name: '숲울림' }],
   verification: {
     // Google Search Console 인증 코드를 여기에 추가하세요
@@ -33,11 +54,37 @@ export const metadata: Metadata = {
     // },
   },
   openGraph: {
-    title: '숲울림 - 심리상담',
-    description: '전문 심리상담 서비스',
+    title: '숲울림 - AI 심리상담 및 정신건강 케어',
+    description: '24시간 AI 심리상담, 감정 기록, 우울증·불안장애 자가진단 서비스',
     type: 'website',
     url: 'https://forestecho.app',
     siteName: '숲울림',
+    locale: 'ko_KR',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: '숲울림 - AI 심리상담 및 정신건강 케어',
+    description: '24시간 AI 심리상담, 감정 기록, 우울증·불안장애 자가진단 서비스',
+  },
+  alternates: {
+    canonical: 'https://forestecho.app',
+    languages: {
+      'ko-KR': 'https://forestecho.app',
+      'en-US': 'https://forestecho.app',
+      'ja-JP': 'https://forestecho.app',
+      'zh-CN': 'https://forestecho.app',
+    },
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 }
 

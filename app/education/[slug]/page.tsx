@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import Script from 'next/script'
 import { ARTICLES } from '@/types/education'
 import ArticleContent from '@/components/education/ArticleContent'
 
@@ -32,11 +33,21 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       publishedTime: article.lastUpdated.toISOString(),
       authors: ['숲울림'],
       tags: article.tags,
+      url: `https://forestecho.app/education/${article.id}`,
     },
     twitter: {
       card: 'summary_large_image',
       title: article.title.ko,
       description: article.summary.ko,
+    },
+    alternates: {
+      canonical: `https://forestecho.app/education/${article.id}`,
+      languages: {
+        'ko-KR': `https://forestecho.app/education/${article.id}`,
+        'en-US': `https://forestecho.app/education/${article.id}`,
+        'ja-JP': `https://forestecho.app/education/${article.id}`,
+        'zh-CN': `https://forestecho.app/education/${article.id}`,
+      },
     },
   }
 }
@@ -49,5 +60,45 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
     notFound()
   }
 
-  return <ArticleContent article={article} />
+  // JSON-LD structured data for SEO
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: article.title.ko,
+    description: article.summary.ko,
+    author: {
+      '@type': 'Organization',
+      name: '숲울림',
+      url: 'https://forestecho.app',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: '숲울림',
+      url: 'https://forestecho.app',
+    },
+    datePublished: article.lastUpdated.toISOString(),
+    dateModified: article.lastUpdated.toISOString(),
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://forestecho.app/education/${article.id}`,
+    },
+    keywords: article.tags.join(', '),
+    articleSection: article.category,
+    inLanguage: 'ko-KR',
+    about: {
+      '@type': 'MedicalCondition',
+      name: article.title.ko,
+    },
+  }
+
+  return (
+    <>
+      <Script
+        id={`article-jsonld-${article.id}`}
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <ArticleContent article={article} />
+    </>
+  )
 }
