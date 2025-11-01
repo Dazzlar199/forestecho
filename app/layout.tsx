@@ -4,6 +4,7 @@ import './globals.css'
 import { AuthProvider } from '@/components/layout/AuthProvider'
 import { ThemeProvider } from '@/components/layout/ThemeProvider'
 import { LanguageProvider } from '@/components/layout/LanguageProvider'
+import { ChatProvider } from '@/contexts/ChatContext'
 import Header from '@/components/layout/Header'
 
 const spectral = Spectral({
@@ -62,8 +63,10 @@ export default function RootLayout({
         <ThemeProvider>
           <LanguageProvider>
             <AuthProvider>
-              <Header />
-              {children}
+              <ChatProvider>
+                <Header />
+                {children}
+              </ChatProvider>
             </AuthProvider>
           </LanguageProvider>
         </ThemeProvider>

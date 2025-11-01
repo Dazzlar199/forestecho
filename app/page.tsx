@@ -1,9 +1,9 @@
 'use client'
 
-import { useState } from 'react'
 import dynamic from 'next/dynamic'
 import { Loader2 } from 'lucide-react'
 import ForestBackground from '@/components/layout/ForestBackground'
+import { useChatContext } from '@/contexts/ChatContext'
 
 // Dynamic imports for code splitting
 const ChatInterface = dynamic(() => import('@/components/chat/ChatInterface'), {
@@ -31,7 +31,7 @@ const OnboardingTour = dynamic(() => import('@/components/onboarding/OnboardingT
 })
 
 export default function Home() {
-  const [showChat, setShowChat] = useState(false)
+  const { showChat, setShowChat } = useChatContext()
 
   return (
     <main className="min-h-screen relative">

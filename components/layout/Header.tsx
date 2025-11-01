@@ -5,10 +5,11 @@ import { Sun, Moon, Languages, Heart, Home, Brain, Calendar, Users, BookOpen, Lo
 import { useAuth } from './AuthProvider'
 import { useTheme } from './ThemeProvider'
 import { useLanguage, type Language } from './LanguageProvider'
+import { useChatContext } from '@/contexts/ChatContext'
 import AuthModal from '@/components/auth/AuthModal'
 import NicknameModal from '@/components/profile/NicknameModal'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { signOut } from 'firebase/auth'
 import { auth } from '@/lib/firebase/config'
 
@@ -16,7 +17,9 @@ export default function Header() {
   const { user } = useAuth()
   const { theme, toggleTheme } = useTheme()
   const { language, setLanguage, t } = useLanguage()
+  const { resetToHome } = useChatContext()
   const pathname = usePathname()
+  const router = useRouter()
   const [showAuthModal, setShowAuthModal] = useState(false)
   const [showPrivacy, setShowPrivacy] = useState(false)
   const [showLangMenu, setShowLangMenu] = useState(false)
@@ -55,6 +58,14 @@ export default function Header() {
       await signOut(auth)
     } catch (error) {
       console.error('Logout error:', error)
+    }
+  }
+
+  const handleHomeClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+    resetToHome()
+    if (pathname !== '/') {
+      router.push('/')
     }
   }
 
@@ -103,8 +114,8 @@ export default function Header() {
           {/* 오른쪽: 홈/언어/로그인/개인정보 */}
           <div className="flex items-center gap-6">
             {/* 홈 버튼 */}
-            <Link
-              href="/"
+            <button
+              onClick={handleHomeClick}
               className={`flex items-center gap-2 text-sm transition-colors px-4 py-2 ${
                 theme === 'dark'
                   ? 'text-gray-500 hover:text-gray-300'
@@ -119,7 +130,7 @@ export default function Header() {
                 {language === 'ja' && 'ホーム'}
                 {language === 'zh' && '首页'}
               </span>
-            </Link>
+            </button>
 
             {/* 언어 선택 */}
             <div className="relative">
@@ -548,10 +559,12 @@ export default function Header() {
                     </div>
 
                     {/* 홈 */}
-                    <Link
-                      href="/"
-                      onClick={() => setShowMobileMenu(false)}
-                      className={`flex items-center gap-3 p-4 rounded-xl transition-colors ${
+                    <button
+                      onClick={(e) => {
+                        handleHomeClick(e)
+                        setShowMobileMenu(false)
+                      }}
+                      className={`w-full flex items-center gap-3 p-4 rounded-xl transition-colors ${
                         mounted && pathname === '/'
                           ? theme === 'dark'
                             ? 'bg-emerald-900/30 text-emerald-400'
@@ -563,7 +576,7 @@ export default function Header() {
                     >
                       <Home className="w-5 h-5" />
                       <span>{language === 'ko' ? '홈' : language === 'en' ? 'Home' : language === 'ja' ? 'ホーム' : '首页'}</span>
-                    </Link>
+                    </button>
 
                     {/* 메뉴 아이템 */}
                     {menuItems.map((item) => (
@@ -623,10 +636,12 @@ export default function Header() {
                 ) : (
                   <>
                     {/* 로그인 안 한 경우 */}
-                    <Link
-                      href="/"
-                      onClick={() => setShowMobileMenu(false)}
-                      className={`flex items-center gap-3 p-4 rounded-xl transition-colors ${
+                    <button
+                      onClick={(e) => {
+                        handleHomeClick(e)
+                        setShowMobileMenu(false)
+                      }}
+                      className={`w-full flex items-center gap-3 p-4 rounded-xl transition-colors ${
                         mounted && pathname === '/'
                           ? theme === 'dark'
                             ? 'bg-emerald-900/30 text-emerald-400'
@@ -638,7 +653,7 @@ export default function Header() {
                     >
                       <Home className="w-5 h-5" />
                       <span>{language === 'ko' ? '홈' : language === 'en' ? 'Home' : language === 'ja' ? 'ホーム' : '首页'}</span>
-                    </Link>
+                    </button>
 
                     <Link
                       href="/faq"
