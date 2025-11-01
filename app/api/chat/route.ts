@@ -12,6 +12,7 @@ import {
 import { enhanceWithResearch } from '@/lib/search/tavily'
 import { COUNSELING_MODES, type CounselingMode } from '@/lib/openai/counseling-modes'
 import { rateLimit } from '@/lib/rate-limit'
+import { getCounselingResponseJsonSchema, type CounselingResponse } from '@/lib/openai/structured-schemas'
 
 const languageInstructions = {
   ko: '한국어로 답변하세요.',
@@ -150,9 +151,35 @@ export async function POST(request: NextRequest) {
       systemPrompt += `\n\n## 관련 심리학 연구 및 이론:\n${researchKnowledge}\n\n위 연구 결과를 참고하여 증거 기반의 조언을 제공하세요. 적절한 경우 "연구에 따르면..." 등으로 인용하세요.`
     }
 
-    // OpenAI API 호출 - 더 정교한 설정
+    // Structured Output 추가 지시사항
+    systemPrompt += `\n\n## 응답 형식 지침
+
+반드시 다음 JSON 구조로 응답하세요:
+
+1. **message**: 내담자에게 전달할 따뜻하고 전문적인 메시지 (${language === 'ko' ? '한국어' : language === 'en' ? 'English' : language === 'ja' ? '日本語' : '中文'})
+   - 공감과 이해를 표현하세요
+   - 구체적 예시나 비유를 포함하세요
+   - 탐색적 질문을 포함하세요
+
+2. **analysis**: 내담자의 심리 상태 분석
+   - emotions: 감지된 감정들 (이름, 강도, 촉발 요인)
+   - cognitiveDistortions: 발견된 인지 왜곡이 있다면
+   - coreIssue: 핵심 문제 한 문장 요약
+   - insights: 치료적 통찰 (패턴, 근본 욕구, 과거와의 연결)
+
+3. **suggestions**: 실용적 제안 (선택적)
+   - immediate: 즉시 시도할 심리 기법 1-2개 (이름, 카테고리, 설명, 단계별 방법, 기대 효과)
+   - questions: 추가 탐색 질문 1-2개
+   - resources: 유용한 리소스 정보
+
+4. **riskAssessment**: 위험 평가
+   - level: low/medium/high
+   - concerns: 구체적 우려사항
+   - recommendProfessionalHelp: 전문가 필요 여부`
+
+    // OpenAI API 호출 - Structured Output 사용
     const completion = await openai.chat.completions.create({
-      model: 'gpt-4o',
+      model: 'gpt-4o-2024-08-06', // Structured Outputs 지원 모델
       messages: [
         {
           role: 'system',
@@ -160,30 +187,61 @@ export async function POST(request: NextRequest) {
         },
         ...messages,
       ],
-      temperature: 0.7, // 더 일관된 응답
-      max_tokens: 1500, // 더 상세한 응답
-      presence_penalty: 0.7, // 반복 줄이기
+      temperature: 0.7,
+      max_tokens: 2000, // 구조화된 응답을 위해 증가
+      presence_penalty: 0.7,
       frequency_penalty: 0.4,
-      top_p: 0.95, // 고품질 응답
+      top_p: 0.95,
+      response_format: {
+        type: "json_schema",
+        json_schema: getCounselingResponseJsonSchema()
+      }
     })
 
-    const assistantMessage = completion.choices[0]?.message?.content
+    const responseContent = completion.choices[0]?.message?.content
 
-    if (!assistantMessage) {
+    if (!responseContent) {
       throw new Error('응답 생성에 실패했습니다.')
     }
 
-    // 응답 품질 체크
-    const quality = checkResponseQuality(assistantMessage)
+    // JSON 파싱
+    let structuredResponse: CounselingResponse
+    try {
+      structuredResponse = JSON.parse(responseContent)
+    } catch (parseError) {
+      console.error('JSON parsing error:', parseError)
+      // Fallback: 일반 텍스트 응답으로 처리
+      return NextResponse.json({
+        message: responseContent,
+        usage: completion.usage,
+        metadata: {
+          emotions,
+          distortions,
+          isCrisis,
+          quality: checkResponseQuality(responseContent),
+          parseError: true
+        },
+      })
+    }
 
+    // 응답 품질 체크
+    const quality = checkResponseQuality(structuredResponse.message)
+
+    // 풍부한 메타데이터와 함께 반환
     return NextResponse.json({
-      message: assistantMessage,
+      message: structuredResponse.message,
       usage: completion.usage,
       metadata: {
-        emotions,
-        distortions,
-        isCrisis,
-        quality,
+        // 기존 분석 데이터
+        emotions: emotions,
+        distortions: distortions,
+        isCrisis: isCrisis,
+        quality: quality,
+
+        // Structured Output으로 얻은 풍부한 데이터
+        analysis: structuredResponse.analysis,
+        suggestions: structuredResponse.suggestions,
+        riskAssessment: structuredResponse.riskAssessment,
       },
     })
   } catch (error: any) {

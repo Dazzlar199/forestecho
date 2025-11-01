@@ -2474,7 +2474,66 @@ export const ARTICLES: Article[] = [
       }
     ],
     lastUpdated: new Date('2025-10-27'),
-    featured: true
+    featured: true,
+    recommendedProducts: [
+      {
+        title: {
+          ko: '불안할 땐 뇌과학',
+          en: 'Neuroscience for Anxiety',
+          ja: '不安の時の脳科学',
+          zh: '焦虑时的脑科学'
+        },
+        description: {
+          ko: '뇌과학으로 이해하는 불안의 메커니즘과 극복 방법',
+          en: 'Understanding anxiety mechanisms through neuroscience and overcoming methods',
+          ja: '脳科学で理解する不安のメカニズムと克服法',
+          zh: '通过神经科学理解焦虑机制及克服方法'
+        },
+        price: 15300,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/PLACEHOLDER_ANXIETY_1',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/placeholder1.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '걱정 말아요 그대',
+          en: 'Don\'t Worry',
+          ja: '心配しないで',
+          zh: '不要担心'
+        },
+        description: {
+          ko: '혜민 스님이 전하는 불안과 걱정을 내려놓는 지혜',
+          en: 'Wisdom on letting go of anxiety and worry from Haemin Sunim',
+          ja: 'ヘミンスニムが伝える不安と心配を手放す知恵',
+          zh: '惠敏法师教你放下焦虑和担忧的智慧'
+        },
+        price: 13500,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/PLACEHOLDER_ANXIETY_2',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/placeholder2.jpg',
+        category: 'book'
+      },
+      {
+        title: {
+          ko: '불안 극복 워크북',
+          en: 'Anxiety Workbook',
+          ja: '不安克服ワークブック',
+          zh: '克服焦虑工作手册'
+        },
+        description: {
+          ko: '실용적인 인지행동치료 기법으로 불안 다스리기',
+          en: 'Managing anxiety with practical CBT techniques',
+          ja: '実用的な認知行動療法で不安をコントロール',
+          zh: '用实用认知行为疗法管理焦虑'
+        },
+        price: 18000,
+        affiliate: 'coupang',
+        link: 'https://link.coupang.com/a/PLACEHOLDER_ANXIETY_3',
+        imageUrl: 'https://thumbnail10.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/placeholder3.jpg',
+        category: 'book'
+      }
+    ]
   },
 
   // ===== 정신건강 질환 (Conditions) - Article 3 =====

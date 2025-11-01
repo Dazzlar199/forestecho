@@ -128,6 +128,7 @@ export default function ChatInterface() {
         role: 'assistant',
         content: data.message,
         timestamp: new Date(),
+        metadata: data.metadata, // Structured Output 메타데이터 포함
       }
 
       let latestMessages: Message[] = []

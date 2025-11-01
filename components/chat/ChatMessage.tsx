@@ -1,12 +1,8 @@
 'use client'
 
 import { User, Bot } from 'lucide-react'
-
-interface Message {
-  role: 'user' | 'assistant'
-  content: string
-  timestamp: Date
-}
+import type { Message } from '@/types'
+import MessageInsights from './MessageInsights'
 
 interface ChatMessageProps {
   message: Message
@@ -29,6 +25,12 @@ export default function ChatMessage({ message }: ChatMessageProps) {
         <div className="whitespace-pre-wrap break-words text-sm sm:text-base" style={{ letterSpacing: '0.01em' }}>
           {message.content}
         </div>
+
+        {/* Structured Output 인사이트 표시 (assistant 메시지만) */}
+        {!isUser && message.metadata && (
+          <MessageInsights metadata={message.metadata} />
+        )}
+
         <div className={`text-xs mt-2 sm:mt-4 ${isUser ? 'text-gray-600' : 'text-gray-600'}`} style={{ letterSpacing: '0.03em' }}>
           {message.timestamp.toLocaleTimeString('ko-KR', {
             hour: '2-digit',
