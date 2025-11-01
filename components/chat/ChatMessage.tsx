@@ -1,14 +1,14 @@
 'use client'
 
+import { memo } from 'react'
 import { User, Bot } from 'lucide-react'
 import type { Message } from '@/types'
-import MessageInsights from './MessageInsights'
 
 interface ChatMessageProps {
   message: Message
 }
 
-export default function ChatMessage({ message }: ChatMessageProps) {
+function ChatMessage({ message }: ChatMessageProps) {
   const isUser = message.role === 'user'
 
   return (
@@ -26,11 +26,6 @@ export default function ChatMessage({ message }: ChatMessageProps) {
           {message.content}
         </div>
 
-        {/* Structured Output 인사이트 표시 (assistant 메시지만) */}
-        {!isUser && message.metadata && (
-          <MessageInsights metadata={message.metadata} />
-        )}
-
         <div className={`text-xs mt-2 sm:mt-4 ${isUser ? 'text-gray-600' : 'text-gray-600'}`} style={{ letterSpacing: '0.03em' }}>
           {message.timestamp.toLocaleTimeString('ko-KR', {
             hour: '2-digit',
@@ -41,3 +36,13 @@ export default function ChatMessage({ message }: ChatMessageProps) {
     </div>
   )
 }
+
+// React.memo로 최적화: 메시지 내용과 타임스탬프가 변경되지 않으면 리렌더링 방지
+export default memo(ChatMessage, (prevProps, nextProps) => {
+  // content와 timestamp가 같으면 리렌더링하지 않음 (true 반환)
+  return (
+    prevProps.message.content === nextProps.message.content &&
+    prevProps.message.timestamp.getTime() === nextProps.message.timestamp.getTime() &&
+    prevProps.message.role === nextProps.message.role
+  )
+})

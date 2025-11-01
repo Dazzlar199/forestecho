@@ -3,17 +3,9 @@
 import { useState } from 'react'
 import { useLanguage } from '../layout/LanguageProvider'
 import { useTheme } from '../layout/ThemeProvider'
-import { X, Coffee, Cloud, TrendingUp, Heart, HelpCircle, Sparkles, UserCircle } from 'lucide-react'
+import { X, UserCircle } from 'lucide-react'
 import { CATEGORIES, type PostCategory } from '@/types/community'
-
-const iconMap: Record<string, any> = {
-  Coffee,
-  Cloud,
-  TrendingUp,
-  Heart,
-  HelpCircle,
-  Sparkles
-}
+import { iconMap } from '@/lib/utils/icon-map'
 
 interface PostCreateProps {
   onClose: () => void

@@ -1,27 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-import {
-  ChevronDown,
-  Check,
-  Heart,
-  Brain,
-  Target,
-  Search,
-  Flower2
-} from 'lucide-react'
+import { ChevronDown, Check } from 'lucide-react'
 import { useLanguage } from '../layout/LanguageProvider'
 import { useTheme } from '../layout/ThemeProvider'
 import { getAllCounselingModes, type CounselingMode } from '@/lib/openai/counseling-modes'
-
-// Icon mapping
-const iconMap: Record<string, any> = {
-  Heart,
-  Brain,
-  Target,
-  Search,
-  Flower2,
-}
+import { iconMap } from '@/lib/utils/icon-map'
 
 interface ModeSelectorProps {
   selectedMode: CounselingMode
@@ -36,7 +20,7 @@ export default function ModeSelector({ selectedMode, onModeChange }: ModeSelecto
   const modes = getAllCounselingModes(language as 'ko' | 'en' | 'ja' | 'zh')
   const currentMode = modes.find(m => m.id === selectedMode)
 
-  const CurrentIcon = currentMode ? iconMap[currentMode.iconName] : Heart
+  const CurrentIcon = currentMode ? iconMap[currentMode.iconName] : iconMap['Heart']
 
   return (
     <div className="relative mb-4 sm:mb-6">
@@ -87,7 +71,7 @@ export default function ModeSelector({ selectedMode, onModeChange }: ModeSelecto
             }`}
           >
             {modes.map((mode) => {
-              const ModeIcon = iconMap[mode.iconName] || Heart
+              const ModeIcon = iconMap[mode.iconName] || iconMap['Heart']
               return (
                 <button
                   key={mode.id}

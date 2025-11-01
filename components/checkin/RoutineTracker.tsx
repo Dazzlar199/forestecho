@@ -3,29 +3,9 @@
 import { useState } from 'react'
 import { useLanguage } from '../layout/LanguageProvider'
 import { useTheme } from '../layout/ThemeProvider'
-import {
-  Sunrise,
-  Activity,
-  Droplets,
-  Footprints,
-  BookHeart,
-  PhoneOff,
-  BookOpen,
-  Check,
-  Flame,
-  Plus
-} from 'lucide-react'
+import { Check, Flame, Plus } from 'lucide-react'
 import { DEFAULT_ROUTINES, type RoutineItem } from '@/types/checkin'
-
-const iconMap: Record<string, any> = {
-  Sunrise,
-  Activity,
-  Droplets,
-  Footprints,
-  BookHeart,
-  PhoneOff,
-  BookOpen
-}
+import { iconMap } from '@/lib/utils/icon-map'
 
 interface RoutineTrackerProps {
   routines: RoutineItem[]

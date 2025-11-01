@@ -1,5 +1,6 @@
 'use client'
 
+import { memo } from 'react'
 import { Brain, Heart, AlertCircle, Activity } from 'lucide-react'
 import type { MessageMetadata } from '@/types'
 
@@ -7,7 +8,7 @@ interface LiveAnalysisSidebarProps {
   latestMetadata: MessageMetadata | null
 }
 
-export default function LiveAnalysisSidebar({ latestMetadata }: LiveAnalysisSidebarProps) {
+function LiveAnalysisSidebar({ latestMetadata }: LiveAnalysisSidebarProps) {
   if (!latestMetadata?.analysis) {
     return (
       <div className="hidden lg:block w-80 bg-gradient-to-b from-emerald-50 to-teal-50 border-l border-emerald-200 p-6">
@@ -134,3 +135,28 @@ export default function LiveAnalysisSidebar({ latestMetadata }: LiveAnalysisSide
     </div>
   )
 }
+
+// React.memo로 최적화: latestMetadata가 변경되지 않으면 리렌더링 방지
+export default memo(LiveAnalysisSidebar, (prevProps, nextProps) => {
+  // metadata가 없는 경우
+  if (!prevProps.latestMetadata && !nextProps.latestMetadata) return true
+  if (!prevProps.latestMetadata || !nextProps.latestMetadata) return false
+
+  // analysis 깊은 비교
+  const prevAnalysis = prevProps.latestMetadata.analysis
+  const nextAnalysis = nextProps.latestMetadata.analysis
+
+  if (!prevAnalysis && !nextAnalysis) return true
+  if (!prevAnalysis || !nextAnalysis) return false
+
+  // emotions 배열 비교
+  const emotionsEqual = JSON.stringify(prevAnalysis.emotions) === JSON.stringify(nextAnalysis.emotions)
+  const coreIssueEqual = prevAnalysis.coreIssue === nextAnalysis.coreIssue
+
+  // riskAssessment 비교
+  const prevRisk = prevProps.latestMetadata.riskAssessment
+  const nextRisk = nextProps.latestMetadata.riskAssessment
+  const riskEqual = JSON.stringify(prevRisk) === JSON.stringify(nextRisk)
+
+  return emotionsEqual && coreIssueEqual && riskEqual
+})

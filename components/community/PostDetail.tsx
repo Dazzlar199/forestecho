@@ -3,17 +3,9 @@
 import { useState } from 'react'
 import { useLanguage } from '../layout/LanguageProvider'
 import { useTheme } from '../layout/ThemeProvider'
-import { X, Heart, MessageCircle, Clock, Send, Coffee, Cloud, TrendingUp, HelpCircle, Sparkles } from 'lucide-react'
+import { X, Heart, MessageCircle, Clock, Send } from 'lucide-react'
 import { CATEGORIES, type Post, type Comment } from '@/types/community'
-
-const iconMap: Record<string, any> = {
-  Coffee,
-  Cloud,
-  TrendingUp,
-  Heart,
-  HelpCircle,
-  Sparkles
-}
+import { iconMap } from '@/lib/utils/icon-map'
 
 interface PostDetailProps {
   post: Post
@@ -40,7 +32,7 @@ export default function PostDetail({
   const [isAnonymous, setIsAnonymous] = useState(true)
 
   const category = CATEGORIES.find(c => c.id === post.category)
-  const Icon = category ? iconMap[category.icon] : Coffee
+  const Icon = category ? iconMap[category.icon] : iconMap['Coffee']
   const isPostLiked = currentUserId && post.likedBy.includes(currentUserId)
 
   const formatTimeAgo = (date: Date) => {

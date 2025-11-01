@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect, useCallback } from 'react'
+import { useState, useRef, useEffect, useCallback, useMemo } from 'react'
 import { Send, Loader2 } from 'lucide-react'
 import { FIRST_MESSAGE } from '@/lib/openai/prompts'
 import ChatMessage from './ChatMessage'
@@ -40,10 +40,12 @@ export default function ChatInterface() {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const { user, isPremium} = useAuth()
 
-  // 가장 최근 assistant 메시지의 메타데이터 추출
-  const latestAnalysis = messages
-    .filter(m => m.role === 'assistant' && m.metadata)
-    .slice(-1)[0]?.metadata || null
+  // 가장 최근 assistant 메시지의 메타데이터 추출 (useMemo로 최적화)
+  const latestAnalysis = useMemo(() => {
+    return messages
+      .filter(m => m.role === 'assistant' && m.metadata)
+      .slice(-1)[0]?.metadata || null
+  }, [messages])
 
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -174,11 +176,24 @@ export default function ChatInterface() {
     } catch (error: any) {
       console.error('Error:', error)
 
+      let errorMessage = '죄송합니다. 일시적인 오류가 발생했습니다. 다시 시도해주세요.'
+
       if (error.name === 'AbortError') {
-        alert('응답 시간이 초과되었습니다. 다시 시도해주세요.')
-      } else {
-        alert('죄송합니다. 일시적인 오류가 발생했습니다. 다시 시도해주세요.')
+        errorMessage = '⏱️ 응답 시간이 초과되었습니다. 네트워크 연결을 확인하고 다시 시도해주세요.'
+      } else if (error.message?.includes('Failed to fetch') || error.message?.includes('NetworkError')) {
+        errorMessage = '🌐 네트워크 연결에 실패했습니다. 인터넷 연결을 확인해주세요.'
+      } else if (error.response) {
+        // 서버에서 반환한 에러 메시지 사용
+        const errorData = await error.response.json().catch(() => ({}))
+        errorMessage = errorData.error || errorMessage
+
+        // Rate limit 에러 특별 처리
+        if (errorData.errorCode === 'RATE_LIMIT_EXCEEDED') {
+          errorMessage = `⚠️ ${errorData.error}\n잠시 후 다시 시도해주세요. (약 ${errorData.retryAfter || 60}초 후)`
+        }
       }
+
+      alert(errorMessage)
 
       // 에러 발생 시 마지막 메시지 제거
       setMessages((prev) => prev.slice(0, -1))

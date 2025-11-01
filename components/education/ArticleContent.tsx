@@ -2,19 +2,11 @@
 
 import { useLanguage } from '@/components/layout/LanguageProvider'
 import Link from 'next/link'
-import { ChevronLeft, Clock, Calendar, ExternalLink, BookOpen, Brain, Heart, Sun, Users, Briefcase } from 'lucide-react'
+import { ChevronLeft, Clock, Calendar, ExternalLink } from 'lucide-react'
 import { ARTICLE_CATEGORIES } from '@/types/education'
 import type { Article } from '@/types/education'
 import RecommendedProducts from './RecommendedProducts'
-
-const iconMap: Record<string, any> = {
-  BookOpen,
-  Brain,
-  Heart,
-  Sun,
-  Users,
-  Briefcase
-}
+import { iconMap } from '@/lib/utils/icon-map'
 
 interface ArticleContentProps {
   article: Article
@@ -23,7 +15,7 @@ interface ArticleContentProps {
 export default function ArticleContent({ article }: ArticleContentProps) {
   const { language } = useLanguage()
   const category = ARTICLE_CATEGORIES.find(c => c.id === article.category)
-  const Icon = category ? iconMap[category.icon] : BookOpen
+  const Icon = category ? iconMap[category.icon] : iconMap['BookOpen']
   // Fallback to Korean if the selected language content doesn't exist
   const content = article.content[language] || article.content.ko
 

@@ -3,17 +3,9 @@
 import Link from 'next/link'
 import { useLanguage } from '../layout/LanguageProvider'
 import { useTheme } from '../layout/ThemeProvider'
-import { Clock, Star, BookOpen, Brain, Heart, Sun, Users, Briefcase } from 'lucide-react'
+import { Clock, Star } from 'lucide-react'
 import { ARTICLE_CATEGORIES, type Article, type ArticleCategory } from '@/types/education'
-
-const iconMap: Record<string, any> = {
-  BookOpen,
-  Brain,
-  Heart,
-  Sun,
-  Users,
-  Briefcase
-}
+import { iconMap } from '@/lib/utils/icon-map'
 
 interface ArticleListProps {
   articles: Article[]
@@ -57,7 +49,7 @@ export default function ArticleList({
     <div className="grid gap-6 md:grid-cols-2">
       {sortedArticles.map((article) => {
         const category = ARTICLE_CATEGORIES.find(c => c.id === article.category)
-        const Icon = category ? iconMap[category.icon] : BookOpen
+        const Icon = category ? iconMap[category.icon] : iconMap['BookOpen']
 
         return (
           <Link

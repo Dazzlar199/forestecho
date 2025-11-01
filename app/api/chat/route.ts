@@ -259,7 +259,11 @@ export async function POST(request: NextRequest) {
     // API 키 오류 처리
     if (error?.status === 401) {
       return NextResponse.json(
-        { error: 'OpenAI API 키가 유효하지 않습니다.' },
+        {
+          error: 'OpenAI API 키가 유효하지 않습니다.',
+          error_en: 'Invalid OpenAI API key.',
+          errorCode: 'INVALID_API_KEY'
+        },
         { status: 401 }
       )
     }
@@ -267,13 +271,72 @@ export async function POST(request: NextRequest) {
     // Rate limit 오류 처리
     if (error?.status === 429) {
       return NextResponse.json(
-        { error: '요청이 너무 많습니다. 잠시 후 다시 시도해주세요.' },
+        {
+          error: '요청이 너무 많습니다. 잠시 후 다시 시도해주세요.',
+          error_en: 'Too many requests. Please try again later.',
+          errorCode: 'RATE_LIMIT_EXCEEDED',
+          retryAfter: 60
+        },
         { status: 429 }
       )
     }
 
+    // 타임아웃 오류 처리
+    if (error?.code === 'ETIMEDOUT' || error?.message?.includes('timeout')) {
+      return NextResponse.json(
+        {
+          error: '응답 시간이 초과되었습니다. 네트워크 연결을 확인해주세요.',
+          error_en: 'Request timeout. Please check your network connection.',
+          errorCode: 'TIMEOUT'
+        },
+        { status: 408 }
+      )
+    }
+
+    // 네트워크 오류 처리
+    if (error?.code === 'ECONNREFUSED' || error?.code === 'ENOTFOUND') {
+      return NextResponse.json(
+        {
+          error: '네트워크 연결에 실패했습니다. 인터넷 연결을 확인해주세요.',
+          error_en: 'Network connection failed. Please check your internet connection.',
+          errorCode: 'NETWORK_ERROR'
+        },
+        { status: 503 }
+      )
+    }
+
+    // JSON 파싱 오류 (Structured Output)
+    if (error?.message?.includes('JSON') || error?.message?.includes('parse')) {
+      return NextResponse.json(
+        {
+          error: '응답 처리 중 오류가 발생했습니다. 다시 시도해주세요.',
+          error_en: 'Response processing error. Please try again.',
+          errorCode: 'PARSE_ERROR'
+        },
+        { status: 500 }
+      )
+    }
+
+    // 기타 OpenAI API 오류
+    if (error?.status >= 500) {
+      return NextResponse.json(
+        {
+          error: 'OpenAI 서버에 일시적인 문제가 있습니다. 잠시 후 다시 시도해주세요.',
+          error_en: 'OpenAI server is temporarily unavailable. Please try again later.',
+          errorCode: 'OPENAI_SERVER_ERROR'
+        },
+        { status: 503 }
+      )
+    }
+
+    // 일반 서버 오류
     return NextResponse.json(
-      { error: '서버 오류가 발생했습니다. 다시 시도해주세요.' },
+      {
+        error: '서버 오류가 발생했습니다. 다시 시도해주세요.',
+        error_en: 'Server error occurred. Please try again.',
+        errorCode: 'INTERNAL_SERVER_ERROR',
+        message: process.env.NODE_ENV === 'development' ? error?.message : undefined
+      },
       { status: 500 }
     )
   }

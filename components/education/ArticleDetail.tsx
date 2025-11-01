@@ -2,17 +2,9 @@
 
 import { useLanguage } from '../layout/LanguageProvider'
 import { useTheme } from '../layout/ThemeProvider'
-import { X, Clock, Calendar, ExternalLink, BookOpen, Brain, Heart, Sun, Users, Briefcase } from 'lucide-react'
+import { X, Clock, Calendar, ExternalLink } from 'lucide-react'
 import { ARTICLE_CATEGORIES, type Article } from '@/types/education'
-
-const iconMap: Record<string, any> = {
-  BookOpen,
-  Brain,
-  Heart,
-  Sun,
-  Users,
-  Briefcase
-}
+import { iconMap } from '@/lib/utils/icon-map'
 
 interface ArticleDetailProps {
   article: Article
@@ -24,7 +16,7 @@ export default function ArticleDetail({ article, onClose }: ArticleDetailProps) 
   const { theme } = useTheme()
 
   const category = ARTICLE_CATEGORIES.find(c => c.id === article.category)
-  const Icon = category ? iconMap[category.icon] : BookOpen
+  const Icon = category ? iconMap[category.icon] : iconMap['BookOpen']
   const content = article.content[language as keyof typeof article.content]
 
   const formatDate = (date: Date) => {

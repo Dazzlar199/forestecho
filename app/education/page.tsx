@@ -3,18 +3,9 @@
 import { useState } from 'react'
 import { useLanguage } from '@/components/layout/LanguageProvider'
 import { useTheme } from '@/components/layout/ThemeProvider'
-import { BookOpen, Brain, Heart, Sun, Users, Briefcase } from 'lucide-react'
 import ArticleList from '@/components/education/ArticleList'
 import { ARTICLES, ARTICLE_CATEGORIES, type ArticleCategory } from '@/types/education'
-
-const iconMap: Record<string, any> = {
-  BookOpen,
-  Brain,
-  Heart,
-  Sun,
-  Users,
-  Briefcase
-}
+import { iconMap } from '@/lib/utils/icon-map'
 
 export default function EducationPage() {
   const { language } = useLanguage()
