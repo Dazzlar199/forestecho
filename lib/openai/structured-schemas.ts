@@ -73,7 +73,7 @@ export type Technique = z.infer<typeof TechniqueSchema>
 export type Insight = z.infer<typeof InsightSchema>
 export type CounselingResponse = z.infer<typeof CounselingResponseSchema>
 
-// JSON Schema로 변환 (OpenAI API용)
+// JSON Schema로 변환 (OpenAI API용) - Simplified for compatibility
 export function getCounselingResponseJsonSchema() {
   return {
     name: "counseling_response",
@@ -90,84 +90,29 @@ export function getCounselingResponseJsonSchema() {
           properties: {
             emotions: {
               type: "array",
+              description: "감지된 감정 목록",
               items: {
                 type: "object",
                 properties: {
-                  name: { type: "string" },
-                  intensity: { type: "number" },
-                  trigger: { type: "string" }
+                  name: {
+                    type: "string",
+                    description: "감정 이름"
+                  },
+                  intensity: {
+                    type: "number",
+                    description: "감정 강도 0-10"
+                  }
                 },
                 required: ["name", "intensity"],
                 additionalProperties: false
               }
             },
-            cognitiveDistortions: {
-              type: "array",
-              items: {
-                type: "object",
-                properties: {
-                  type: {
-                    type: "string",
-                    enum: ["흑백논리", "과잉일반화", "정신적필터", "긍정무시", "성급한결론", "확대와축소", "감정적추론", "당위적사고", "낙인찍기", "개인화"]
-                  },
-                  example: { type: "string" },
-                  challenge: { type: "string" }
-                },
-                required: ["type", "example", "challenge"],
-                additionalProperties: false
-              }
-            },
-            coreIssue: { type: "string" },
-            insights: {
-              type: "array",
-              items: {
-                type: "object",
-                properties: {
-                  pattern: { type: "string" },
-                  underlyingNeed: { type: "string" },
-                  connectionToPast: { type: "string" }
-                },
-                required: ["pattern"],
-                additionalProperties: false
-              }
+            coreIssue: {
+              type: "string",
+              description: "핵심 문제 요약"
             }
           },
-          required: ["emotions"],
-          additionalProperties: false
-        },
-        suggestions: {
-          type: "object",
-          properties: {
-            immediate: {
-              type: "array",
-              items: {
-                type: "object",
-                properties: {
-                  name: { type: "string" },
-                  category: {
-                    type: "string",
-                    enum: ["호흡", "마음챙김", "인지재구조화", "행동활성화", "이완", "기타"]
-                  },
-                  description: { type: "string" },
-                  steps: {
-                    type: "array",
-                    items: { type: "string" }
-                  },
-                  expectedBenefit: { type: "string" }
-                },
-                required: ["name", "category", "description", "steps", "expectedBenefit"],
-                additionalProperties: false
-              }
-            },
-            questions: {
-              type: "array",
-              items: { type: "string" }
-            },
-            resources: {
-              type: "array",
-              items: { type: "string" }
-            }
-          },
+          required: ["emotions", "coreIssue"],
           additionalProperties: false
         },
         riskAssessment: {
@@ -175,13 +120,13 @@ export function getCounselingResponseJsonSchema() {
           properties: {
             level: {
               type: "string",
-              enum: ["low", "medium", "high"]
+              enum: ["low", "medium", "high"],
+              description: "위험 수준"
             },
-            concerns: {
-              type: "array",
-              items: { type: "string" }
-            },
-            recommendProfessionalHelp: { type: "boolean" }
+            recommendProfessionalHelp: {
+              type: "boolean",
+              description: "전문가 도움 권장 여부"
+            }
           },
           required: ["level", "recommendProfessionalHelp"],
           additionalProperties: false

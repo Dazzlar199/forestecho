@@ -159,23 +159,32 @@ export async function POST(request: NextRequest) {
 1. **message**: 내담자에게 전달할 따뜻하고 전문적인 메시지 (${language === 'ko' ? '한국어' : language === 'en' ? 'English' : language === 'ja' ? '日本語' : '中文'})
    - 공감과 이해를 표현하세요
    - 구체적 예시나 비유를 포함하세요
+   - 심리학적 근거와 실용적 조언을 포함하세요
    - 탐색적 질문을 포함하세요
 
 2. **analysis**: 내담자의 심리 상태 분석
-   - emotions: 감지된 감정들 (이름, 강도, 촉발 요인)
-   - cognitiveDistortions: 발견된 인지 왜곡이 있다면
-   - coreIssue: 핵심 문제 한 문장 요약
-   - insights: 치료적 통찰 (패턴, 근본 욕구, 과거와의 연결)
+   - emotions: 감지된 감정들 배열 (각 감정: name(문자열), intensity(0-10 숫자))
+   - coreIssue: 핵심 문제 한 문장 요약 (문자열)
 
-3. **suggestions**: 실용적 제안 (선택적)
-   - immediate: 즉시 시도할 심리 기법 1-2개 (이름, 카테고리, 설명, 단계별 방법, 기대 효과)
-   - questions: 추가 탐색 질문 1-2개
-   - resources: 유용한 리소스 정보
+3. **riskAssessment**: 위험 평가
+   - level: "low", "medium", "high" 중 하나
+   - recommendProfessionalHelp: true 또는 false
 
-4. **riskAssessment**: 위험 평가
-   - level: low/medium/high
-   - concerns: 구체적 우려사항
-   - recommendProfessionalHelp: 전문가 필요 여부`
+예시:
+{
+  "message": "힘든 시기를 보내고 계시는군요...",
+  "analysis": {
+    "emotions": [
+      {"name": "불안", "intensity": 7},
+      {"name": "우울", "intensity": 5}
+    ],
+    "coreIssue": "직장에서의 과도한 업무 부담으로 인한 번아웃 위험"
+  },
+  "riskAssessment": {
+    "level": "medium",
+    "recommendProfessionalHelp": false
+  }
+}`
 
     // OpenAI API 호출 - Structured Output 사용
     const completion = await openai.chat.completions.create({
