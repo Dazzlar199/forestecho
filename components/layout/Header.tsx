@@ -615,6 +615,44 @@ export default function Header() {
                       </span>
                     </button>
 
+                    {/* 구분선 */}
+                    <div className={`border-t my-2 ${
+                      theme === 'dark' ? 'border-gray-700' : 'border-gray-200'
+                    }`}></div>
+
+                    {/* 언어 선택 */}
+                    <div className={`p-3 rounded-xl ${
+                      theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50'
+                    }`}>
+                      <div className={`text-xs mb-2 px-1 ${
+                        theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
+                      }`}>
+                        {language === 'ko' ? '언어' : language === 'en' ? 'Language' : language === 'ja' ? '言語' : '语言'}
+                      </div>
+                      <div className="grid grid-cols-2 gap-2">
+                        {languages.map((lang) => (
+                          <button
+                            key={lang.code}
+                            onClick={() => {
+                              setLanguage(lang.code)
+                            }}
+                            className={`flex items-center justify-center gap-2 p-3 rounded-lg transition-colors ${
+                              language === lang.code
+                                ? theme === 'dark'
+                                  ? 'bg-emerald-900/40 border-2 border-emerald-500 text-emerald-400'
+                                  : 'bg-emerald-100 border-2 border-emerald-500 text-emerald-700'
+                                : theme === 'dark'
+                                  ? 'bg-gray-700 border-2 border-transparent text-gray-300 hover:bg-gray-600'
+                                  : 'bg-white border-2 border-transparent text-gray-700 hover:bg-gray-100'
+                            }`}
+                          >
+                            <span className="text-lg">{lang.flag}</span>
+                            <span className="text-xs font-medium">{lang.label}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
                     {/* 로그아웃 */}
                     <button
                       onClick={() => {
@@ -671,6 +709,44 @@ export default function Header() {
                       <HelpCircle className="w-5 h-5" />
                       <span>{language === 'ko' ? 'FAQ' : language === 'en' ? 'FAQ' : language === 'ja' ? 'FAQ' : '常见问题'}</span>
                     </Link>
+
+                    {/* 구분선 */}
+                    <div className={`border-t my-2 ${
+                      theme === 'dark' ? 'border-gray-700' : 'border-gray-200'
+                    }`}></div>
+
+                    {/* 언어 선택 */}
+                    <div className={`p-3 rounded-xl ${
+                      theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50'
+                    }`}>
+                      <div className={`text-xs mb-2 px-1 ${
+                        theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
+                      }`}>
+                        {language === 'ko' ? '언어' : language === 'en' ? 'Language' : language === 'ja' ? '言語' : '语言'}
+                      </div>
+                      <div className="grid grid-cols-2 gap-2">
+                        {languages.map((lang) => (
+                          <button
+                            key={lang.code}
+                            onClick={() => {
+                              setLanguage(lang.code)
+                            }}
+                            className={`flex items-center justify-center gap-2 p-3 rounded-lg transition-colors ${
+                              language === lang.code
+                                ? theme === 'dark'
+                                  ? 'bg-emerald-900/40 border-2 border-emerald-500 text-emerald-400'
+                                  : 'bg-emerald-100 border-2 border-emerald-500 text-emerald-700'
+                                : theme === 'dark'
+                                  ? 'bg-gray-700 border-2 border-transparent text-gray-300 hover:bg-gray-600'
+                                  : 'bg-white border-2 border-transparent text-gray-700 hover:bg-gray-100'
+                            }`}
+                          >
+                            <span className="text-lg">{lang.flag}</span>
+                            <span className="text-xs font-medium">{lang.label}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
 
                     <button
                       onClick={() => {

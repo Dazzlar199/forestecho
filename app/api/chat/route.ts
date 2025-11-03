@@ -10,6 +10,7 @@ import {
 import { enhanceWithResearch } from '@/lib/search/tavily'
 import { COUNSELING_MODES, type CounselingMode } from '@/lib/openai/counseling-modes'
 import { rateLimit } from '@/lib/rate-limit'
+import { detectLanguageFromMessages } from '@/lib/utils/language-detector'
 
 const languageInstructions = {
   ko: '한국어로 답변하세요.',
@@ -88,7 +89,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const { messages, language = 'ko', counselingMode = 'general', responseTone = 50 } = await request.json()
+    const { messages, language: clientLanguage, counselingMode = 'general', responseTone = 50 } = await request.json()
 
     if (!messages || !Array.isArray(messages)) {
       return NextResponse.json(
@@ -96,6 +97,10 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       )
     }
+
+    // 언어 자동 감지: 클라이언트가 보낸 언어 OR 최근 메시지에서 자동 감지
+    const detectedLanguage = clientLanguage || detectLanguageFromMessages(messages)
+    const language = detectedLanguage
 
     // 위기 상황 감지
     const latestUserMessage = messages.filter((m: Message) => m.role === 'user').slice(-1)[0]?.content || ''
@@ -116,8 +121,9 @@ export async function POST(request: NextRequest) {
     // 시스템 프롬프트 구성
     let systemPrompt = modePrompt + '\n\n' + contextualGuidance
 
-    // 언어 설정 추가
-    systemPrompt += `\n\n**IMPORTANT LANGUAGE INSTRUCTION**: ${languageInstructions[language as keyof typeof languageInstructions] || languageInstructions.ko}`
+    // 언어 설정 추가 (자동 감지된 언어로 강제)
+    const languageInstruction = languageInstructions[language as keyof typeof languageInstructions] || languageInstructions.ko
+    systemPrompt += `\n\n**CRITICAL LANGUAGE REQUIREMENT**: The user is communicating in ${language === 'ko' ? 'Korean (한국어)' : language === 'en' ? 'English' : language === 'ja' ? 'Japanese (日本語)' : 'Chinese (中文)'}. You MUST respond in the SAME language. ${languageInstruction}`
 
     // 이성-감정 톤 조정 (0: 이성적, 100: 감성적)
     const toneGuidance = getToneGuidance(responseTone)

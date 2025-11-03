@@ -1,11 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { X, Mail, Lock, User as UserIcon } from 'lucide-react'
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   GoogleAuthProvider,
   updateProfile,
 } from 'firebase/auth'
@@ -23,6 +24,25 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
   const [name, setName] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+
+  // 리다이렉트 결과 처리
+  useEffect(() => {
+    const handleRedirectResult = async () => {
+      try {
+        const result = await getRedirectResult(auth)
+        if (result) {
+          // 로그인 성공
+          onClose()
+        }
+      } catch (err: any) {
+        if (err.code !== 'auth/missing-initial-state') {
+          setError('Google 로그인에 실패했습니다.')
+        }
+      }
+    }
+
+    handleRedirectResult()
+  }, [onClose])
 
   if (!isOpen) return null
 
@@ -66,11 +86,11 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
     try {
       const provider = new GoogleAuthProvider()
-      await signInWithPopup(auth, provider)
-      onClose()
+      // 모바일/앱 환경에서 더 안정적인 signInWithRedirect 사용
+      await signInWithRedirect(auth, provider)
+      // 리다이렉트가 시작되므로 페이지가 리로드됨
     } catch (err: any) {
       setError('Google 로그인에 실패했습니다.')
-    } finally {
       setLoading(false)
     }
   }

@@ -6,6 +6,7 @@ import { ThemeProvider } from '@/components/layout/ThemeProvider'
 import { LanguageProvider } from '@/components/layout/LanguageProvider'
 import { ChatProvider } from '@/contexts/ChatContext'
 import Header from '@/components/layout/Header'
+import ServiceWorkerRegister from '@/components/pwa/ServiceWorkerRegister'
 
 const spectral = Spectral({
   subsets: ['latin'],
@@ -116,26 +117,6 @@ export default function RootLayout({
         <link rel="apple-touch-icon" sizes="167x167" href="/icon-192x192.svg" />
         <link rel="icon" type="image/svg+xml" href="/icon-192x192.svg" />
 
-        {/* Service Worker 등록 스크립트 */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              if ('serviceWorker' in navigator) {
-                window.addEventListener('load', function() {
-                  navigator.serviceWorker.register('/sw.js').then(
-                    function(registration) {
-                      console.log('Service Worker 등록 성공:', registration.scope);
-                    },
-                    function(err) {
-                      console.log('Service Worker 등록 실패:', err);
-                    }
-                  );
-                });
-              }
-            `,
-          }}
-        />
-
         {process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID && (
           <script
             async
@@ -147,6 +128,7 @@ export default function RootLayout({
       <body className={`${spectral.className} ${nanumMyeongjo.className}`}>
         <div className="forest-mist"></div>
         <div className="forest-particles"></div>
+        <ServiceWorkerRegister />
         <ThemeProvider>
           <LanguageProvider>
             <AuthProvider>
