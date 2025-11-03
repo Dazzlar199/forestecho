@@ -1,7 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // output: 'export', // Capacitor는 웹 서버를 직접 사용하도록 설정
   images: {
+    // unoptimized: true, // 원래대로
     remotePatterns: [
       {
         protocol: 'https',

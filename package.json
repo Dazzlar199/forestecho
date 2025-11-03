@@ -7,12 +7,23 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate-blog": "tsx scripts/generate-blog-posts.ts",
+    "generate-tags": "tsx scripts/generate-tags.ts",
+    "generate-simple": "tsx scripts/generate-simple-posts.ts",
+    "generate-seo": "tsx scripts/generate-seo-optimized-posts.ts",
+    "cap:sync": "npx cap sync",
+    "cap:open:ios": "npx cap open ios",
+    "cap:open:android": "npx cap open android"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@capacitor/android": "^7.4.4",
+    "@capacitor/cli": "^7.4.4",
+    "@capacitor/core": "^7.4.4",
+    "@capacitor/ios": "^7.4.4",
     "@tavily/core": "^0.5.12",
     "@types/react": "^19.2.2",
     "autoprefixer": "^10.4.21",
@@ -33,6 +44,7 @@
   },
   "devDependencies": {
     "@types/node": "^24.9.1",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "tsx": "^4.20.6"
   }
 }

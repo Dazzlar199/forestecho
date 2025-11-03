@@ -45,6 +45,19 @@ export const metadata: Metadata = {
     'ForestEcho',
   ],
   authors: [{ name: '숲울림' }],
+  manifest: '/manifest.json', // PWA manifest 파일 연결
+  themeColor: '#5f6b6d', // PWA 테마 색상
+  appleWebApp: {
+    capable: true, // iOS에서 웹앱으로 실행 가능
+    statusBarStyle: 'default', // iOS 상태바 스타일
+    title: '숲울림', // iOS 홈 화면 이름
+  },
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false, // 모바일에서 확대/축소 방지 (앱 느낌)
+  },
   verification: {
     // Google Search Console 인증 코드를 여기에 추가하세요
     // google: 'your-google-verification-code',
@@ -96,6 +109,33 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <head>
+        {/* PWA를 위한 iOS 아이콘 설정 */}
+        <link rel="apple-touch-icon" href="/icon-192x192.svg" />
+        <link rel="apple-touch-icon" sizes="152x152" href="/icon-152x152.svg" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/icon-192x192.svg" />
+        <link rel="apple-touch-icon" sizes="167x167" href="/icon-192x192.svg" />
+        <link rel="icon" type="image/svg+xml" href="/icon-192x192.svg" />
+
+        {/* Service Worker 등록 스크립트 */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                  navigator.serviceWorker.register('/sw.js').then(
+                    function(registration) {
+                      console.log('Service Worker 등록 성공:', registration.scope);
+                    },
+                    function(err) {
+                      console.log('Service Worker 등록 실패:', err);
+                    }
+                  );
+                });
+              }
+            `,
+          }}
+        />
+
         {process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID && (
           <script
             async

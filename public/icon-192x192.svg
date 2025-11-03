@@ -1,0 +1,27 @@
+<svg width="192" height="192" xmlns="http://www.w3.org/2000/svg">
+  <!-- 배경 -->
+  <rect width="192" height="192" fill="#e8f4f8"/>
+
+  <!-- 나무 (심플한 디자인) -->
+  <g transform="translate(96, 96)">
+    <!-- 나무 몸통 -->
+    <rect x="-15.36" y="9.600000000000001" width="30.72" height="67.19999999999999" fill="#8b9a9f" rx="5.76"/>
+
+    <!-- 나뭇잎 레이어 3 -->
+    <circle cx="0" cy="-28.799999999999997" r="48" fill="#5f6b6d" opacity="0.7"/>
+
+    <!-- 나뭇잎 레이어 2 -->
+    <circle cx="0" cy="-38.400000000000006" r="42.24" fill="#5f6b6d" opacity="0.85"/>
+
+    <!-- 나뭇잎 레이어 1 -->
+    <circle cx="0" cy="-48" r="34.56" fill="#5f6b6d"/>
+
+    <!-- 하이라이트 -->
+    <circle cx="-15.36" cy="-53.760000000000005" r="11.52" fill="#d4e9f0" opacity="0.6"/>
+  </g>
+
+  <!-- 하단 텍스트 (큰 아이콘에만) -->
+  
+  <text x="50%" y="168.96" font-family="Arial, sans-serif" font-size="23.04" font-weight="bold" fill="#5f6b6d" text-anchor="middle">숲울림</text>
+  
+</svg>

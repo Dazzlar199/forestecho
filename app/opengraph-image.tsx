@@ -2,6 +2,7 @@ import { ImageResponse } from 'next/og'
 
 // Route segment config
 export const runtime = 'edge'
+export const dynamic = 'force-static' // Static export를 위한 설정
 
 // Image metadata
 export const alt = '숲울림 - 24시간 AI 심리상담'

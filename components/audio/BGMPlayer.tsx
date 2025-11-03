@@ -27,11 +27,16 @@ export default function BGMPlayer() {
 
   // 컴포넌트 마운트 시 자동 재생
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.play().catch(() => {
-        // 자동재생 실패 시 (브라우저 정책)
-        setIsPlaying(false)
-      })
+    if (audioRef.current && isPlaying) {
+      // 짧은 지연을 주어 오디오가 로드될 시간을 줌
+      const timer = setTimeout(() => {
+        audioRef.current?.play().catch(() => {
+          // 자동재생 실패 시 (브라우저 정책)
+          setIsPlaying(false)
+        })
+      }, 100)
+
+      return () => clearTimeout(timer)
     }
   }, [])
 
@@ -41,14 +46,20 @@ export default function BGMPlayer() {
     }
   }, [volume, isMuted])
 
-  const togglePlay = () => {
+  const togglePlay = async () => {
     if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause()
-      } else {
-        audioRef.current.play()
+      try {
+        if (isPlaying) {
+          audioRef.current.pause()
+          setIsPlaying(false)
+        } else {
+          await audioRef.current.play()
+          setIsPlaying(true)
+        }
+      } catch (error) {
+        console.error('재생 오류:', error)
+        setIsPlaying(false)
       }
-      setIsPlaying(!isPlaying)
     }
   }
 
@@ -75,11 +86,24 @@ export default function BGMPlayer() {
     }
   }
 
+  // 트랙 변경 시 재생
   useEffect(() => {
     if (audioRef.current && isPlaying) {
-      audioRef.current.play()
+      // 이전 재생 중단
+      audioRef.current.pause()
+      audioRef.current.currentTime = 0
+
+      // 새 트랙 로드 대기 후 재생
+      const timer = setTimeout(() => {
+        audioRef.current?.play().catch((error) => {
+          console.error('재생 오류:', error)
+          setIsPlaying(false)
+        })
+      }, 100)
+
+      return () => clearTimeout(timer)
     }
-  }, [currentTrackIndex])
+  }, [currentTrackIndex, isPlaying])
 
   return (
     <div

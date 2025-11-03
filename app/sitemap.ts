@@ -1,6 +1,8 @@
 import { MetadataRoute } from 'next'
 import { ARTICLES } from '@/types/education'
 
+export const dynamic = 'force-static' // Static export를 위한 설정
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://forestecho.app'
 

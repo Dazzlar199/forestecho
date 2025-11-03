@@ -1,5 +1,7 @@
 import { ARTICLES } from '@/types/education'
 
+export const dynamic = 'force-static' // Static export를 위한 설정
+
 export async function GET() {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://forestecho.app'
 

@@ -1,0 +1,25 @@
+<svg width="144" height="144" xmlns="http://www.w3.org/2000/svg">
+  <!-- 배경 -->
+  <rect width="144" height="144" fill="#e8f4f8"/>
+
+  <!-- 나무 (심플한 디자인) -->
+  <g transform="translate(72, 72)">
+    <!-- 나무 몸통 -->
+    <rect x="-11.52" y="7.2" width="23.04" height="50.4" fill="#8b9a9f" rx="4.32"/>
+
+    <!-- 나뭇잎 레이어 3 -->
+    <circle cx="0" cy="-21.599999999999998" r="36" fill="#5f6b6d" opacity="0.7"/>
+
+    <!-- 나뭇잎 레이어 2 -->
+    <circle cx="0" cy="-28.8" r="31.68" fill="#5f6b6d" opacity="0.85"/>
+
+    <!-- 나뭇잎 레이어 1 -->
+    <circle cx="0" cy="-36" r="25.919999999999998" fill="#5f6b6d"/>
+
+    <!-- 하이라이트 -->
+    <circle cx="-11.52" cy="-40.32000000000001" r="8.64" fill="#d4e9f0" opacity="0.6"/>
+  </g>
+
+  <!-- 하단 텍스트 (큰 아이콘에만) -->
+  
+</svg>
