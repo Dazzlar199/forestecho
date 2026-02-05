@@ -3,8 +3,8 @@
 import { useLanguage } from '@/components/layout/LanguageProvider'
 import Link from 'next/link'
 import { ChevronLeft, Clock, Calendar, ExternalLink } from 'lucide-react'
-import { ARTICLE_CATEGORIES } from '@/types/education'
-import type { Article } from '@/types/education'
+import { ARTICLE_CATEGORIES } from '@/lib/data/articles'
+import type { Article } from '@/lib/data/articles'
 import RecommendedProducts from './RecommendedProducts'
 import { iconMap } from '@/lib/utils/icon-map'
 
@@ -19,10 +19,11 @@ export default function ArticleContent({ article }: ArticleContentProps) {
   // Fallback to Korean if the selected language content doesn't exist
   const content = article.content[language] || article.content.ko
 
-  const formatDate = (date: Date) => {
-    const year = date.getFullYear()
-    const month = String(date.getMonth() + 1).padStart(2, '0')
-    const day = String(date.getDate()).padStart(2, '0')
+  const formatDate = (date: string | Date) => {
+    const d = typeof date === 'string' ? new Date(date) : date
+    const year = d.getFullYear()
+    const month = String(d.getMonth() + 1).padStart(2, '0')
+    const day = String(d.getDate()).padStart(2, '0')
     return `${year}.${month}.${day}`
   }
 

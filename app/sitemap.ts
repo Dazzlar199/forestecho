@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next'
-import { ARTICLES } from '@/types/education'
+import { ARTICLES } from '@/lib/data/articles'
 
 export const dynamic = 'force-static' // Static export를 위한 설정
 

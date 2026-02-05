@@ -23,28 +23,28 @@ export default function OnboardingTour({ onComplete }: OnboardingTourProps) {
   const steps = [
     {
       title: '숲울림에 오신 것을 환영합니다',
-      description: 'AI 기반 심리 상담 서비스로 당신의 마음 건강을 돌보세요.',
-      emoji: '🌿',
+      description: 'AI 기반 심리 상담 서비스로 당신의 마음 건강을 돌봅니다.',
+      emoji: '',
     },
     {
-      title: 'AI 상담사와 대화하세요',
+      title: 'AI 상담사와 대화',
       description: '24시간 언제든지 전문적인 심리 상담을 받을 수 있습니다. 판단 없이 귀 기울여 듣습니다.',
-      emoji: '💬',
+      emoji: '',
     },
     {
-      title: '답변 스타일을 조정하세요',
+      title: '답변 스타일 조정',
       description: '이성-감정 슬라이더로 AI의 답변 스타일을 원하는 대로 조정할 수 있습니다.',
-      emoji: '🎚️',
+      emoji: '',
     },
     {
-      title: '전문 심리 분석 받기',
-      description: '대화 후 전문적인 심리 분석 리포트를 받아보세요. 감정, 인지, 행동 패턴을 분석합니다.',
-      emoji: '📊',
+      title: '전문 심리 분석',
+      description: '대화 후 전문적인 심리 분석 리포트를 받아볼 수 있습니다. 감정, 인지, 행동 패턴을 분석합니다.',
+      emoji: '',
     },
     {
-      title: '나의 숲을 키워가세요',
-      description: '지속적인 케어로 마음이 성장하면 당신만의 숲도 함께 자랍니다.',
-      emoji: '🌳',
+      title: '지속적인 케어',
+      description: '꾸준한 대화를 통해 마음의 성장을 경험하세요.',
+      emoji: '',
     },
   ]
 
@@ -104,15 +104,6 @@ export default function OnboardingTour({ onComplete }: OnboardingTourProps) {
 
               {/* 콘텐츠 */}
               <div className="text-center mb-8">
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: 0.2, type: 'spring' }}
-                  className="text-7xl mb-6"
-                >
-                  {steps[currentStep].emoji}
-                </motion.div>
-
                 <motion.h2
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}

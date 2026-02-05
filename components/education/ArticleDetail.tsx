@@ -3,7 +3,7 @@
 import { useLanguage } from '../layout/LanguageProvider'
 import { useTheme } from '../layout/ThemeProvider'
 import { X, Clock, Calendar, ExternalLink } from 'lucide-react'
-import { ARTICLE_CATEGORIES, type Article } from '@/types/education'
+import { ARTICLE_CATEGORIES, type Article } from '@/lib/data/articles'
 import { iconMap } from '@/lib/utils/icon-map'
 
 interface ArticleDetailProps {
@@ -19,10 +19,11 @@ export default function ArticleDetail({ article, onClose }: ArticleDetailProps) 
   const Icon = category ? iconMap[category.icon] : iconMap['BookOpen']
   const content = article.content[language as keyof typeof article.content]
 
-  const formatDate = (date: Date) => {
-    const year = date.getFullYear()
-    const month = String(date.getMonth() + 1).padStart(2, '0')
-    const day = String(date.getDate()).padStart(2, '0')
+  const formatDate = (date: string | Date) => {
+    const d = typeof date === 'string' ? new Date(date) : date
+    const year = d.getFullYear()
+    const month = String(d.getMonth() + 1).padStart(2, '0')
+    const day = String(d.getDate()).padStart(2, '0')
     return `${year}.${month}.${day}`
   }
 

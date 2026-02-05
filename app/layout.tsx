@@ -1,23 +1,42 @@
-import type { Metadata } from 'next'
-import { Spectral, Nanum_Myeongjo } from 'next/font/google'
+import type { Metadata, Viewport } from 'next'
+
+export { viewport } from './viewport'
+import { Spectral, Nanum_Myeongjo, Inter } from 'next/font/google'
 import './globals.css'
+import '../styles/design-tokens.css'
+import '../styles/warmth.css'
 import { AuthProvider } from '@/components/layout/AuthProvider'
 import { ThemeProvider } from '@/components/layout/ThemeProvider'
 import { LanguageProvider } from '@/components/layout/LanguageProvider'
 import { ChatProvider } from '@/contexts/ChatContext'
 import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer'
 import ServiceWorkerRegister from '@/components/pwa/ServiceWorkerRegister'
+import MobileBottomNav from '@/components/layout/MobileBottomNav'
+import { SeasonProvider } from '@/contexts/SeasonContext'
+import { PersonalizationProvider } from '@/contexts/PersonalizationContext'
 
+// Brand Font - Serif for headings and brand elements
 const spectral = Spectral({
   subsets: ['latin'],
-  weight: ['300', '400', '500'],
+  weight: ['300', '400', '500', '600', '700'],
   display: 'swap',
+  variable: '--font-brand',
 })
 
 const nanumMyeongjo = Nanum_Myeongjo({
   subsets: ['latin'],
   weight: ['400', '700'],
   display: 'swap',
+  variable: '--font-brand-ko',
+})
+
+// UI Font - Sans-serif for body text and interface
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  display: 'swap',
+  variable: '--font-ui',
 })
 
 export const metadata: Metadata = {
@@ -47,17 +66,10 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: '숲울림' }],
   manifest: '/manifest.json', // PWA manifest 파일 연결
-  themeColor: '#5f6b6d', // PWA 테마 색상
   appleWebApp: {
     capable: true, // iOS에서 웹앱으로 실행 가능
     statusBarStyle: 'default', // iOS 상태바 스타일
     title: '숲울림', // iOS 홈 화면 이름
-  },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false, // 모바일에서 확대/축소 방지 (앱 느낌)
   },
   verification: {
     // Google Search Console 인증 코드를 여기에 추가하세요
@@ -125,20 +137,32 @@ export default function RootLayout({
           />
         )}
       </head>
-      <body className={`${spectral.className} ${nanumMyeongjo.className}`}>
+      <body className={`${spectral.variable} ${nanumMyeongjo.variable} ${inter.variable}`}>
+        {/* Skip to main content for keyboard navigation */}
+        <a href="#main-content" className="skip-to-main">
+          Skip to main content
+        </a>
         <div className="forest-mist"></div>
         <div className="forest-particles"></div>
         <ServiceWorkerRegister />
-        <ThemeProvider>
-          <LanguageProvider>
-            <AuthProvider>
-              <ChatProvider>
-                <Header />
-                {children}
-              </ChatProvider>
-            </AuthProvider>
-          </LanguageProvider>
-        </ThemeProvider>
+        <PersonalizationProvider>
+          <SeasonProvider>
+            <ThemeProvider>
+              <LanguageProvider>
+                <AuthProvider>
+                  <ChatProvider>
+                    <Header />
+                    <main id="main-content" tabIndex={-1}>
+                      {children}
+                    </main>
+                    <Footer />
+                    <MobileBottomNav />
+                  </ChatProvider>
+                </AuthProvider>
+              </LanguageProvider>
+            </ThemeProvider>
+          </SeasonProvider>
+        </PersonalizationProvider>
       </body>
     </html>
   )

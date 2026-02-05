@@ -1,12 +1,14 @@
 'use client'
+import { logger } from '@/lib/utils/logger'
 
 import { useState, useEffect, useMemo } from 'react'
 import { useAuth } from '../layout/AuthProvider'
 import { useTheme } from '../layout/ThemeProvider'
 import { useLanguage } from '../layout/LanguageProvider'
-import { MessageSquare, Plus, Trash2, Menu, X, Search } from 'lucide-react'
+import { MessageSquare, Plus, Trash2, Menu, X, Search, Inbox } from 'lucide-react'
 import { getUserChatSessions, deleteChatSession } from '@/lib/firebase/chat-sessions'
 import type { ChatSession } from '@/types/chat'
+import EmptyState from '../empty-states/EmptyState'
 
 interface ChatHistoryProps {
   currentSessionId: string | null
@@ -37,7 +39,7 @@ export default function ChatHistory({ currentSessionId, onSelectSession, onNewCh
       const userSessions = await getUserChatSessions(user.uid)
       setSessions(userSessions)
     } catch (error) {
-      console.error('Error loading sessions:', error)
+      logger.error('Error loading sessions:', error)
     } finally {
       setLoading(false)
     }
@@ -66,8 +68,12 @@ export default function ChatHistory({ currentSessionId, onSelectSession, onNewCh
         onNewChat()
       }
     } catch (error) {
-      console.error('Error deleting session:', error)
-      alert('삭제 실패했습니다.')
+      logger.error('Error deleting session:', error)
+      const errorMsg = language === 'ko' ? '삭제에 실패했습니다.' :
+                       language === 'en' ? 'Failed to delete.' :
+                       language === 'ja' ? '削除に失敗しました。' :
+                       '删除失败。'
+      alert(errorMsg)
     }
   }
 
@@ -199,18 +205,49 @@ export default function ChatHistory({ currentSessionId, onSelectSession, onNewCh
                   {language === 'zh' && '加载中...'}
                 </div>
               ) : sessions.length === 0 ? (
-                <div className={`text-sm text-center py-4 ${theme === 'dark' ? 'text-gray-500' : 'text-gray-600'}`}>
-                  {language === 'ko' && '저장된 대화가 없습니다'}
-                  {language === 'en' && 'No saved conversations'}
-                  {language === 'ja' && '保存された会話がありません'}
-                  {language === 'zh' && '没有保存的对话'}
+                <div className="py-8">
+                  <EmptyState
+                    icon={Inbox}
+                    title={{
+                      ko: '첫 대화를 시작하세요',
+                      en: 'Start Your First Chat',
+                      ja: '最初の会話を始める',
+                      zh: '开始您的第一次对话'
+                    }}
+                    description={{
+                      ko: '새로운 대화를 시작하면 자동으로 저장됩니다',
+                      en: 'New conversations will be saved automatically',
+                      ja: '新しい会話は自動的に保存されます',
+                      zh: '新对话将自动保存'
+                    }}
+                    action={{
+                      label: {
+                        ko: '대화 시작',
+                        en: 'Start Chat',
+                        ja: 'チャット開始',
+                        zh: '开始聊天'
+                      },
+                      onClick: handleNewChat
+                    }}
+                  />
                 </div>
               ) : filteredSessions.length === 0 ? (
-                <div className={`text-sm text-center py-4 ${theme === 'dark' ? 'text-gray-500' : 'text-gray-600'}`}>
-                  {language === 'ko' && '검색 결과가 없습니다'}
-                  {language === 'en' && 'No results found'}
-                  {language === 'ja' && '検索結果がありません'}
-                  {language === 'zh' && '没有搜索结果'}
+                <div className="py-8">
+                  <EmptyState
+                    icon={Search}
+                    title={{
+                      ko: '검색 결과 없음',
+                      en: 'No Results Found',
+                      ja: '検索結果なし',
+                      zh: '未找到结果'
+                    }}
+                    description={{
+                      ko: '다른 검색어를 시도해보세요',
+                      en: 'Try different keywords',
+                      ja: '別のキーワードで試してください',
+                      zh: '尝试不同的关键词'
+                    }}
+                  />
                 </div>
               ) : (
                 <div className="space-y-2">

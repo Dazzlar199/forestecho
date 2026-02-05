@@ -1,4 +1,4 @@
-import { ARTICLES } from '@/types/education'
+import { ARTICLES } from '@/lib/data/articles'
 
 export const dynamic = 'force-static' // Static export를 위한 설정
 
@@ -18,7 +18,7 @@ export async function GET() {
       <title>${article.title.ko}</title>
       <link>${baseUrl}/education/${article.id}</link>
       <description>${article.summary.ko}</description>
-      <pubDate>${article.lastUpdated.toUTCString()}</pubDate>
+      <pubDate>${new Date(article.lastUpdated).toUTCString()}</pubDate>
       <guid>${baseUrl}/education/${article.id}</guid>
     </item>`).join('')}
   </channel>

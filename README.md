@@ -1,56 +1,60 @@
-# 🌿 숲울림 - AI 심리상담 플랫폼
+# 🌿 숲울림 (ForestEcho) - AI 심리상담 플랫폼
 
 > 당신의 마음에 울리는 전문 AI 심리상담 서비스
 
 힐링 숲 속에서 경험하는 따뜻하고 전문적인 AI 심리상담. 24시간 언제든지 당신의 이야기를 들어드립니다.
 
-## ✨ 주요 기능
+## 🌟 주요 특징
 
-### 🎯 핵심 기능
-- **전문 AI 심리상담**: GPT-4o 기반의 깊이 있는 공감과 전문적인 상담
+### ✨ 핵심 기능
+- **Google Gemini 3 Flash AI 상담**: 최신 AI 모델 기반의 깊이 있는 공감과 전문적인 상담
+- **다양한 상담 모드**: 일반 상담, CBT, DBT, 정신역동, 인지적 상담 등 10가지 모드
+- **이성-감성 톤 조절**: 0-100 슬라이더로 AI 응답 스타일 조정
+- **실시간 스트리밍**: AI 응답을 실시간으로 받아볼 수 있는 스트리밍 채팅
+- **위기 감지 시스템**: 자살/자해 키워드 감지 시 즉시 응급 연락처 제공
 - **힐링 숲 테마**: 자연의 편안함을 느낄 수 있는 UI/UX
-- **힐링 BGM**: 숲 속의 평화로운 분위기를 조성하는 배경음악
-- **24/7 상담**: 언제든지 이용 가능한 상담 서비스
 
-### 🔐 사용자 관리
+### 🌍 다국어 지원
+- 자동 언어 감지 (한국어, 영어, 일본어, 중국어)
+- 언어별 최적화된 AI 응답
+
+### 🔐 보안 & 안전
 - Firebase 인증 (이메일/Google 로그인)
-- 대화 히스토리 자동 저장
+- 콘텐츠 필터링 시스템 (금지 콘텐츠 차단)
 - 개인정보 보호 및 익명성 보장
+- 위기 상황 즉시 감지 및 대응
 
 ### 💎 프리미엄 기능
 - **무제한 대화** (무료는 하루 10회 제한)
 - **전문 심리 분석 리포트**: AI 기반 심화 분석
-- **음성 상담**: ElevenLabs를 통한 음성 응답
 - **대화 히스토리 무제한 저장**
 - **광고 없는 경험**
 
-### 💰 수익화 모델
-- Google AdSense 광고 (무료 사용자)
-- 프리미엄 구독 (월 9,900원)
-- Stripe 결제 시스템 통합 준비
+### 📱 플랫폼
+- **웹 앱**: Next.js 16 기반 PWA (Progressive Web App)
+- **앱인토스**: 토스 앱 내 미니앱으로 접근 가능
+
+---
 
 ## 🚀 시작하기
 
 ### 1. 환경 설정
 
-\`\`\`bash
-# 저장소 클론 (또는 현재 디렉토리 사용)
-cd mentaltouch
-
+```bash
 # 패키지 설치
 npm install
-\`\`\`
+```
 
 ### 2. 환경 변수 설정
 
 `.env.local` 파일 생성:
 
-\`\`\`env
-# OpenAI API Key
-OPENAI_API_KEY=your_openai_api_key
+```env
+# Google Gemini API Key
+GEMINI_API_KEY=your_gemini_api_key
 
-# ElevenLabs API Key (음성 기능)
-ELEVENLABS_API_KEY=your_elevenlabs_api_key
+# Tavily API Key (심리학 연구 검색)
+TAVILY_API_KEY=your_tavily_api_key
 
 # Firebase Configuration
 NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
@@ -60,198 +64,255 @@ NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
 NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
 NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
 
-# Google AdSense
+# Google AdSense (Optional)
 NEXT_PUBLIC_ADSENSE_CLIENT_ID=ca-pub-xxxxxxxxxxxxxxxx
 
 # Base URL (배포 후)
 NEXT_PUBLIC_BASE_URL=https://yourdomain.com
-\`\`\`
+```
 
 ### 3. Firebase 설정
 
 1. [Firebase Console](https://console.firebase.google.com/)에서 프로젝트 생성
 2. Authentication 활성화 (Email/Password, Google)
 3. Firestore Database 생성
-4. 프로젝트 설정에서 config 값을 `.env.local`에 복사
+4. 보안 규칙 배포: `firebase deploy --only firestore:rules`
+5. 프로젝트 설정에서 config 값을 `.env.local`에 복사
 
 ### 4. 개발 서버 실행
 
-\`\`\`bash
+```bash
 npm run dev
-\`\`\`
+```
 
 브라우저에서 http://localhost:3000 접속
 
+---
+
 ## 📁 프로젝트 구조
 
-\`\`\`
-mentaltouch/
+```
+mentaltouch_App/
 ├── app/                      # Next.js App Router
 │   ├── api/                 # API 라우트
-│   │   ├── chat/           # 채팅 API
-│   │   ├── analysis/       # 심리 분석 API
-│   │   └── voice/          # 음성 생성 API
+│   │   ├── chat/           # Gemini AI 채팅 (스트리밍)
+│   │   └── analysis/       # 심리 분석 생성
+│   ├── terms/              # 이용약관
+│   ├── disclaimer/         # 면책조항
 │   ├── layout.tsx          # 루트 레이아웃
-│   ├── page.tsx            # 메인 페이지
-│   ├── sitemap.ts          # SEO Sitemap
-│   └── robots.ts           # SEO Robots
+│   └── page.tsx            # 메인 페이지
+│
 ├── components/              # React 컴포넌트
-│   ├── auth/               # 인증 관련
+│   ├── auth/               # 인증 (로그인/회원가입)
 │   ├── chat/               # 채팅 인터페이스
-│   ├── layout/             # 레이아웃 컴포넌트
-│   ├── premium/            # 프리미엄 기능
-│   └── ads/                # 광고 컴포넌트
-├── lib/                     # 유틸리티 & 설정
-│   ├── firebase/           # Firebase 설정
-│   └── openai/             # OpenAI 설정 & 프롬프트
-└── public/                  # 정적 파일
-    └── sounds/             # BGM 파일
-\`\`\`
-
-## 🎨 디자인 컨셉
-
-### 힐링 숲 테마
-- **색상**: 자연의 초록색, 하늘색, 따뜻한 오렌지톤
-- **분위기**: 평화롭고 안정적인 숲 속 공간
-- **BGM**: 새소리, 바람소리 등 자연의 소리
-- **애니메이션**: 부드럽고 자연스러운 전환
-
-## 📊 수익화 전략
-
-### 1. 광고 수익 (Google AdSense)
-
-**설정 방법:**
-1. [Google AdSense](https://www.google.com/adsense/) 가입
-2. 사이트 승인 받기
-3. 광고 단위 생성
-4. `.env.local`에 클라이언트 ID 추가
-5. 컴포넌트에 광고 슬롯 ID 입력
-
-**예상 수익:**
-- 월간 방문자 10,000명 기준: 월 $100-500
-- 월간 방문자 100,000명 기준: 월 $1,000-5,000
-
-### 2. 프리미엄 구독 (Stripe)
-
-**설정 방법:**
-1. [Stripe](https://stripe.com/) 계정 생성
-2. API 키 발급
-3. 구독 상품 생성 (월 9,900원)
-4. Webhook 설정
-5. Firebase에 구독 상태 저장
-
-**구독 가격 제안:**
-- 월간: 9,900원
-- 3개월: 26,900원 (10% 할인)
-- 연간: 99,000원 (17% 할인)
-
-### 3. 트래픽 증대 전략
-
-**SEO 최적화:**
-- ✅ 메타데이터 최적화
-- ✅ Sitemap & Robots.txt
-- 블로그 콘텐츠 (심리 관련 글)
-- 키워드: "AI 심리상담", "온라인 상담", "멘탈케어"
-
-**마케팅:**
-- SNS 마케팅 (인스타그램, 페이스북)
-- 유튜브 콘텐츠 (심리 팁, 서비스 소개)
-- 네이버 블로그/카페 활용
-- 구글/네이버 검색 광고
-
-## 🌐 배포하기
-
-### Vercel 배포 (추천)
-
-1. [Vercel](https://vercel.com/) 계정 생성
-2. GitHub에 프로젝트 푸시
-3. Vercel에서 프로젝트 import
-4. 환경 변수 설정
-5. 배포 완료!
-
-**장점:**
-- Next.js에 최적화
-- 무료 SSL 인증서
-- 자동 배포
-- CDN 기본 제공
-
-### 도메인 연결
-
-1. **도메인 구매**
-   - 가비아, 호스팅케이알 등에서 구매
-   - 추천: .com, .co.kr
-   - 예: mentaltouch.com
-
-2. **DNS 설정**
-   - Vercel에서 제공하는 DNS 레코드 추가
-   - 보통 24시간 내 적용
-
-3. **SSL 인증서**
-   - Vercel에서 자동 발급
-
-## 💳 결제 시스템 구현
-
-### Stripe 통합 예정
-
-\`\`\`bash
-# Stripe 패키지 설치
-npm install @stripe/stripe-js stripe
-\`\`\`
-
-프리미엄 구독 기능은 기본 구조가 준비되어 있으며,
-Stripe 설정 후 바로 사용 가능합니다.
-
-## 📈 성장 로드맵
-
-### Phase 1: 런칭 (1개월)
-- ✅ 기본 채팅 기능
-- ✅ Firebase 인증
-- ✅ 광고 통합
-- ✅ 보안 헤더 설정
-- ✅ TypeScript 타입 안정성
-- ✅ 프로덕션 빌드 최적화
-- ✅ 모바일 반응형 UI/UX
-- ✅ 온보딩 튜토리얼
-- ✅ 위기 상황 긴급 연락처
-- ✅ 심리 분석 다운로드 기능
-- 도메인 연결
-- SEO 최적화
-
-### Phase 2: 성장 (2-3개월)
-- Stripe 결제 연동
-- 마케팅 시작
-- 사용자 피드백 반영
-- 블로그 콘텐츠 작성
-
-### Phase 3: 확장 (4-6개월)
-- 모바일 앱 개발 (React Native)
-- 전문 상담사 매칭 기능
-- 그룹 상담 기능
-- 커뮤니티 기능
-
-## 🔒 보안 & 개인정보
-
-- Firebase Security Rules 설정
-- HTTPS 필수
-- 개인정보 암호화 저장
-- 정기적인 보안 업데이트
-
-## 🎯 목표
-
-- **1개월**: 일 방문자 100명
-- **3개월**: 일 방문자 500명
-- **6개월**: 일 방문자 2,000명
-- **1년**: 월 구독자 1,000명
-
-## 📞 지원
-
-문제가 발생하면 이슈를 등록해주세요.
-
-## 📄 라이선스
-
-MIT License
+│   ├── counseling/         # 상담 모드 선택기, 톤 슬라이더
+│   ├── crisis/             # 위기 대응 모달
+│   ├── premium/            # 프리미엄 분석 리포트
+│   ├── apps-in-toss/       # 앱인토스 SDK 연동
+│   └── layout/             # 헤더, 배경, 언어 선택기
+│
+├── lib/                     # 비즈니스 로직
+│   ├── gemini/             # Google Gemini AI
+│   │   ├── config.ts       # 모델 설정 (gemini-3-flash-preview)
+│   │   ├── advanced-prompts.ts  # 전문 상담사 프롬프트
+│   │   ├── counseling-modes.ts  # 10가지 상담 모드
+│   │   ├── context-manager.ts   # 위기 감지, 컨텍스트 생성
+│   │   └── response-filter.ts   # 콘텐츠 안전 필터
+│   ├── firebase/           # Firebase 클라이언트/Admin SDK
+│   ├── search/             # Tavily 연구 검색 통합
+│   ├── rate-limit.ts       # API 요청 제한 (10/분)
+│   └── utils/              # 언어 감지, 아이콘 생성
+│
+├── contexts/                # React Context
+│   └── ChatContext.tsx     # 채팅 상태 관리
+│
+├── types/                   # TypeScript 타입 정의
+│
+├── functions/              # Firebase Cloud Functions (Optional)
+│   └── index.js           # Node.js 백엔드 API
+│
+├── public/                  # 정적 파일
+│   ├── images/             # 이미지 에셋
+│   ├── music/              # 배경 음악 (현재 비활성화)
+│   └── manifest.json       # PWA 매니페스트
+│
+├── firestore.rules         # Firebase 보안 규칙
+├── firebase.json           # Firebase 설정
+├── next.config.js          # Next.js 설정
+├── tailwind.config.ts      # Tailwind CSS 커스텀 테마
+└── tsconfig.json           # TypeScript 설정
+```
 
 ---
 
-**만든 이:** MentalTouch Team
-**연락처:** contact@mentaltouch.com (예시)
+## 🎨 기술 스택
+
+### Frontend
+- **Framework**: Next.js 16.0.0 (App Router, React 19)
+- **Language**: TypeScript 5.9.3 (Strict Mode)
+- **Styling**: Tailwind CSS 3.4.18 + Custom Forest Theme
+- **State**: React Context API
+- **Animation**: Framer Motion 12.23.24
+- **Icons**: Lucide React 0.548.0
+
+### Backend
+- **AI Model**: Google Gemini 3 Flash Preview
+- **Database**: Firebase Firestore
+- **Authentication**: Firebase Auth
+- **Research**: Tavily API (심리학 연구 검색)
+- **Rate Limiting**: In-memory (10 requests/min)
+
+### Deployment
+- **Web**: Vercel (Production)
+- **Apps in Toss**: 토스 앱 미니앱 플랫폼
+
+---
+
+## 🔒 보안 기능
+
+### 1. 콘텐츠 필터링
+```typescript
+// lib/gemini/response-filter.ts
+- 마약/약물 관련
+- 무기/폭력 관련
+- 자해/자살 관련
+- 미성년자 성적 콘텐츠
+- 범죄 조장
+- 혐오 발언
+- 개인정보 노출
+```
+
+### 2. 위기 감지
+```typescript
+// lib/gemini/context-manager.ts
+- 자살 키워드 실시간 감지
+- 자해 키워드 감지
+- 즉시 응급 연락처 제공 (1577-0199 등)
+```
+
+### 3. Firebase 보안 규칙
+- 사용자별 데이터 격리 (userId 기반)
+- Admin 권한 검증 (Custom Claims 필요)
+- 읽기/쓰기 권한 세밀 제어
+
+---
+
+## 💰 수익 모델
+
+### 1. 앱인토스 수익화
+
+#### A. 인앱 광고 (IAA)
+- 전면형/보상형 광고
+- 토스 애즈 연동
+- **수수료**: 광고매출의 30% (운영비) + 15% (앱인토스 수수료)
+
+#### B. 인앱 결제 (IAP)
+- 프리미엄 구독 (월 9,900원)
+- **수수료**: 앱마켓 15-30% + 토스 5%
+
+### 2. 웹 수익화
+
+#### Google AdSense
+- 배너 광고
+- 네이티브 광고
+- **예상 수익**: 월 10,000명 기준 $100-500
+
+#### Stripe 결제
+- 프리미엄 구독
+- 월 9,900원
+
+---
+
+## 📱 앱인토스 배포
+
+### 제출 준비물
+
+1. **웹 서비스 URL** (배포 완료된 URL)
+2. **서비스 정보**
+   - 서비스명: 숲울림 (ForestEcho)
+   - 카테고리: 건강/의료 또는 라이프스타일
+   - 설명: AI 기반 24시간 심리상담 서비스
+3. **법적 문서**
+   - ✅ 이용약관 (/terms)
+   - ✅ 면책조항 (/disclaimer)
+   - ✅ 개인정보처리방침 (Firebase)
+4. **심사용 계정**
+   - 테스트 이메일/비밀번호
+5. **스크린샷**
+   - 5-8장 (채팅, 모드 선택, 분석 등)
+
+### 토스 SDK 연동
+
+```typescript
+// components/apps-in-toss/AppsInTossProvider.tsx
+// TODO: 토스 개발자 문서 참고하여 구현
+// https://toss.im/developers/apps-in-toss
+```
+
+---
+
+## 🧪 테스트
+
+```bash
+# 개발 서버
+npm run dev
+
+# 프로덕션 빌드
+npm run build
+npm run start
+
+# 린트
+npm run lint
+```
+
+---
+
+## 📊 성능 최적화
+
+### 구현된 최적화
+- ✅ 코드 분할 (Dynamic imports)
+- ✅ 이미지 최적화 (Next.js Image)
+- ✅ 서비스 워커 (PWA 오프라인 지원)
+- ✅ 스트리밍 응답 (AI 대기 시간 최소화)
+
+### 추가 개선 필요
+- ⏳ 번들 분석 (@next/bundle-analyzer)
+- ⏳ Intersection Observer (애니메이션 최적화)
+- ⏳ Redis 기반 rate limiting (Upstash)
+
+---
+
+## 📄 라이선스
+
+이 프로젝트는 개인 프로젝트입니다.
+
+---
+
+## 🤝 기여
+
+현재는 개인 프로젝트로 운영 중입니다.
+
+---
+
+## 📞 문의
+
+- **이메일**: support@forestecho.app
+- **웹사이트**: https://forestecho.app
+
+---
+
+## 📝 변경 이력
+
+### v1.0.0 (2026-01-30)
+- ✅ Google Gemini 3 Flash Preview 통합
+- ✅ ElevenLabs 음성 기능 제거 (불필요)
+- ✅ Capacitor/Flutter 제거 (웹 전용)
+- ✅ 앱인토스 준비 (SDK 연동 예정)
+- ✅ 보안 강화 (콘텐츠 필터, 위기 감지)
+- ✅ 다국어 자동 감지
+- ✅ 10가지 상담 모드
+- ✅ 이성-감성 톤 조절
+
+---
+
+**Made with ❤️ for mental health support**

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { logger } from '@/lib/utils/logger'
 import { useAuth } from '@/components/layout/AuthProvider'
 import { useTheme } from '@/components/layout/ThemeProvider'
 import { db } from '@/lib/firebase/config'
@@ -82,21 +83,44 @@ export default function AdminPage() {
   const [editingFAQ, setEditingFAQ] = useState<FAQ | null>(null)
   const [faqFormData, setFaqFormData] = useState({ question: '', answer: '', category: '일반' })
 
-  // 관리자 체크
+  // 관리자 체크 (서버 사이드 API 호출)
   useEffect(() => {
     if (!loading && !user) {
       router.push('/login')
       return
     }
 
-    if (user) {
-      const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL
-      if (user.email === adminEmail) {
-        setIsAdmin(true)
-      } else {
-        alert('관리자만 접근할 수 있습니다.')
+    async function checkAdminStatus() {
+      if (!user) return
+
+      try {
+        // Firebase ID Token 가져오기
+        const token = await user.getIdToken()
+
+        // 서버 사이드 API로 admin 체크
+        const res = await fetch('/api/admin/check', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+
+        const data = await res.json()
+
+        if (data.isAdmin) {
+          setIsAdmin(true)
+        } else {
+          alert('Admin access only.')
+          router.push('/')
+        }
+      } catch (error) {
+        logger.error('Admin check failed:', error)
+        alert('Permission check failed.')
         router.push('/')
       }
+    }
+
+    if (user) {
+      checkAdminStatus()
     }
   }, [user, loading, router])
 
@@ -158,7 +182,7 @@ export default function AdminPage() {
 
         setStats({ totalUsers, totalInquiries, pendingInquiries, totalFAQs })
       } catch (error) {
-        console.error('통계 불러오기 오류:', error)
+        logger.error('통계 불러오기 오류:', error)
       }
     }
 
@@ -170,8 +194,8 @@ export default function AdminPage() {
     try {
       await updateDoc(doc(db, 'inquiries', inquiryId), { status })
     } catch (error) {
-      console.error('상태 업데이트 오류:', error)
-      alert('상태 업데이트 중 오류가 발생했습니다.')
+      logger.error('상태 업데이트 오류:', error)
+      alert('Status update failed.')
     }
   }
 
@@ -189,10 +213,10 @@ export default function AdminPage() {
 
       setReplyText('')
       setSelectedInquiry(null)
-      alert('답변이 성공적으로 전송되었습니다!')
+      alert('Reply sent successfully.')
     } catch (error) {
-      console.error('답변 제출 오류:', error)
-      alert('답변 제출 중 오류가 발생했습니다.')
+      logger.error('답변 제출 오류:', error)
+      alert('Reply submission failed.')
     } finally {
       setReplying(false)
     }
@@ -211,7 +235,7 @@ export default function AdminPage() {
           answer: faqFormData.answer.trim(),
           category: faqFormData.category,
         })
-        alert('FAQ가 수정되었습니다!')
+        alert('FAQ updated.')
       } else {
         // 추가
         await addDoc(collection(db, 'faqs'), {
@@ -221,15 +245,15 @@ export default function AdminPage() {
           order: faqs.length,
           createdAt: new Date(),
         })
-        alert('FAQ가 추가되었습니다!')
+        alert('FAQ added.')
       }
 
       setFaqFormData({ question: '', answer: '', category: '일반' })
       setShowFAQForm(false)
       setEditingFAQ(null)
     } catch (error) {
-      console.error('FAQ 저장 오류:', error)
-      alert('FAQ 저장 중 오류가 발생했습니다.')
+      logger.error('FAQ 저장 오류:', error)
+      alert('FAQ save failed.')
     }
   }
 
@@ -239,10 +263,10 @@ export default function AdminPage() {
 
     try {
       await deleteDoc(doc(db, 'faqs', faqId))
-      alert('FAQ가 삭제되었습니다!')
+      alert('FAQ deleted.')
     } catch (error) {
-      console.error('FAQ 삭제 오류:', error)
-      alert('FAQ 삭제 중 오류가 발생했습니다.')
+      logger.error('FAQ 삭제 오류:', error)
+      alert('FAQ delete failed.')
     }
   }
 

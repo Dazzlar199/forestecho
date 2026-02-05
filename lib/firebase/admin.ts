@@ -1,4 +1,5 @@
 import admin from 'firebase-admin'
+import { logger } from '@/lib/utils/logger'
 
 let initialized = false
 
@@ -12,7 +13,12 @@ function initAdmin() {
     : undefined
 
   if (!privateKey || !process.env.FIREBASE_PROJECT_ID || !process.env.FIREBASE_CLIENT_EMAIL) {
-    return
+    logger.warn('[Firebase Admin] Missing environment variables:', {
+      hasPrivateKey: !!privateKey,
+      hasProjectId: !!process.env.FIREBASE_PROJECT_ID,
+      hasClientEmail: !!process.env.FIREBASE_CLIENT_EMAIL,
+    })
+    throw new Error('Firebase Admin SDK environment variables are not configured')
   }
 
   try {
@@ -24,8 +30,10 @@ function initAdmin() {
       }),
     })
     initialized = true
-  } catch (error) {
-    // Ignore errors during build
+    logger.log('[Firebase Admin] Successfully initialized')
+  } catch (error: any) {
+    logger.error('[Firebase Admin] Initialization failed:', error.message)
+    throw error
   }
 }
 

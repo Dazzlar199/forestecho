@@ -1,5 +1,6 @@
 'use client'
 
+import { memo } from 'react'
 import { Brain, Heart } from 'lucide-react'
 import { useTheme } from '../layout/ThemeProvider'
 import { useLanguage } from '../layout/LanguageProvider'
@@ -9,7 +10,7 @@ interface ToneSliderProps {
   onChange: (value: number) => void
 }
 
-export default function ToneSlider({ value, onChange }: ToneSliderProps) {
+function ToneSlider({ value, onChange }: ToneSliderProps) {
   const { theme } = useTheme()
   const { language } = useLanguage()
 
@@ -121,3 +122,5 @@ export default function ToneSlider({ value, onChange }: ToneSliderProps) {
     </div>
   )
 }
+
+export default memo(ToneSlider)

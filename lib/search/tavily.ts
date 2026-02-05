@@ -1,4 +1,5 @@
 import { tavily } from '@tavily/core'
+import { logger } from '@/lib/utils/logger'
 
 const tavilyClient = tavily({
   apiKey: process.env.TAVILY_API_KEY || '',
@@ -7,14 +8,14 @@ const tavilyClient = tavily({
 export async function searchPsychologyKnowledge(query: string): Promise<string> {
   try {
     if (!process.env.TAVILY_API_KEY) {
-      console.warn('Tavily API key not configured')
+      logger.warn('Tavily API key not configured')
       return ''
     }
 
     // 3초 타임아웃 설정
     const timeoutPromise = new Promise<string>((resolve) => {
       setTimeout(() => {
-        console.warn('Tavily search timeout')
+        logger.warn('Tavily search timeout')
         resolve('')
       }, 3000)
     })
@@ -41,7 +42,7 @@ export async function searchPsychologyKnowledge(query: string): Promise<string> 
     const result = await Promise.race([searchPromise, timeoutPromise])
     return result
   } catch (error) {
-    console.error('Tavily search error:', error)
+    logger.error('Tavily search error:', error)
     return ''
   }
 }

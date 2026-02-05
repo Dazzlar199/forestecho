@@ -81,3 +81,37 @@ export const emotionTriggers = {
   ja: ['仕事', '人間関係', '健康', '家族', 'お金', '未来', '過去', '孤独', 'その他'],
   zh: ['工作', '人际关系', '健康', '家庭', '金钱', '未来', '过去', '孤独', '其他'],
 }
+
+// 감정 여정 트래킹 (진행도 시각화용)
+export interface EmotionSnapshot {
+  id: string
+  userId: string
+  sessionId: string
+  timestamp: Date
+  emotion: EmotionType
+  intensity: number // 1-10
+  context?: string
+  userMessage?: string
+  metadata?: {
+    conversationLength?: number
+    counselingMode?: string
+  }
+}
+
+export interface EmotionTrend {
+  date: string // YYYY-MM-DD
+  emotions: Partial<Record<EmotionType, number>> // 평균 intensity
+  sessionCount: number
+}
+
+export interface EmotionStats {
+  dominantEmotion: EmotionType
+  averageIntensity: number
+  improvementScore: number // -100 to 100 (긍정적 변화)
+  totalSessions: number
+  dateRange: {
+    start: Date
+    end: Date
+  }
+  emotionDistribution: Partial<Record<EmotionType, number>> // percentage
+}

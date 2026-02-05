@@ -1,4 +1,5 @@
 'use client'
+import { logger } from '@/lib/utils/logger'
 
 import { useEffect } from 'react'
 
@@ -9,10 +10,10 @@ export default function ServiceWorkerRegister() {
         navigator.serviceWorker
           .register('/sw.js')
           .then((registration) => {
-            console.log('Service Worker 등록 성공:', registration.scope)
+            logger.log('Service Worker 등록 성공:', registration.scope)
           })
           .catch((err) => {
-            console.log('Service Worker 등록 실패:', err)
+            logger.log('Service Worker 등록 실패:', err)
           })
       })
     }

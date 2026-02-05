@@ -4,7 +4,8 @@ import { useState } from 'react'
 import { useLanguage } from '@/components/layout/LanguageProvider'
 import { useTheme } from '@/components/layout/ThemeProvider'
 import ArticleList from '@/components/education/ArticleList'
-import { ARTICLES, ARTICLE_CATEGORIES, type ArticleCategory } from '@/types/education'
+import { type ArticleCategory } from '@/types/education'
+import { ARTICLES, ARTICLE_CATEGORIES } from '@/lib/data/articles'
 import { iconMap } from '@/lib/utils/icon-map'
 
 export default function EducationPage() {

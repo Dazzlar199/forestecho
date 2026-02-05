@@ -49,4 +49,21 @@ const nextConfig = {
   },
 }
 
-module.exports = nextConfig
+// Sentry 설정 (프로덕션 빌드에서만)
+if (process.env.NEXT_PUBLIC_SENTRY_DSN && process.env.NODE_ENV === 'production') {
+  const { withSentryConfig } = require('@sentry/nextjs')
+
+  const sentryWebpackPluginOptions = {
+    silent: true,
+    org: process.env.SENTRY_ORG,
+    project: process.env.SENTRY_PROJECT,
+    widenClientFileUpload: true,
+    transpileClientSDK: true,
+    hideSourceMaps: true,
+    disableLogger: true,
+  }
+
+  module.exports = withSentryConfig(nextConfig, sentryWebpackPluginOptions)
+} else {
+  module.exports = nextConfig
+}

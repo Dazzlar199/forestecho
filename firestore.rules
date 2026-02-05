@@ -1,160 +1,266 @@
 rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
+  service cloud.firestore {
+    match /databases/{database}/documents {
 
-    // ==============================================
-    // 기본 규칙: 모든 접근 차단 (안전 우선!)
-    // ==============================================
-    match /{document=**} {
-      allow read, write: if false;
-    }
+      // ==============================================
+      // 기본 규칙: 모든 접근 차단 (안전 우선!)
+      // ==============================================
+      match /{document=**} {
+        allow read, write: if false;
+      }
 
-    // ==============================================
-    // 채팅 세션: 본인만 접근 가능
-    // ==============================================
-    match /chatSessions/{sessionId} {
-      // 읽기: 로그인 + 본인 세션만
-      allow read: if request.auth != null
-                  && request.auth.uid == resource.data.userId;
-
-      // 생성: 로그인 + userId 검증
-      allow create: if request.auth != null
-                    && request.auth.uid == request.resource.data.userId
-                    && request.resource.data.userId is string
-                    && request.resource.data.messages is list;
-
-      // 수정: 본인 세션만 (메시지 추가)
-      allow update: if request.auth != null
+      // ==============================================
+      // 채팅 세션: 본인만 접근 가능
+      // ==============================================
+      match /chatSessions/{sessionId} {
+        // 읽기: 로그인 + 본인 세션만
+        allow read: if request.auth != null
                     && request.auth.uid == resource.data.userId;
 
-      // 삭제: 본인 세션만
-      allow delete: if request.auth != null
+        // 생성: 로그인 + userId 검증
+        allow create: if request.auth != null
+                      && request.auth.uid == request.resource.data.userId
+                      && request.resource.data.userId is string
+                      && request.resource.data.messages is list;
+
+        // 수정: 본인 세션만 (메시지 추가)
+        allow update: if request.auth != null
+                      && request.auth.uid == resource.data.userId;
+
+        // 삭제: 본인 세션만
+        allow delete: if request.auth != null
+                      && request.auth.uid == resource.data.userId;
+      }
+
+      // ==============================================
+      // 심리 분석: 본인만 접근 가능
+      // ==============================================
+      match /psychologicalAnalyses/{analysisId} {
+        // 읽기: 로그인 + 본인 분석만
+        allow read: if request.auth != null
                     && request.auth.uid == resource.data.userId;
-    }
 
-    // ==============================================
-    // 심리 분석: 본인만 접근 가능
-    // ==============================================
-    match /psychologicalAnalyses/{analysisId} {
-      // 읽기: 로그인 + 본인 분석만
-      allow read: if request.auth != null
-                  && request.auth.uid == resource.data.userId;
+        // 생성: Admin SDK에서 생성하므로 클라이언트에서는 생성 불가
+        allow create: if false;
 
-      // 생성: Admin SDK에서 생성하므로 클라이언트에서는 생성 불가
-      allow create: if false;
+        // 수정: 본인 분석만
+        allow update: if request.auth != null
+                      && request.auth.uid == resource.data.userId;
 
-      // 수정: 본인 분석만
-      allow update: if request.auth != null
+        // 삭제: 본인 분석만
+        allow delete: if request.auth != null
+                      && request.auth.uid == resource.data.userId;
+      }
+
+      // ==============================================
+      // 분석 기록 (analyses): 본인만 접근 가능
+      // ==============================================
+      match /analyses/{analysisId} {
+        // 읽기: 로그인 + 본인 분석만
+        allow read: if request.auth != null
                     && request.auth.uid == resource.data.userId;
 
-      // 삭제: 본인 분석만
-      allow delete: if request.auth != null
+        // 생성: 클라이언트에서 생성 가능
+        allow create: if request.auth != null
+                      && request.auth.uid == request.resource.data.userId;
+
+        // 수정: 본인 분석만
+        allow update: if request.auth != null
+                      && request.auth.uid == resource.data.userId;
+
+        // 삭제: 본인 분석만
+        allow delete: if request.auth != null
+                      && request.auth.uid == resource.data.userId;
+      }
+
+      // ==============================================
+      // 사용자 프로필 (향후 사용)
+      // ==============================================
+      match /users/{userId} {
+        // 모든 로그인 사용자가 읽을 수 있음 (닉네임, 프로필 사진, referral code 등)
+        allow read: if request.auth != null;
+
+        // 본인만 수정 가능
+        // referralCode, referralCount, referralRewards는 서버에서 관리
+        allow write: if request.auth != null
+                     && request.auth.uid == userId;
+
+        // 초대 코드 생성 (클라이언트 → API → Admin SDK)
+        // 초대 코드 적용 (가입 시 자동 or 수동 입력 → API → Admin SDK)
+      }
+
+      // ==============================================
+      // 감정 기록: 본인만 접근
+      // ==============================================
+      match /emotions/{emotionId} {
+        allow read: if request.auth != null
                     && request.auth.uid == resource.data.userId;
-    }
 
-    // ==============================================
-    // 사용자 프로필 (향후 사용)
-    // ==============================================
-    match /users/{userId} {
-      // 모든 로그인 사용자가 읽을 수 있음 (닉네임, 프로필 사진 등)
-      allow read: if request.auth != null;
+        allow write: if request.auth != null
+                     && request.auth.uid == resource.data.userId;
 
-      // 본인만 수정 가능
-      allow write: if request.auth != null
-                   && request.auth.uid == userId;
-    }
+        allow create: if request.auth != null
+                      && request.auth.uid == request.resource.data.userId;
+      }
 
-    // ==============================================
-    // 감정 기록: 본인만 접근
-    // ==============================================
-    match /emotions/{emotionId} {
-      allow read: if request.auth != null
-                  && request.auth.uid == resource.data.userId;
-
-      allow write: if request.auth != null
-                   && request.auth.uid == resource.data.userId;
-
-      allow create: if request.auth != null
-                    && request.auth.uid == request.resource.data.userId;
-    }
-
-    // ==============================================
-    // 체크인 기록: 본인만 접근
-    // ==============================================
-    match /checkins/{checkinId} {
-      allow read: if request.auth != null
-                  && request.auth.uid == resource.data.userId;
-
-      allow write: if request.auth != null
-                   && request.auth.uid == resource.data.userId;
-
-      allow create: if request.auth != null
-                    && request.auth.uid == request.resource.data.userId;
-    }
-
-    // ==============================================
-    // 커뮤니티 포스트: 모두 읽기, 작성자만 수정/삭제
-    // ==============================================
-    match /posts/{postId} {
-      // 로그인한 사람만 읽기
-      allow read: if request.auth != null;
-
-      // 로그인한 사람만 작성
-      allow create: if request.auth != null
-                    && request.auth.uid == request.resource.data.authorId;
-
-      // 작성자만 수정/삭제
-      allow update, delete: if request.auth != null
-                            && request.auth.uid == resource.data.authorId;
-    }
-
-    // ==============================================
-    // 커뮤니티 댓글
-    // ==============================================
-    match /posts/{postId}/comments/{commentId} {
-      // 로그인한 사람만 읽기
-      allow read: if request.auth != null;
-
-      // 로그인한 사람만 작성
-      allow create: if request.auth != null
-                    && request.auth.uid == request.resource.data.authorId;
-
-      // 작성자만 수정/삭제
-      allow update, delete: if request.auth != null
-                            && request.auth.uid == resource.data.authorId;
-    }
-
-    // ==============================================
-    // 문의사항/피드백: 작성자 본인 + 관리자만 읽기 가능
-    // ==============================================
-    match /inquiries/{inquiryId} {
-      // 읽기: 본인 또는 로그인한 사용자 (관리자 체크는 클라이언트에서)
-      allow read: if request.auth != null;
-
-      // 생성: 로그인한 사용자만
-      allow create: if request.auth != null
-                    && request.auth.uid == request.resource.data.userId
-                    && request.resource.data.userId is string
-                    && request.resource.data.type in ['inquiry', 'feedback', 'bug']
-                    && request.resource.data.status == 'pending';
-
-      // 수정: 로그인한 사용자 (관리자가 답변 추가)
-      allow update: if request.auth != null;
-
-      // 삭제: 본인만
-      allow delete: if request.auth != null
+      // ==============================================
+      // 체크인 기록: 본인만 접근
+      // ==============================================
+      match /checkins/{checkinId} {
+        allow read: if request.auth != null
                     && request.auth.uid == resource.data.userId;
-    }
 
-    // ==============================================
-    // FAQ: 모두 읽기, 관리자만 수정 (앱에서 체크)
-    // ==============================================
-    match /faqs/{faqId} {
-      // 모두 읽기 가능 (로그인 불필요)
-      allow read: if true;
+        allow write: if request.auth != null
+                     && request.auth.uid == resource.data.userId;
 
-      // 생성/수정/삭제는 로그인 필요 (관리자가 클라이언트에서)
-      allow create, update, delete: if request.auth != null;
+        allow create: if request.auth != null
+                      && request.auth.uid == request.resource.data.userId;
+      }
+
+      // ==============================================
+      // 커뮤니티 포스트: 모두 읽기, 작성자만 수정/삭제
+      // ==============================================
+      match /posts/{postId} {
+        // 로그인한 사람만 읽기
+        allow read: if request.auth != null;
+
+        // 로그인한 사람만 작성
+        allow create: if request.auth != null
+                      && request.auth.uid == request.resource.data.authorId;
+
+        // 작성자만 수정/삭제
+        allow update, delete: if request.auth != null
+                              && request.auth.uid == resource.data.authorId;
+      }
+
+      // ==============================================
+      // 커뮤니티 댓글
+      // ==============================================
+      match /posts/{postId}/comments/{commentId} {
+        // 로그인한 사람만 읽기
+        allow read: if request.auth != null;
+
+        // 로그인한 사람만 작성
+        allow create: if request.auth != null
+                      && request.auth.uid == request.resource.data.authorId;
+
+        // 작성자만 수정/삭제
+        allow update, delete: if request.auth != null
+                              && request.auth.uid == resource.data.authorId;
+      }
+
+      // ==============================================
+      // 문의사항/피드백: 작성자 본인 + 관리자만 읽기 가능
+      // ==============================================
+      match /inquiries/{inquiryId} {
+        // 읽기: 본인 또는 로그인한 사용자 (관리자 체크는 클라이언트에서)
+        allow read: if request.auth != null;
+
+        // 생성: 로그인한 사용자만
+        allow create: if request.auth != null
+                      && request.auth.uid == request.resource.data.userId
+                      && request.resource.data.userId is string
+                      && request.resource.data.type in ['inquiry', 'feedback', 'bug']
+                      && request.resource.data.status == 'pending';
+
+        // 수정: 로그인한 사용자 (관리자가 답변 추가)
+        allow update: if request.auth != null;
+
+        // 삭제: 본인만
+        allow delete: if request.auth != null
+                      && request.auth.uid == resource.data.userId;
+      }
+
+      // ==============================================
+      // FAQ: 모두 읽기, 관리자만 수정 (앱에서 체크)
+      // ==============================================
+      match /faqs/{faqId} {
+        // 모두 읽기 가능 (로그인 불필요)
+        allow read: if true;
+
+        // 생성/수정/삭제는 로그인 필요 (관리자가 클라이언트에서)
+        allow create, update, delete: if request.auth != null;
+      }
+
+      // ==============================================
+      // 감정 스냅샷 (Emotion Journey): 본인만 접근
+      // ==============================================
+      match /emotionSnapshots/{snapshotId} {
+        // 읽기: 로그인 + 본인 데이터만
+        allow read: if request.auth != null
+                    && request.auth.uid == resource.data.userId;
+
+        // 생성: 로그인 + 본인 데이터만
+        allow create: if request.auth != null
+                      && request.auth.uid == request.resource.data.userId
+                      && request.resource.data.userId is string
+                      && request.resource.data.emotion is string
+                      && request.resource.data.timestamp is timestamp;
+
+        // 수정/삭제: 본인 데이터만
+        allow update, delete: if request.auth != null
+                              && request.auth.uid == resource.data.userId;
+      }
+
+      // ==============================================
+      // 평가 (Ratings): 본인만 접근
+      // ==============================================
+      match /ratings/{ratingId} {
+        // 읽기: 본인 평가만
+        allow read: if request.auth != null
+                    && request.auth.uid == resource.data.userId;
+
+        // 생성: 본인 데이터만
+        allow create: if request.auth != null
+                      && request.auth.uid == request.resource.data.userId;
+
+        // 수정/삭제: 본인 데이터만
+        allow update, delete: if request.auth != null
+                              && request.auth.uid == resource.data.userId;
+      }
+
+      // ==============================================
+      // 공개 통계: 모두 읽기 가능 (서버에서만 쓰기)
+      // ==============================================
+      match /publicStats/{statId} {
+        // 모두 읽기 가능 (로그인 불필요)
+        allow read: if true;
+
+        // 쓰기는 서버에서만 (Cloud Functions or Admin SDK)
+        allow write: if false;
+      }
+
+      // ==============================================
+      // 분석 피드백: 로그인 사용자만 작성 가능
+      // ==============================================
+      match /analysisFeedback/{feedbackId} {
+        // 읽기: 서버/관리자만 (일반 사용자는 읽기 불가)
+        allow read: if false;
+
+        // 생성: 로그인한 사용자만
+        allow create: if request.auth != null
+                      && request.resource.data.analysisId is string
+                      && request.resource.data.rating in ['positive', 'negative'];
+
+        // 수정/삭제: 불가 (한 번 제출하면 수정 불가)
+        allow update, delete: if false;
+      }
+
+      // ==============================================
+      // 멘탈 헬스 프로필: 본인만 접근
+      // ==============================================
+      match /mentalHealthProfiles/{userId} {
+        // 읽기: 본인만
+        allow read: if request.auth != null
+                    && request.auth.uid == userId;
+
+        // 생성/수정: 본인만
+        allow create, update: if request.auth != null
+                              && request.auth.uid == userId;
+
+        // 삭제: 본인만
+        allow delete: if request.auth != null
+                      && request.auth.uid == userId;
+      }
     }
   }
-}

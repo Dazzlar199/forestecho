@@ -1,223 +1,280 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { X, Mail, Lock, User as UserIcon } from 'lucide-react'
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signInWithRedirect,
-  getRedirectResult,
-  GoogleAuthProvider,
-  updateProfile,
-} from 'firebase/auth'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { X } from 'lucide-react'
+import { useTheme } from '@/components/layout/ThemeProvider'
+import { useLanguage } from '@/components/layout/LanguageProvider'
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import { auth } from '@/lib/firebase/config'
+import { applyStoredReferralCode } from '@/lib/referral/referral-client'
+import EmailSignUpForm from './EmailSignUpForm'
+import EmailSignInForm from './EmailSignInForm'
+import PasswordResetModal from './PasswordResetModal'
+import { logger } from '@/lib/utils/logger'
 
 interface AuthModalProps {
   isOpen: boolean
   onClose: () => void
 }
 
+type AuthMode = 'signin' | 'signup'
+type AuthMethod = 'social' | 'email'
+
 export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
-  const [isLogin, setIsLogin] = useState(true)
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [name, setName] = useState('')
-  const [loading, setLoading] = useState(false)
+  const { theme } = useTheme()
+  const { language } = useLanguage()
+  const [authMode, setAuthMode] = useState<AuthMode>('signin')
+  const [authMethod, setAuthMethod] = useState<AuthMethod>('social')
+  const [showPasswordReset, setShowPasswordReset] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
-
-  // 리다이렉트 결과 처리
-  useEffect(() => {
-    const handleRedirectResult = async () => {
-      try {
-        const result = await getRedirectResult(auth)
-        if (result) {
-          // 로그인 성공
-          onClose()
-        }
-      } catch (err: any) {
-        if (err.code !== 'auth/missing-initial-state') {
-          setError('Google 로그인에 실패했습니다.')
-        }
-      }
-    }
-
-    handleRedirectResult()
-  }, [onClose])
-
-  if (!isOpen) return null
-
-  const handleEmailAuth = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError('')
-    setLoading(true)
-
-    try {
-      if (isLogin) {
-        await signInWithEmailAndPassword(auth, email, password)
-      } else {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password)
-        if (name) {
-          await updateProfile(userCredential.user, { displayName: name })
-        }
-      }
-      onClose()
-    } catch (err: any) {
-      setError(
-        err.code === 'auth/email-already-in-use'
-          ? '이미 사용 중인 이메일입니다.'
-          : err.code === 'auth/weak-password'
-          ? '비밀번호는 6자 이상이어야 합니다.'
-          : err.code === 'auth/invalid-email'
-          ? '유효하지 않은 이메일입니다.'
-          : err.code === 'auth/user-not-found'
-          ? '사용자를 찾을 수 없습니다.'
-          : err.code === 'auth/wrong-password'
-          ? '잘못된 비밀번호입니다.'
-          : '오류가 발생했습니다. 다시 시도해주세요.'
-      )
-    } finally {
-      setLoading(false)
-    }
-  }
 
   const handleGoogleAuth = async () => {
     setError('')
-    setLoading(true)
+    setIsLoading(true)
 
     try {
       const provider = new GoogleAuthProvider()
-      // 모바일/앱 환경에서 더 안정적인 signInWithRedirect 사용
-      await signInWithRedirect(auth, provider)
-      // 리다이렉트가 시작되므로 페이지가 리로드됨
+      const result = await signInWithPopup(auth, provider)
+
+      // Apply referral code if exists (non-blocking)
+      applyStoredReferralCode(result.user.uid).catch((err) =>
+        logger.error('Failed to apply referral code:', err)
+      )
+
+      onClose()
     } catch (err: any) {
-      setError('Google 로그인에 실패했습니다.')
-      setLoading(false)
+      logger.error('Google auth error:', err)
+
+      if (err.code === 'auth/popup-blocked') {
+        setError(language === 'ko' ? '팝업이 차단되었습니다.' : 'Popup blocked.')
+      } else if (err.code === 'auth/popup-closed-by-user') {
+        setError(language === 'ko' ? '로그인이 취소되었습니다.' : 'Login cancelled.')
+      } else if (err.code !== 'auth/cancelled-popup-request') {
+        setError(language === 'ko' ? 'Google 로그인 실패' : 'Google login failed.')
+      }
+    } finally {
+      setIsLoading(false)
     }
   }
 
+  const handleSuccess = async () => {
+    // 회원가입/로그인 성공 시 referral 코드 적용
+    if (auth.currentUser) {
+      applyStoredReferralCode(auth.currentUser.uid).catch((err) =>
+        logger.error('Failed to apply referral code:', err)
+      )
+    }
+    onClose()
+  }
+
+  if (!isOpen) return null
+
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl max-w-md w-full p-8 relative">
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
-        >
-          <X className="w-6 h-6" />
-        </button>
+    <>
+      <AnimatePresence>
+        {isOpen && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            onClick={onClose}
+          >
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+            />
 
-        <h2 className="text-2xl font-bold text-gray-800 mb-6">
-          {isLogin ? '로그인' : '회원가입'}
-        </h2>
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className={`relative w-full max-w-md rounded-2xl border p-8 ${
+                theme === 'dark'
+                  ? 'bg-gray-900 border-emerald-500/30'
+                  : 'bg-white border-emerald-300'
+              }`}
+            >
+              {/* 닫기 버튼 */}
+              <button
+                onClick={onClose}
+                className={`absolute top-4 right-4 p-2 rounded-lg transition-colors ${
+                  theme === 'dark'
+                    ? 'hover:bg-white/10 text-gray-400'
+                    : 'hover:bg-gray-100 text-gray-600'
+                }`}
+              >
+                <X className="w-5 h-5" />
+              </button>
 
-        {error && (
-          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
-            {error}
+              {/* 헤더 */}
+              <div className="text-center mb-8">
+                <h2 className={`text-2xl font-normal mb-2 ${
+                  theme === 'dark' ? 'text-gray-200' : 'text-gray-800'
+                }`}>
+                  {authMode === 'signin' ? (
+                    <>
+                      {language === 'ko' && '로그인'}
+                      {language === 'en' && 'Sign In'}
+                      {language === 'ja' && 'ログイン'}
+                      {language === 'zh' && '登录'}
+                    </>
+                  ) : (
+                    <>
+                      {language === 'ko' && '회원가입'}
+                      {language === 'en' && 'Sign Up'}
+                      {language === 'ja' && '登録'}
+                      {language === 'zh' && '注册'}
+                    </>
+                  )}
+                </h2>
+                <p className={`text-sm ${
+                  theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
+                }`}>
+                  {language === 'ko' && '숲울림에 오신 것을 환영합니다'}
+                  {language === 'en' && 'Welcome to ForestEcho'}
+                  {language === 'ja' && 'ForestEchoへようこそ'}
+                  {language === 'zh' && '欢迎来到ForestEcho'}
+                </p>
+              </div>
+
+              {/* 인증 방법 선택 탭 */}
+              <div className={`flex gap-2 mb-6 p-1 rounded-lg ${
+                theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'
+              }`}>
+                <button
+                  onClick={() => setAuthMethod('social')}
+                  className={`flex-1 py-2 px-4 rounded-md transition-colors ${
+                    authMethod === 'social'
+                      ? theme === 'dark'
+                        ? 'bg-emerald-500 text-white'
+                        : 'bg-emerald-500 text-white'
+                      : theme === 'dark'
+                      ? 'text-gray-400 hover:text-gray-300'
+                      : 'text-gray-600 hover:text-gray-700'
+                  }`}
+                >
+                  {language === 'ko' && '소셜 로그인'}
+                  {language === 'en' && 'Social'}
+                  {language === 'ja' && 'ソーシャル'}
+                  {language === 'zh' && '社交'}
+                </button>
+                <button
+                  onClick={() => setAuthMethod('email')}
+                  className={`flex-1 py-2 px-4 rounded-md transition-colors ${
+                    authMethod === 'email'
+                      ? theme === 'dark'
+                        ? 'bg-emerald-500 text-white'
+                        : 'bg-emerald-500 text-white'
+                      : theme === 'dark'
+                      ? 'text-gray-400 hover:text-gray-300'
+                      : 'text-gray-600 hover:text-gray-700'
+                  }`}
+                >
+                  {language === 'ko' && '이메일'}
+                  {language === 'en' && 'Email'}
+                  {language === 'ja' && 'メール'}
+                  {language === 'zh' && '电子邮件'}
+                </button>
+              </div>
+
+              {/* 인증 폼 */}
+              <AnimatePresence mode="wait">
+                {authMethod === 'social' ? (
+                  <motion.div
+                    key="social"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 20 }}
+                  >
+                    <button
+                      onClick={handleGoogleAuth}
+                      disabled={isLoading}
+                      className={`w-full flex items-center justify-center gap-3 px-6 py-3 rounded-lg border transition-all ${
+                        theme === 'dark'
+                          ? 'bg-white text-gray-800 border-gray-300 hover:bg-gray-100'
+                          : 'bg-white text-gray-800 border-gray-300 hover:bg-gray-50'
+                      } ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    >
+                      <svg className="w-5 h-5" viewBox="0 0 24 24">
+                        <path
+                          fill="#4285F4"
+                          d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                        />
+                        <path
+                          fill="#34A853"
+                          d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                        />
+                        <path
+                          fill="#FBBC05"
+                          d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                        />
+                        <path
+                          fill="#EA4335"
+                          d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                        />
+                      </svg>
+                      {language === 'ko' && 'Google로 계속하기'}
+                      {language === 'en' && 'Continue with Google'}
+                      {language === 'ja' && 'Googleで続ける'}
+                      {language === 'zh' && '使用Google继续'}
+                    </button>
+
+                    {error && (
+                      <div className="mt-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-500 text-sm">
+                        {error}
+                      </div>
+                    )}
+
+                    <div className="mt-6 text-center">
+                      <button
+                        onClick={() => setAuthMethod('email')}
+                        className={`text-sm ${
+                          theme === 'dark'
+                            ? 'text-gray-500 hover:text-gray-400'
+                            : 'text-gray-600 hover:text-gray-700'
+                        }`}
+                      >
+                        {language === 'ko' && '또는 이메일로 계속하기'}
+                        {language === 'en' && 'Or continue with email'}
+                        {language === 'ja' && 'またはメールで続ける'}
+                        {language === 'zh' && '或使用电子邮件继续'}
+                      </button>
+                    </div>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="email"
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                  >
+                    {authMode === 'signin' ? (
+                      <EmailSignInForm
+                        onSuccess={handleSuccess}
+                        onSwitchToSignUp={() => setAuthMode('signup')}
+                        onForgotPassword={() => setShowPasswordReset(true)}
+                      />
+                    ) : (
+                      <EmailSignUpForm
+                        onSuccess={handleSuccess}
+                        onSwitchToSignIn={() => setAuthMode('signin')}
+                      />
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
           </div>
         )}
+      </AnimatePresence>
 
-        <form onSubmit={handleEmailAuth} className="space-y-4">
-          {!isLogin && (
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">이름</label>
-              <div className="relative">
-                <UserIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                  placeholder="홍길동"
-                  required={!isLogin}
-                />
-              </div>
-            </div>
-          )}
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">이메일</label>
-            <div className="relative">
-              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                placeholder="example@email.com"
-                required
-              />
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">비밀번호</label>
-            <div className="relative">
-              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                placeholder="••••••••"
-                required
-                minLength={6}
-              />
-            </div>
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-3 bg-primary-500 text-white font-semibold rounded-lg hover:bg-primary-600 transition-colors disabled:opacity-50"
-          >
-            {loading ? '처리 중...' : isLogin ? '로그인' : '회원가입'}
-          </button>
-        </form>
-
-        <div className="my-6 flex items-center gap-4">
-          <div className="flex-1 h-px bg-gray-300" />
-          <span className="text-sm text-gray-500">또는</span>
-          <div className="flex-1 h-px bg-gray-300" />
-        </div>
-
-        <button
-          onClick={handleGoogleAuth}
-          disabled={loading}
-          className="w-full py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
-        >
-          <svg className="w-5 h-5" viewBox="0 0 24 24">
-            <path
-              fill="currentColor"
-              d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-            />
-            <path
-              fill="currentColor"
-              d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-            />
-            <path
-              fill="currentColor"
-              d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-            />
-            <path
-              fill="currentColor"
-              d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-            />
-          </svg>
-          Google로 계속하기
-        </button>
-
-        <p className="mt-6 text-center text-sm text-gray-600">
-          {isLogin ? '계정이 없으신가요?' : '이미 계정이 있으신가요?'}
-          <button
-            onClick={() => {
-              setIsLogin(!isLogin)
-              setError('')
-            }}
-            className="ml-2 text-primary-500 font-semibold hover:underline"
-          >
-            {isLogin ? '회원가입' : '로그인'}
-          </button>
-        </p>
-      </div>
-    </div>
+      <PasswordResetModal
+        isOpen={showPasswordReset}
+        onClose={() => setShowPasswordReset(false)}
+      />
+    </>
   )
 }

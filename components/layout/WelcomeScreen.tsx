@@ -5,6 +5,7 @@ import { useLanguage } from './LanguageProvider'
 import { useAuth } from './AuthProvider'
 import Link from 'next/link'
 import { Heart, Brain, Calendar, Users, BookOpen, TreePine } from 'lucide-react'
+import SocialProof from '../trust/SocialProof'
 
 interface WelcomeScreenProps {
   onStartChat: () => void
@@ -139,6 +140,9 @@ export default function WelcomeScreen({ onStartChat }: WelcomeScreenProps) {
             </div>
           </div>
         </div>
+
+        {/* 사용자 후기 */}
+        <SocialProof />
 
         {/* Bottom Notice */}
         <div className="mt-32 text-center">

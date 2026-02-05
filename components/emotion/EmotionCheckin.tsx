@@ -6,6 +6,8 @@ import { useTheme } from '../layout/ThemeProvider'
 import { useAuth } from '../layout/AuthProvider'
 import { emotionConfig, emotionTriggers, type EmotionType, type EmotionRecord } from '@/types/emotion'
 import { ChevronRight, Save, X, Laugh, Smile, Wind, Minus, AlertCircle, CloudRain, Flame, Zap } from 'lucide-react'
+import { saveEmotionRecord } from '@/lib/firebase/emotion-tracking'
+import { logger } from '@/lib/utils/logger'
 
 // Icon mapping
 const emotionIconMap: Record<string, any> = {
@@ -59,7 +61,15 @@ export default function EmotionCheckin({ onSave, onClose }: EmotionCheckinProps)
       timestamp: new Date(),
     }
 
-    // TODO: Firestore에 저장
+    // Firestore에 저장
+    try {
+      const { id, ...recordData } = record
+      const savedId = await saveEmotionRecord(recordData)
+      record.id = savedId
+    } catch (error) {
+      logger.error('Failed to save emotion record:', error)
+    }
+
     if (onSave) {
       onSave(record)
     }
@@ -237,7 +247,7 @@ export default function EmotionCheckin({ onSave, onClose }: EmotionCheckinProps)
               <button
                 key={trigger}
                 onClick={() => toggleTrigger(trigger)}
-                className={`px-4 py-2 rounded-full text-sm transition-all ${
+                className={`px-4 py-3 min-h-[44px] rounded-full text-sm transition-all ${
                   selectedTriggers.includes(trigger)
                     ? theme === 'dark'
                       ? 'bg-emerald-500/20 text-emerald-400 border-2 border-emerald-500'

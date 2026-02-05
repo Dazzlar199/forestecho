@@ -5,6 +5,7 @@ import Script from 'next/script'
 import { Loader2 } from 'lucide-react'
 import ForestBackground from '@/components/layout/ForestBackground'
 import { useChatContext } from '@/contexts/ChatContext'
+import ErrorBoundary from '@/components/error/ErrorBoundary'
 
 // Dynamic imports for code splitting
 const ChatInterface = dynamic(() => import('@/components/chat/ChatInterface'), {
@@ -23,12 +24,12 @@ const WelcomeScreen = dynamic(() => import('@/components/layout/WelcomeScreen'),
   ),
 })
 
-const BGMPlayer = dynamic(() => import('@/components/audio/BGMPlayer'), {
-  ssr: false, // Audio API는 클라이언트 전용
-})
-
 const OnboardingTour = dynamic(() => import('@/components/onboarding/OnboardingTour'), {
   ssr: false, // localStorage 사용하므로 SSR 불필요
+})
+
+const OnboardingFlow = dynamic(() => import('@/components/onboarding/OnboardingFlow'), {
+  ssr: false,
 })
 
 export default function Home() {
@@ -78,14 +79,16 @@ export default function Home() {
       />
       <main className="min-h-screen relative">
         <ForestBackground />
-        <BGMPlayer />
+        <OnboardingFlow onComplete={() => {}} />
         <OnboardingTour onComplete={() => {}} />
 
         {!showChat ? (
           <WelcomeScreen onStartChat={() => setShowChat(true)} />
         ) : (
-          <div className="container mx-auto px-4 py-8">
-            <ChatInterface />
+          <div className="container mx-auto px-4 pt-24 pb-8">
+            <ErrorBoundary>
+              <ChatInterface />
+            </ErrorBoundary>
           </div>
         )}
       </main>

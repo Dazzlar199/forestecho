@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { logger } from '@/lib/utils/logger'
 import { useLanguage } from '@/components/layout/LanguageProvider'
 import { useTheme } from '@/components/layout/ThemeProvider'
 import { useAuth } from '@/components/layout/AuthProvider'
@@ -88,7 +89,9 @@ export default function CommunityPage() {
     try {
       await addDoc(collection(db, 'posts'), {
         authorId: user.uid,
-        authorName: postData.isAnonymous ? '익명' : user.displayName || '사용자',
+        authorName: postData.isAnonymous
+          ? (language === 'ko' ? '익명' : language === 'en' ? 'Anonymous' : language === 'ja' ? '匿名' : '匿名')
+          : user.displayName || (language === 'ko' ? '사용자' : 'User'),
         isAnonymous: postData.isAnonymous,
         category: postData.category,
         title: postData.title,
@@ -102,8 +105,12 @@ export default function CommunityPage() {
 
       setShowPostCreate(false)
     } catch (error) {
-      console.error('게시글 작성 오류:', error)
-      alert('게시글 작성 중 오류가 발생했습니다.')
+      logger.error('Post creation error:', error)
+      const errorMsg = language === 'ko' ? '게시글 작성 중 오류가 발생했습니다.' :
+                       language === 'en' ? 'An error occurred while creating the post.' :
+                       language === 'ja' ? '投稿の作成中にエラーが発生しました。' :
+                       '创建帖子时发生错误。'
+      alert(errorMsg)
     }
   }
 
@@ -122,7 +129,7 @@ export default function CommunityPage() {
         likedBy: isLiked ? arrayRemove(user.uid) : arrayUnion(user.uid),
       })
     } catch (error) {
-      console.error('좋아요 오류:', error)
+      logger.error('좋아요 오류:', error)
     }
   }
 
@@ -141,7 +148,7 @@ export default function CommunityPage() {
         likedBy: isLiked ? arrayRemove(user.uid) : arrayUnion(user.uid),
       })
     } catch (error) {
-      console.error('댓글 좋아요 오류:', error)
+      logger.error('댓글 좋아요 오류:', error)
     }
   }
 
@@ -152,7 +159,9 @@ export default function CommunityPage() {
       await addDoc(collection(db, 'posts', selectedPostId, 'comments'), {
         postId: selectedPostId,
         authorId: user.uid,
-        authorName: isAnonymous ? '익명' : user.displayName || '사용자',
+        authorName: isAnonymous
+          ? (language === 'ko' ? '익명' : language === 'en' ? 'Anonymous' : language === 'ja' ? '匿名' : '匿名')
+          : user.displayName || (language === 'ko' ? '사용자' : 'User'),
         isAnonymous,
         content,
         timestamp: new Date(),
@@ -166,8 +175,12 @@ export default function CommunityPage() {
         commentCount: increment(1),
       })
     } catch (error) {
-      console.error('댓글 작성 오류:', error)
-      alert('댓글 작성 중 오류가 발생했습니다.')
+      logger.error('Comment creation error:', error)
+      const commentErrorMsg = language === 'ko' ? '댓글 작성 중 오류가 발생했습니다.' :
+                              language === 'en' ? 'An error occurred while posting the comment.' :
+                              language === 'ja' ? 'コメントの投稿中にエラーが発生しました。' :
+                              '发表评论时发生错误。'
+      alert(commentErrorMsg)
     }
   }
 

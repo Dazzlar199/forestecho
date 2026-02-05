@@ -15,6 +15,7 @@ import {
 import { db } from './config'
 import type { ChatSession, ChatSessionCreate } from '@/types/chat'
 import type { Message } from '@/types'
+import { logger } from '@/lib/utils/logger'
 
 // Firestore 데이터를 ChatSession으로 변환
 function convertFirestoreToSession(id: string, data: any): ChatSession {
@@ -63,7 +64,7 @@ export async function createChatSession(
     )
     return docRef.id
   } catch (error) {
-    console.error('Error creating chat session:', error)
+    logger.error('Error creating chat session:', error)
     throw error
   }
 }
@@ -91,7 +92,7 @@ export async function updateChatSession(
 
     await withTimeout(updateDoc(sessionRef, updateData), 5000)
   } catch (error) {
-    console.error('Error updating chat session:', error)
+    logger.error('Error updating chat session:', error)
     throw error
   }
 }
@@ -114,7 +115,7 @@ export async function getUserChatSessions(userId: string): Promise<ChatSession[]
 
     return sessions
   } catch (error) {
-    console.error('Error getting user chat sessions:', error)
+    logger.error('Error getting user chat sessions:', error)
     throw error
   }
 }
@@ -130,7 +131,7 @@ export async function getChatSession(sessionId: string): Promise<ChatSession | n
     }
     return null
   } catch (error) {
-    console.error('Error getting chat session:', error)
+    logger.error('Error getting chat session:', error)
     throw error
   }
 }
@@ -140,7 +141,7 @@ export async function deleteChatSession(sessionId: string): Promise<void> {
   try {
     await withTimeout(deleteDoc(doc(db, 'chatSessions', sessionId)), 5000)
   } catch (error) {
-    console.error('Error deleting chat session:', error)
+    logger.error('Error deleting chat session:', error)
     throw error
   }
 }

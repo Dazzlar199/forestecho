@@ -1,9 +1,8 @@
 'use client'
+import { logger } from '@/lib/utils/logger'
 
 import { useState, useEffect } from 'react'
 import {
-  Sun,
-  Moon,
   Menu,
   X,
   Home,
@@ -57,7 +56,7 @@ export default function MobileHeader() {
       setShowMenu(false)
       router.push('/')
     } catch (error) {
-      console.error('Logout error:', error)
+      logger.error('Logout error:', error)
     }
   }
 
@@ -100,10 +99,8 @@ export default function MobileHeader() {
             숲울림
           </Link>
 
-          {/* 테마 토글 */}
-          <button onClick={toggleTheme} className={`p-2 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-            {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-          </button>
+          {/* 빈 공간 (오른쪽 정렬 유지) */}
+          <div className="w-10"></div>
         </div>
       </header>
 

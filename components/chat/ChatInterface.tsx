@@ -1,6 +1,7 @@
 'use client'
+import { logger } from '@/lib/utils/logger'
 
-import { useState, useRef, useEffect, useCallback, useMemo } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { Send, Loader2 } from 'lucide-react'
 import { FIRST_MESSAGE } from '@/lib/openai/prompts'
 import ChatMessage from './ChatMessage'
@@ -10,15 +11,23 @@ import AnalysisReport from '../premium/AnalysisReport'
 import ModeSelector from '../counseling/ModeSelector'
 import ToneSlider from '../counseling/ToneSlider'
 import CrisisModal from '../crisis/CrisisModal'
+import GuestLimitModal from '../auth/GuestLimitModal'
+import AuthModal from '../auth/AuthModal'
+import UpgradeModal from '../trust/UpgradeModal'
+import EmotionPicker from '../onboarding/EmotionPicker'
+import QuickStartTemplates from '../onboarding/QuickStartTemplates'
+import SOSButton from '../crisis/SOSButton'
 import type { Message } from '@/types'
 import type { CounselingMode } from '@/lib/openai/counseling-modes'
 import {
   createChatSession,
   updateChatSession,
   generateChatTitle,
+  getChatSession,
 } from '@/lib/firebase/chat-sessions'
 import ChatHistory from './ChatHistory'
 import type { ChatSession } from '@/types/chat'
+import { useGuestMode } from '@/hooks/useGuestMode'
 
 export default function ChatInterface() {
   const { language, t } = useLanguage()
@@ -35,19 +44,26 @@ export default function ChatInterface() {
   const [isLoading, setIsLoading] = useState(false)
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null)
   const [showCrisisModal, setShowCrisisModal] = useState(false)
+  const [showGuestLimitModal, setShowGuestLimitModal] = useState(false)
+  const [showAuthModal, setShowAuthModal] = useState(false)
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false)
+  const [showEmotionPicker, setShowEmotionPicker] = useState(false)
+  const [showQuickStart, setShowQuickStart] = useState(true)
+  const [selectedEmotion, setSelectedEmotion] = useState<{emotion: string, intensity: number} | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const { user, isPremium} = useAuth()
+  const { guestMessageCount, isGuestLimitReached, remainingMessages, incrementGuestCount } = useGuestMode()
 
   const scrollToBottom = useCallback(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' })
   }, [])
 
   useEffect(() => {
     scrollToBottom()
   }, [messages, scrollToBottom])
 
-  // 페이지 로드 시 이전 대화 세션 복원
+  // 페이지 로드 시 이전 대화 세션 복원 + 감정 선택기 표시
   useEffect(() => {
     const restoreSession = async () => {
       if (!user) return
@@ -55,18 +71,18 @@ export default function ChatInterface() {
       const savedSessionId = localStorage.getItem('currentChatSessionId')
       if (savedSessionId) {
         try {
-          const { getChatSession } = await import('@/lib/firebase/chat-sessions')
           const session = await getChatSession(savedSessionId)
           if (session && session.messages && session.messages.length > 0) {
             setMessages(session.messages)
             setCounselingMode(session.counselingMode)
             setCurrentSessionId(session.id)
+            setShowQuickStart(false) // 기존 세션이 있으면 빠른 시작 숨김
           } else {
             // 세션이 비어있으면 localStorage 정리하고 초기 메시지 표시
             localStorage.removeItem('currentChatSessionId')
           }
         } catch (error) {
-          console.error('Error restoring session:', error)
+          logger.error('Error restoring session:', error)
           // 복원 실패 시 localStorage 정리
           localStorage.removeItem('currentChatSessionId')
         }
@@ -74,10 +90,27 @@ export default function ChatInterface() {
     }
 
     restoreSession()
+
+    // 첫 방문 시 감정 선택기 표시 (한번만)
+    const hasShownEmotionPicker = localStorage.getItem('emotion_picker_shown')
+    if (!hasShownEmotionPicker && messages.length === 1) {
+      setShowEmotionPicker(true)
+    }
   }, [user])
 
   const handleSend = useCallback(async () => {
+    // 게스트 모드: 제한 도달 시 모달 표시
+    if (!user && isGuestLimitReached) {
+      setShowGuestLimitModal(true)
+      return
+    }
+
     if (!input.trim() || isLoading) return
+
+    // 게스트 사용자 카운트 증가
+    if (!user) {
+      incrementGuestCount()
+    }
 
     const userMessage: Message = {
       role: 'user',
@@ -111,18 +144,31 @@ export default function ChatInterface() {
           language,
           counselingMode,
           responseTone,
+          userId: user?.uid || null, // Tier 체크용
         }),
       })
 
       if (!response.ok) {
-        throw new Error('응답을 받는데 실패했습니다')
+        // 에러 응답 상세 정보 가져오기
+        let errorMessage = language === 'ko' ? '응답을 받는데 실패했습니다' :
+                         language === 'en' ? 'Failed to get response' :
+                         language === 'ja' ? '応答の取得に失敗しました' :
+                         '获取响应失败'
+        try {
+          const errorData = await response.json()
+          logger.error('API Error:', errorData)
+          errorMessage = errorData.error || errorData.error_en || errorMessage
+        } catch (e) {
+          logger.error('Failed to parse error response')
+        }
+        throw new Error(errorMessage)
       }
 
       const reader = response.body?.getReader()
       const decoder = new TextDecoder()
 
       if (!reader) {
-        throw new Error('스트림을 읽을 수 없습니다')
+        throw new Error('Stream unavailable')
       }
 
       let fullContent = ''
@@ -200,22 +246,42 @@ export default function ChatInterface() {
               await updateChatSession(currentSessionId, allMessages)
             }
           } catch (saveError) {
-            console.error('Error saving chat session:', saveError)
+            logger.error('Error saving chat session:', saveError)
           }
         })()
       }
     } catch (error: any) {
-      console.error('Error:', error)
+      logger.error('Error:', error)
 
-      let errorMessage = '죄송합니다. 일시적인 오류가 발생했습니다. 다시 시도해주세요.'
+      let errorContent = ''
 
       if (error.name === 'AbortError') {
-        errorMessage = '⏱️ 응답 시간이 초과되었습니다. 네트워크 연결을 확인하고 다시 시도해주세요.'
+        errorContent = language === 'ko' ? '응답 시간이 초과되었습니다. 네트워크 연결을 확인하고 다시 시도해주세요.' :
+                       language === 'en' ? 'Response timed out. Please check your connection and try again.' :
+                       language === 'ja' ? '応答がタイムアウトしました。接続を確認して再度お試しください。' :
+                       '响应超时。请检查网络连接并重试。'
       } else if (error.message?.includes('Failed to fetch') || error.message?.includes('NetworkError')) {
-        errorMessage = '🌐 네트워크 연결에 실패했습니다. 인터넷 연결을 확인해주세요.'
+        errorContent = language === 'ko' ? '네트워크 연결에 실패했습니다. 인터넷 연결을 확인해주세요.' :
+                       language === 'en' ? 'Network connection failed. Please check your internet.' :
+                       language === 'ja' ? 'ネットワーク接続に失敗しました。インターネット接続を確認してください。' :
+                       '网络连接失败。请检查您的网络。'
+      } else if (error.message?.includes('DAILY_LIMIT_REACHED')) {
+        setShowUpgradeModal(true)
+      } else {
+        errorContent = language === 'ko' ? '일시적인 오류가 발생했습니다. 다시 시도해주세요.' :
+                       language === 'en' ? 'A temporary error occurred. Please try again.' :
+                       language === 'ja' ? '一時的なエラーが発生しました。もう一度お試しください。' :
+                       '发生了临时错误。请重试。'
       }
 
-      alert(errorMessage)
+      // 에러 메시지를 어시스턴트 메시지로 표시 (alert 대신)
+      if (errorContent) {
+        setMessages((prev) => [
+          ...prev.slice(0, -2),
+          { role: 'assistant', content: errorContent, timestamp: new Date() },
+        ])
+        return // 아래 slice 실행 방지
+      }
 
       // 에러 발생 시 마지막 2개 메시지 제거 (user + temp assistant)
       setMessages((prev) => prev.slice(0, -2))
@@ -247,6 +313,44 @@ export default function ChatInterface() {
     setCurrentSessionId(null)
     localStorage.removeItem('currentChatSessionId')
     setCounselingMode('general')
+    setShowQuickStart(true)
+  }, [])
+
+  const handleEmotionSelect = useCallback((emotion: string, intensity: number) => {
+    setSelectedEmotion({ emotion, intensity })
+    setShowEmotionPicker(false)
+    localStorage.setItem('emotion_picker_shown', 'true')
+
+    // 감정 정보를 포함한 첫 메시지 자동 생성
+    const emotionLabels: Record<string, Record<string, string>> = {
+      happy: { ko: '행복', en: 'happiness', ja: '幸せ', zh: '开心' },
+      sad: { ko: '슬픔', en: 'sadness', ja: '悲しみ', zh: '悲伤' },
+      anxious: { ko: '불안', en: 'anxiety', ja: '不安', zh: '焦虑' },
+      angry: { ko: '화남', en: 'anger', ja: '怒り', zh: '愤怒' },
+      tired: { ko: '지침', en: 'tiredness', ja: '疲れ', zh: '疲惫' },
+      calm: { ko: '평온', en: 'calmness', ja: '穏やかさ', zh: '平静' },
+      excited: { ko: '설렘', en: 'excitement', ja: '興奮', zh: '兴奋' },
+      confused: { ko: '혼란', en: 'confusion', ja: '混乱', zh: '困惑' },
+    }
+    const emotionLabel = emotionLabels[emotion]?.[language] || emotion
+    const msg = language === 'ko' ? `지금 ${emotionLabel}을 느끼고 있어요 (강도: ${intensity}/10).` :
+                language === 'en' ? `I'm feeling ${emotionLabel} right now (intensity: ${intensity}/10).` :
+                language === 'ja' ? `今${emotionLabel}を感じています（強度：${intensity}/10）。` :
+                `我现在感到${emotionLabel}（强度：${intensity}/10）。`
+    setInput(msg)
+  }, [])
+
+  const handleTemplateSelect = useCallback((template: string) => {
+    setInput(template)
+    setShowQuickStart(false)
+    if (textareaRef.current) {
+      textareaRef.current.focus()
+    }
+  }, [])
+
+  const handleSkipEmotion = useCallback(() => {
+    setShowEmotionPicker(false)
+    localStorage.setItem('emotion_picker_shown', 'true')
   }, [])
 
   const handleSelectSession = useCallback((session: ChatSession) => {
@@ -257,22 +361,64 @@ export default function ChatInterface() {
   }, [])
 
   return (
-    <div className="flex h-screen">
-      {/* Main Chat Area (중앙) */}
-      <div className="flex-1 flex flex-col py-2 sm:py-8 px-3 sm:px-6 max-w-4xl mx-auto w-full">
-        {/* Mode Selector */}
-        <div className="mb-3 sm:mb-4">
-          <ModeSelector selectedMode={counselingMode} onModeChange={setCounselingMode} />
+    <div className="flex h-screen" style={{
+      paddingBottom: 'var(--safe-area-inset-bottom)'
+    }}>
+      {/* Emotion Picker Sidebar (왼쪽) */}
+      {showEmotionPicker && (
+        <div className="w-80 border-r border-white/10 bg-black/20 backdrop-blur-xl p-4 overflow-y-auto hidden md:block">
+          <div className="sticky top-0">
+            <h3 className="text-lg font-medium text-gray-100 mb-4">
+              {language === 'ko' ? '현재 감정 상태' :
+               language === 'en' ? 'Current Mood' :
+               language === 'ja' ? '現在の気分' : '当前情绪'}
+            </h3>
+            <div className="grid grid-cols-2 gap-3 mb-4">
+              {[
+                { id: 'happy', label: language === 'ko' ? '행복' : language === 'en' ? 'Happy' : language === 'ja' ? '幸せ' : '开心' },
+                { id: 'sad', label: language === 'ko' ? '슬픔' : language === 'en' ? 'Sad' : language === 'ja' ? '悲しみ' : '悲伤' },
+                { id: 'anxious', label: language === 'ko' ? '불안' : language === 'en' ? 'Anxious' : language === 'ja' ? '不安' : '焦虑' },
+                { id: 'angry', label: language === 'ko' ? '분노' : language === 'en' ? 'Angry' : language === 'ja' ? '怒り' : '愤怒' },
+                { id: 'tired', label: language === 'ko' ? '피로' : language === 'en' ? 'Tired' : language === 'ja' ? '疲れ' : '疲惫' },
+                { id: 'calm', label: language === 'ko' ? '평온' : language === 'en' ? 'Calm' : language === 'ja' ? '穏やか' : '平静' },
+                { id: 'excited', label: language === 'ko' ? '흥분' : language === 'en' ? 'Excited' : language === 'ja' ? '興奮' : '兴奋' },
+                { id: 'confused', label: language === 'ko' ? '혼란' : language === 'en' ? 'Confused' : language === 'ja' ? '混乱' : '困惑' },
+              ].map((emotion) => (
+                <button
+                  key={emotion.id}
+                  onClick={() => handleEmotionSelect(emotion.id, 5)}
+                  className="p-3 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/30 transition-all text-center text-sm text-gray-300"
+                >
+                  {emotion.label}
+                </button>
+              ))}
+            </div>
+            <button
+              onClick={handleSkipEmotion}
+              className="w-full text-sm text-gray-500 hover:text-gray-300 transition-colors"
+            >
+              {language === 'ko' ? '건너뛰기' :
+               language === 'en' ? 'Skip' :
+               language === 'ja' ? 'スキップ' : '跳过'}
+            </button>
+          </div>
         </div>
+      )}
 
-        {/* Tone Slider */}
-        <div className="mb-4 sm:mb-6">
+      {/* Main Chat Area (중앙) */}
+      <div className="flex-1 flex flex-col py-2 sm:py-4 px-3 sm:px-4 max-w-5xl mx-auto w-full">
+        {/* 대화 모드 및 톤 설정 */}
+        <div className="mb-3 sm:mb-4 space-y-3">
+          <ModeSelector
+            selectedMode={counselingMode}
+            onModeChange={setCounselingMode}
+          />
           <ToneSlider value={responseTone} onChange={setResponseTone} />
         </div>
 
-        <div className="flex-1 flex flex-col bg-black/20 backdrop-blur-xl border border-white/10 rounded-lg overflow-hidden">
+        <div className="flex-1 flex flex-col bg-black/20 backdrop-blur-xl border border-white/10 rounded-lg overflow-hidden min-h-0">
           {/* Chat Messages */}
-          <div className="flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-6 md:px-10 md:py-12 space-y-4 sm:space-y-6 md:space-y-8">
+          <div className="flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-6 space-y-4 sm:space-y-6">
             {messages.map((message, index) => (
               <ChatMessage key={index} message={message} />
             ))}
@@ -287,9 +433,57 @@ export default function ChatInterface() {
             <div ref={messagesEndRef} />
           </div>
 
+          {/* Quick Start Templates */}
+          {showQuickStart && messages.length === 1 && (
+            <div className="border-t border-white/10 bg-black/10 p-3">
+              <div className="flex flex-wrap gap-2">
+                {(language === 'ko' ? [
+                  { label: '직장 스트레스', prompt: '요즘 직장에서 스트레스를 많이 받고 있습니다.' },
+                  { label: '관계 문제', prompt: '주변 사람들과의 관계에서 어려움이 있습니다.' },
+                  { label: '불안 증상', prompt: '요즘 이유 없이 불안하고 걱정이 많습니다.' },
+                  { label: '가족 갈등', prompt: '가족 관계에서 갈등이 있습니다.' },
+                  { label: '대인관계', prompt: '사람들과 어울리는 것이 힘듭니다.' },
+                  { label: '자아 정체성', prompt: '내가 누구인지 모르겠습니다.' },
+                ] : language === 'ja' ? [
+                  { label: '仕事のストレス', prompt: '最近、仕事でストレスをたくさん感じています。' },
+                  { label: '人間関係', prompt: '周りの人との関係で悩んでいます。' },
+                  { label: '不安症状', prompt: '最近、理由もなく不安で心配が多いです。' },
+                  { label: '家族の問題', prompt: '家族関係で葛藤があります。' },
+                  { label: '対人関係', prompt: '人と付き合うのが辛いです。' },
+                  { label: 'アイデンティティ', prompt: '自分が誰なのかわかりません。' },
+                ] : language === 'zh' ? [
+                  { label: '工作压力', prompt: '最近在工作中承受很大的压力。' },
+                  { label: '人际关系', prompt: '与周围人的关系中遇到了困难。' },
+                  { label: '焦虑症状', prompt: '最近无缘无故感到焦虑和担忧。' },
+                  { label: '家庭矛盾', prompt: '家庭关系中存在矛盾。' },
+                  { label: '社交困难', prompt: '与人交往感到很困难。' },
+                  { label: '自我认同', prompt: '不知道自己是谁。' },
+                ] : [
+                  { label: 'Work Stress', prompt: 'I\'ve been feeling very stressed at work lately.' },
+                  { label: 'Relationships', prompt: 'I\'m having difficulties in my relationships.' },
+                  { label: 'Anxiety', prompt: 'I\'ve been feeling anxious and worried for no reason.' },
+                  { label: 'Family Issues', prompt: 'There are conflicts in my family.' },
+                  { label: 'Social Life', prompt: 'I find it hard to socialize with people.' },
+                  { label: 'Identity', prompt: 'I don\'t know who I am.' },
+                ]).map((template, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => handleTemplateSelect(template.prompt)}
+                    className="px-3 py-2 text-xs sm:text-sm bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/30 rounded-lg transition-all text-gray-300"
+                  >
+                    {template.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Input Area */}
-          <div className="border-t border-white/10 bg-black/30 px-4 py-4 sm:px-6 sm:py-6 md:px-10 md:py-8">
-            <div className="flex gap-2 sm:gap-4">
+          <div className="border-t border-white/10 bg-black/30 px-4 py-3 sm:px-6 sm:py-4"
+            style={{
+              paddingBottom: 'max(0.75rem, calc(var(--safe-area-inset-bottom) + 0.75rem))'
+            }}>
+            <div className="flex gap-2 sm:gap-3 items-end">
               <textarea
                 ref={textareaRef}
                 value={input}
@@ -304,7 +498,8 @@ export default function ChatInterface() {
               <button
                 onClick={handleSend}
                 disabled={isLoading || !input.trim()}
-                className="self-end p-2 sm:p-3 text-gray-500 hover:text-gray-300 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                className="p-3 text-gray-500 hover:text-gray-300 disabled:opacity-30 disabled:cursor-not-allowed transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+                aria-label="Send message"
               >
                 <Send className="w-5 h-5" />
               </button>
@@ -329,6 +524,44 @@ export default function ChatInterface() {
 
       {/* Crisis Modal */}
       <CrisisModal isOpen={showCrisisModal} onClose={() => setShowCrisisModal(false)} />
+
+      {/* Guest Limit Modal */}
+      <GuestLimitModal
+        isOpen={showGuestLimitModal}
+        onClose={() => setShowGuestLimitModal(false)}
+        onSignUp={() => {
+          setShowGuestLimitModal(false)
+          setShowAuthModal(true)
+        }}
+      />
+
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+      />
+
+      {/* Upgrade Modal */}
+      <UpgradeModal
+        isOpen={showUpgradeModal}
+        onClose={() => setShowUpgradeModal(false)}
+        currentTier={user ? 'free' : 'guest'}
+        dailyUsed={guestMessageCount}
+        dailyLimit={user ? 20 : 3}
+      />
+
+      {/* Emotion Picker (모바일용 모달) */}
+      {showEmotionPicker && (
+        <div className="md:hidden">
+          <EmotionPicker
+            onSelect={handleEmotionSelect}
+            onSkip={handleSkipEmotion}
+          />
+        </div>
+      )}
+
+      {/* SOS Button - Always visible */}
+      <SOSButton onCrisisClick={() => setShowCrisisModal(true)} />
     </div>
   )
 }

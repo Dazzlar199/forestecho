@@ -1,0 +1,121 @@
+[
+  {
+    "id": "basics",
+    "name": {
+      "ko": "기본 개념",
+      "en": "Basics",
+      "ja": "基本概念",
+      "zh": "基本概念"
+    },
+    "description": {
+      "ko": "정신건강의 기초를 이해합니다",
+      "en": "Understanding mental health fundamentals",
+      "ja": "メンタルヘルスの基礎を理解する",
+      "zh": "了解心理健康基础"
+    },
+    "icon": "BookOpen",
+    "color": "#3b82f6"
+  },
+  {
+    "id": "conditions",
+    "name": {
+      "ko": "정신건강 질환",
+      "en": "Conditions",
+      "ja": "精神疾患",
+      "zh": "心理健康状况"
+    },
+    "description": {
+      "ko": "다양한 정신건강 질환에 대해 알아봅니다",
+      "en": "Learn about mental health conditions",
+      "ja": "様々な精神疾患について学ぶ",
+      "zh": "了解各种心理健康状况"
+    },
+    "icon": "Brain",
+    "color": "#ec4899"
+  },
+  {
+    "id": "management",
+    "name": {
+      "ko": "관리 및 대처",
+      "en": "Management",
+      "ja": "管理と対処",
+      "zh": "管理与应对"
+    },
+    "description": {
+      "ko": "스트레스와 감정을 건강하게 관리하는 방법",
+      "en": "How to manage stress and emotions",
+      "ja": "ストレスと感情を健康的に管理する方法",
+      "zh": "如何健康管理压力和情绪"
+    },
+    "icon": "Heart",
+    "color": "#10b981"
+  },
+  {
+    "id": "lifestyle",
+    "name": {
+      "ko": "생활습관",
+      "en": "Lifestyle",
+      "ja": "生活習慣",
+      "zh": "生活习惯"
+    },
+    "description": {
+      "ko": "정신건강을 지키는 일상 습관",
+      "en": "Daily habits for mental wellness",
+      "ja": "メンタルヘルスを守る日常習慣",
+      "zh": "保持心理健康的日常习惯"
+    },
+    "icon": "Sun",
+    "color": "#f59e0b"
+  },
+  {
+    "id": "relationships",
+    "name": {
+      "ko": "대인관계",
+      "en": "Relationships",
+      "ja": "対人関係",
+      "zh": "人际关系"
+    },
+    "description": {
+      "ko": "건강한 관계 형성과 유지",
+      "en": "Building and maintaining healthy relationships",
+      "ja": "健康的な関係の構築と維持",
+      "zh": "建立和维持健康的关系"
+    },
+    "icon": "Users",
+    "color": "#8b5cf6"
+  },
+  {
+    "id": "workplace",
+    "name": {
+      "ko": "직장/학업",
+      "en": "Work & Study",
+      "ja": "職場/学業",
+      "zh": "工作/学习"
+    },
+    "description": {
+      "ko": "직장과 학업에서의 정신건강",
+      "en": "Mental health at work and school",
+      "ja": "職場と学校でのメンタルヘルス",
+      "zh": "工作和学习中的心理健康"
+    },
+    "icon": "Briefcase",
+    "color": "#06b6d4"
+  },
+  {
+    "id": "adolescent",
+    "name": {
+      "ko": "청소년 정신건강",
+      "en": "Adolescent Health",
+      "ja": "青少年のメンタルヘルス",
+      "zh": "青少年心理健康"
+    },
+    "description": {
+      "ko": "청소년 특화 정신건강 정보",
+      "en": "Mental health for adolescents",
+      "ja": "青少年向けのメンタルヘルス",
+      "zh": "青少年心理健康信息"
+    },
+    "icon": "Heart",
+    "color": "#f59e0b"
+  }
+]

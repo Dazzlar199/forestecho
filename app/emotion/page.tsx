@@ -10,6 +10,8 @@ import EmotionHistory from '@/components/emotion/EmotionHistory'
 import EmotionGraph from '@/components/emotion/EmotionGraph'
 import { Plus, BarChart3, List } from 'lucide-react'
 import type { EmotionRecord } from '@/types/emotion'
+import { getEmotionRecords } from '@/lib/firebase/emotion-tracking'
+import { logger } from '@/lib/utils/logger'
 
 export default function EmotionPage() {
   const { user, loading } = useAuth()
@@ -22,72 +24,56 @@ export default function EmotionPage() {
   const [activeTab, setActiveTab] = useState<'graph' | 'history'>('graph')
   const [period, setPeriod] = useState<'week' | 'month'>('week')
 
-  // Redirect if not logged in (disabled for testing)
-  // useEffect(() => {
-  //   if (!loading && !user) {
-  //     router.push('/')
-  //   }
-  // }, [user, loading, router])
-
-  // TODO: Load emotion records from Firestore
   useEffect(() => {
-    // Fetch user's emotion records from Firestore
-    // For now, using mock data (works without login for testing)
-    const mockRecords: EmotionRecord[] = [
-      {
-        id: '1',
-        userId: user?.uid || 'test-user',
-        emotion: 'happy',
-        intensity: 7,
-        note: '좋은 하루였어요',
-        triggers: ['일', '관계'],
-        timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2), // 2 hours ago
-      },
-      {
-        id: '2',
-        userId: user?.uid || 'test-user',
-        emotion: 'anxious',
-        intensity: 6,
-        triggers: ['일'],
-        timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24), // 1 day ago
-      },
-      {
-        id: '3',
-        userId: user?.uid || 'test-user',
-        emotion: 'calm',
-        intensity: 8,
-        note: '명상 후 평온함',
-        timestamp: new Date(Date.now() - 1000 * 60 * 60 * 48), // 2 days ago
-      },
-    ]
-    setEmotionRecords(mockRecords)
-  }, [user])
+    if (!loading && !user) {
+      router.push('/')
+    }
+  }, [user, loading, router])
+
+  // Firestore에서 감정 기록 로드
+  useEffect(() => {
+    async function loadRecords() {
+      if (!user) {
+        setEmotionRecords([])
+        return
+      }
+
+      try {
+        const days = period === 'week' ? 7 : 30
+        const records = await getEmotionRecords(user.uid, days)
+        setEmotionRecords(records)
+      } catch (error) {
+        logger.error('Failed to load emotion records:', error)
+      }
+    }
+
+    loadRecords()
+  }, [user, period])
 
   const handleSaveEmotion = (record: EmotionRecord) => {
-    // TODO: Save to Firestore
+    // Firestore 저장은 EmotionCheckin 컴포넌트에서 처리됨
     setEmotionRecords((prev) => [record, ...prev])
     setShowCheckin(false)
   }
 
-  // Removed login check for testing
-  // if (loading) {
-  //   return (
-  //     <div className="min-h-screen flex items-center justify-center">
-  //       <div className="text-center">
-  //         <div className={`text-lg ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
-  //           {language === 'ko' && '로딩 중...'}
-  //           {language === 'en' && 'Loading...'}
-  //           {language === 'ja' && '読み込み中...'}
-  //           {language === 'zh' && '加载中...'}
-  //         </div>
-  //       </div>
-  //     </div>
-  //   )
-  // }
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className={`text-lg ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+            {language === 'ko' && '로딩 중...'}
+            {language === 'en' && 'Loading...'}
+            {language === 'ja' && '読み込み中...'}
+            {language === 'zh' && '加载中...'}
+          </div>
+        </div>
+      </div>
+    )
+  }
 
-  // if (!user) {
-  //   return null
-  // }
+  if (!user) {
+    return null
+  }
 
   return (
     <div className="min-h-screen py-20 sm:py-32 px-4 sm:px-6">

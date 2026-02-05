@@ -2,7 +2,7 @@
 
 import { ShoppingBag, ExternalLink } from 'lucide-react'
 import { useLanguage } from '@/components/layout/LanguageProvider'
-import type { RecommendedProduct } from '@/types/education'
+import type { RecommendedProduct } from '@/lib/data/articles'
 
 interface RecommendedProductsProps {
   products: RecommendedProduct[]

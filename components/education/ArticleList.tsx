@@ -4,7 +4,8 @@ import Link from 'next/link'
 import { useLanguage } from '../layout/LanguageProvider'
 import { useTheme } from '../layout/ThemeProvider'
 import { Clock, Star } from 'lucide-react'
-import { ARTICLE_CATEGORIES, type Article, type ArticleCategory } from '@/types/education'
+import { type Article, type ArticleCategory } from '@/types/education'
+import { ARTICLE_CATEGORIES } from '@/lib/data/articles'
 import { iconMap } from '@/lib/utils/icon-map'
 
 interface ArticleListProps {
@@ -27,7 +28,9 @@ export default function ArticleList({
   const sortedArticles = [...filteredArticles].sort((a, b) => {
     if (a.featured && !b.featured) return -1
     if (!a.featured && b.featured) return 1
-    return b.lastUpdated.getTime() - a.lastUpdated.getTime()
+    const dateA = typeof a.lastUpdated === 'string' ? new Date(a.lastUpdated) : a.lastUpdated
+    const dateB = typeof b.lastUpdated === 'string' ? new Date(b.lastUpdated) : b.lastUpdated
+    return dateB.getTime() - dateA.getTime()
   })
 
   if (sortedArticles.length === 0) {

@@ -21,8 +21,8 @@ function ChatMessage({ message }: ChatMessageProps) {
         )}
       </div>
 
-      <div className={`chat-message ${isUser ? 'user' : 'assistant'} max-w-[85%] sm:max-w-none`}>
-        <div className="whitespace-pre-wrap break-words text-sm sm:text-base" style={{ letterSpacing: '0.01em' }}>
+      <div className={`chat-message ${isUser ? 'user' : 'assistant'} max-w-[90%] sm:max-w-none`}>
+        <div className="whitespace-pre-wrap break-words text-base" style={{ letterSpacing: '0.01em' }}>
           {message.content}
         </div>
 

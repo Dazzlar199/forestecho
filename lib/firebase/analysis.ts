@@ -7,9 +7,11 @@ import {
   limit,
   doc,
   getDoc,
+  writeBatch,
 } from 'firebase/firestore'
 import { db } from './config'
 import type { PsychologicalAnalysis } from '@/types/analysis'
+import { logger } from '@/lib/utils/logger'
 
 // 사용자의 모든 분석 결과 가져오기
 export async function getUserAnalyses(
@@ -41,7 +43,7 @@ export async function getUserAnalyses(
 
     return analyses
   } catch (error) {
-    console.error('Error getting user analyses:', error)
+    logger.error('Error getting user analyses:', error)
     return []
   }
 }
@@ -68,7 +70,7 @@ export async function getAnalysisById(
 
     return null
   } catch (error) {
-    console.error('Error getting analysis:', error)
+    logger.error('Error getting analysis:', error)
     return null
   }
 }
@@ -121,12 +123,35 @@ export async function getUserAnalysisStats(userId: string) {
       averageRecoveryPotential: Math.round(averageRecoveryPotential * 10) / 10,
     }
   } catch (error) {
-    console.error('Error getting analysis stats:', error)
+    logger.error('Error getting analysis stats:', error)
     return {
       totalAnalyses: 0,
       latestAnalysis: null,
       averageRiskLevel: 'low' as const,
       averageRecoveryPotential: 0,
     }
+  }
+}
+
+/**
+ * 사용자의 모든 대화 기록 삭제
+ */
+export async function deleteAllUserAnalyses(userId: string): Promise<void> {
+  try {
+    const analysesRef = collection(db, 'analyses')
+    const q = query(analysesRef, where('userId', '==', userId))
+    const snapshot = await getDocs(q)
+
+    // 배치 삭제
+    const batch = writeBatch(db)
+    snapshot.docs.forEach((doc) => {
+      batch.delete(doc.ref)
+    })
+
+    await batch.commit()
+    logger.info(`Deleted ${snapshot.docs.length} analyses for user ${userId}`)
+  } catch (error) {
+    logger.error('Error deleting user analyses:', error)
+    throw error
   }
 }

@@ -28,10 +28,12 @@ export default function ForestVisualization({ data }: ForestVisualizationProps) 
     return () => clearInterval(interval)
   }, [])
 
-  const treeCount = Math.min(level * 2, 14)
-  const flowerCount = Math.max(0, (level - 2) * 6)
-  const starCount = Math.max(0, (level - 6) * 4)
+  const treeCount = Math.min(level * 2, 16)
+  const flowerCount = Math.max(0, (level - 2) * 8)
+  const starCount = Math.max(0, (level - 6) * 5)
   const cloudCount = Math.max(2, Math.min(level, 4))
+  const butterflyCount = Math.max(0, (level - 4) * 2)
+  const birdCount = Math.max(0, (level - 5) * 1)
 
   // 나무 생성 (나무마다 고유한 위치와 크기)
   const trees = Array.from({ length: treeCount }, (_, i) => ({
@@ -437,47 +439,152 @@ export default function ForestVisualization({ data }: ForestVisualizationProps) 
               </motion.g>
             )
           })}
+
+        {/* 나비 */}
+        {level >= 4 &&
+          Array.from({ length: butterflyCount }).map((_, i) => {
+            const butterflyX = 200 + (i * 300) % 800 + Math.sin(time * 0.8 + i) * 50
+            const butterflyY = 200 + Math.cos(time * 0.6 + i) * 30 + (i % 3) * 40
+
+            return (
+              <motion.g
+                key={`butterfly-${i}`}
+                animate={{
+                  x: [0, 20, 0],
+                  y: [0, -15, 0],
+                }}
+                transition={{
+                  duration: 3 + i * 0.5,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }}
+              >
+                {/* 왼쪽 날개 */}
+                <motion.ellipse
+                  cx={butterflyX - 4}
+                  cy={butterflyY}
+                  rx="6"
+                  ry="10"
+                  fill="#ff69b4"
+                  opacity="0.8"
+                  animate={{
+                    scaleX: [1, 0.3, 1],
+                  }}
+                  transition={{
+                    duration: 0.3,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  }}
+                />
+                {/* 오른쪽 날개 */}
+                <motion.ellipse
+                  cx={butterflyX + 4}
+                  cy={butterflyY}
+                  rx="6"
+                  ry="10"
+                  fill="#ff69b4"
+                  opacity="0.8"
+                  animate={{
+                    scaleX: [1, 0.3, 1],
+                  }}
+                  transition={{
+                    duration: 0.3,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  }}
+                />
+                {/* 몸통 */}
+                <ellipse
+                  cx={butterflyX}
+                  cy={butterflyY}
+                  rx="1.5"
+                  ry="5"
+                  fill="#8b4513"
+                />
+              </motion.g>
+            )
+          })}
+
+        {/* 새 */}
+        {level >= 5 &&
+          Array.from({ length: birdCount }).map((_, i) => {
+            const birdX = 100 + (time * 50 + i * 400) % 1100
+            const birdY = 80 + Math.sin(time + i * 2) * 15 + (i % 2) * 30
+
+            return (
+              <motion.g key={`bird-${i}`}>
+                {/* 왼쪽 날개 */}
+                <motion.path
+                  d={`M ${birdX - 8} ${birdY} Q ${birdX - 15} ${birdY - 8} ${birdX - 18} ${birdY - 2}`}
+                  stroke="#333"
+                  strokeWidth="2"
+                  fill="none"
+                  strokeLinecap="round"
+                  animate={{
+                    d: [
+                      `M ${birdX - 8} ${birdY} Q ${birdX - 15} ${birdY - 8} ${birdX - 18} ${birdY - 2}`,
+                      `M ${birdX - 8} ${birdY} Q ${birdX - 15} ${birdY + 2} ${birdX - 18} ${birdY + 5}`,
+                      `M ${birdX - 8} ${birdY} Q ${birdX - 15} ${birdY - 8} ${birdX - 18} ${birdY - 2}`,
+                    ],
+                  }}
+                  transition={{
+                    duration: 0.4,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  }}
+                />
+                {/* 오른쪽 날개 */}
+                <motion.path
+                  d={`M ${birdX + 8} ${birdY} Q ${birdX + 15} ${birdY - 8} ${birdX + 18} ${birdY - 2}`}
+                  stroke="#333"
+                  strokeWidth="2"
+                  fill="none"
+                  strokeLinecap="round"
+                  animate={{
+                    d: [
+                      `M ${birdX + 8} ${birdY} Q ${birdX + 15} ${birdY - 8} ${birdX + 18} ${birdY - 2}`,
+                      `M ${birdX + 8} ${birdY} Q ${birdX + 15} ${birdY + 2} ${birdX + 18} ${birdY + 5}`,
+                      `M ${birdX + 8} ${birdY} Q ${birdX + 15} ${birdY - 8} ${birdX + 18} ${birdY - 2}`,
+                    ],
+                  }}
+                  transition={{
+                    duration: 0.4,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  }}
+                />
+              </motion.g>
+            )
+          })}
       </svg>
 
-      {/* 레벨 정보 오버레이 */}
-      <div className="absolute top-4 left-4 bg-black/40 backdrop-blur-md border border-white/20 rounded-lg p-4 max-w-xs">
-        <div className="flex items-center gap-3 mb-2">
-          <span className="text-4xl">{levelEmoji}</span>
+      {/* 레벨 정보 - 심플하게 */}
+      <div className="absolute top-4 left-4 bg-black/50 border border-emerald-500/30 rounded-lg px-4 py-3">
+        <div className="flex items-center gap-2">
+          <span className="text-3xl">{levelEmoji}</span>
           <div>
-            <div className="text-white text-xl font-light" style={{ letterSpacing: '0.05em' }}>
+            <div className="text-white text-lg font-light">
               레벨 {level}
             </div>
-            <div className="text-white/80 text-sm" style={{ fontWeight: 300 }}>
+            <div className="text-emerald-400 text-xs">
               {levelInfo.title}
             </div>
           </div>
         </div>
-        <p className="text-white/70 text-xs mt-2" style={{ fontWeight: 300, lineHeight: 1.6 }}>
-          {levelInfo.description}
-        </p>
       </div>
 
-      {/* 진행 바 */}
-      <div className="absolute bottom-4 left-4 right-4 bg-black/40 backdrop-blur-md border border-white/20 rounded-lg p-4">
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-white/80 text-sm" style={{ fontWeight: 300 }}>
-            레벨 {level}
-          </span>
-          <span className="text-white/80 text-sm" style={{ fontWeight: 300 }}>
-            {level >= 10 ? '완성!' : `레벨 ${level + 1}까지`}
-          </span>
-        </div>
-        <div className="h-2 bg-black/40 rounded-full overflow-hidden">
+      {/* 진행 바 - 심플하게 */}
+      <div className="absolute bottom-4 left-4 right-4 bg-black/50 border border-emerald-500/30 rounded-lg px-4 py-3">
+        <div className="h-2 bg-black/40 rounded-full overflow-hidden mb-2">
           <motion.div
-            className="h-full rounded-full"
-            style={{ backgroundColor: levelColor }}
+            className="h-full rounded-full bg-emerald-500"
             initial={{ width: 0 }}
             animate={{ width: `${(level / 10) * 100}%` }}
             transition={{ delay: 0.5, duration: 1.5, ease: 'easeOut' }}
           />
         </div>
-        <div className="mt-2 text-xs text-white/60 text-center" style={{ fontWeight: 300 }}>
-          {level >= 10 ? '축하합니다! 완벽한 숲을 완성했습니다!' : '상담을 받고 회복할수록 숲이 성장합니다'}
+        <div className="text-xs text-emerald-400 text-center">
+          {level >= 10 ? '🎉 완벽한 숲 완성!' : `레벨 ${level + 1}까지 ${10 - level}회 남음`}
         </div>
       </div>
     </div>

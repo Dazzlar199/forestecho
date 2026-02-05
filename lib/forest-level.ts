@@ -21,23 +21,49 @@ export interface UserForestData {
 
 // 숲 레벨 계산
 export function calculateForestLevel(data: UserForestData): number {
-  // 1. 분석 횟수 점수 (0-30점)
-  const analysisScore = Math.min(data.analysisCount * 3, 30)
+  // 숲 레벨은 대화 횟수를 중심으로 천천히 성장해야 함
+  // 1회 대화 = 레벨 1, 10회 = 레벨 3, 30회 = 레벨 6, 50회+ = 레벨 10
 
-  // 2. 회복 가능성 점수 (0-40점)
-  const recoveryScore = (data.averageRecoveryPotential / 10) * 40
+  // 1. 분석 횟수 기반 기본 레벨 (가장 중요)
+  let baseLevel: number
+  if (data.analysisCount === 0) {
+    baseLevel = 1
+  } else if (data.analysisCount <= 3) {
+    baseLevel = 1
+  } else if (data.analysisCount <= 7) {
+    baseLevel = 2
+  } else if (data.analysisCount <= 15) {
+    baseLevel = 3
+  } else if (data.analysisCount <= 25) {
+    baseLevel = 4
+  } else if (data.analysisCount <= 35) {
+    baseLevel = 5
+  } else if (data.analysisCount <= 45) {
+    baseLevel = 6
+  } else if (data.analysisCount <= 60) {
+    baseLevel = 7
+  } else if (data.analysisCount <= 80) {
+    baseLevel = 8
+  } else if (data.analysisCount <= 100) {
+    baseLevel = 9
+  } else {
+    baseLevel = 10
+  }
 
-  // 3. 위험 수준 점수 (0-30점)
-  const riskScore =
-    data.riskLevel === 'low' ? 30 : data.riskLevel === 'medium' ? 15 : 0
+  // 2. 회복 가능성 보너스 (최대 +1 레벨)
+  // 평균 회복 가능성이 8.0 이상일 때만 보너스
+  const recoveryBonus = data.averageRecoveryPotential >= 8.0 ? 1 : 0
 
-  // 총점 (0-100점)
-  const totalScore = analysisScore + recoveryScore + riskScore
+  // 3. 위험 수준 보너스 (최대 +1 레벨)
+  // 'low' 위험도이고 분석이 10회 이상일 때만 보너스
+  const riskBonus = 
+    data.analysisCount >= 10 && data.riskLevel === 'low' ? 1 : 0
 
-  // 레벨 변환 (1-10)
-  const level = Math.min(Math.floor(totalScore / 10) + 1, 10)
+  // 최종 레벨 (1-10)
+  const finalLevel = Math.min(baseLevel + recoveryBonus + riskBonus, 10)
 
-  return level
+
+  return finalLevel
 }
 
 // 레벨별 정보

@@ -1,0 +1,396 @@
+{
+  "metadata": {
+    "generated": "2026-02-01",
+    "version": "2.0",
+    "project": "ForestEcho (숲울림)",
+    "description": "AI Mental Health Counseling Platform",
+    "healthScore": 6.5,
+    "totalSourceFiles": 130,
+    "totalLinesOfCode": 42000
+  },
+  "criticalIssues": [
+    {
+      "id": "PERF-001",
+      "severity": "critical",
+      "title": "856KB Type File with Embedded Data",
+      "file": "types/education.ts",
+      "lines": 17180,
+      "impact": "Bundle bloat, slow compilation, memory issues",
+      "estimatedFix": "2 hours",
+      "estimatedImpact": "-850KB bundle, +50% faster builds"
+    },
+    {
+      "id": "SEC-001",
+      "severity": "critical",
+      "title": "Broken Rate Limiting in Serverless",
+      "file": "lib/rate-limit.ts",
+      "impact": "Users can bypass rate limits, potential abuse",
+      "estimatedFix": "1 hour",
+      "estimatedImpact": "Proper rate limiting, prevent abuse"
+    },
+    {
+      "id": "PERF-002",
+      "severity": "high",
+      "title": "Firebase Admin Proxy Overhead",
+      "file": "lib/firebase/admin.ts",
+      "impact": "Performance degradation on every request",
+      "estimatedFix": "3 hours",
+      "estimatedImpact": "~20% faster API routes"
+    },
+    {
+      "id": "SEC-002",
+      "severity": "high",
+      "title": "Admin Check via Client-Side Email",
+      "files": ["multiple"],
+      "impact": "Security vulnerability (client can spoof admin)",
+      "estimatedFix": "2 hours",
+      "estimatedImpact": "Secure admin operations"
+    },
+    {
+      "id": "PERF-003",
+      "severity": "medium",
+      "title": "17MB Unused Music Files",
+      "files": ["public/music/*.mp3", "components/audio/BGMPlayer.tsx"],
+      "impact": "Wasted bandwidth, slower deployments",
+      "estimatedFix": "5 minutes",
+      "estimatedImpact": "-17MB deployment size"
+    }
+  ],
+  "architecture": {
+    "framework": "Next.js 16.0.0",
+    "runtime": "React 19.2.0",
+    "language": "TypeScript 5.9.3",
+    "styling": "Tailwind CSS 3.4.18",
+    "database": "Firebase Firestore",
+    "authentication": "Firebase Auth",
+    "aiProviders": [
+      {
+        "name": "Google Gemini 3 Flash",
+        "tier": "premium",
+        "cost": "$0.50/$3 per 1M tokens"
+      },
+      {
+        "name": "OpenAI GPT-4o-mini",
+        "tier": "free",
+        "cost": "$0.15/$0.60 per 1M tokens"
+      }
+    ],
+    "deployment": "Vercel (Serverless)",
+    "cdn": "Vercel Edge Network"
+  },
+  "apiRoutes": {
+    "active": [
+      {
+        "path": "/api/chat",
+        "method": "POST",
+        "lines": 470,
+        "purpose": "Real-time AI chat with streaming",
+        "dependencies": [
+          "Gemini AI",
+          "OpenAI",
+          "Firebase Admin",
+          "Rate Limiting",
+          "Crisis Detection",
+          "Content Filtering"
+        ],
+        "issues": [
+          "In-memory rate limiting won't work in serverless",
+          "Emotion tracking blocks response",
+          "No caching for FAQs"
+        ]
+      },
+      {
+        "path": "/api/analysis",
+        "method": "POST",
+        "lines": 208,
+        "purpose": "Generate psychological analysis report",
+        "dependencies": ["OpenAI GPT-4", "Firebase Admin"],
+        "issues": ["Premium tier only", "No fraud prevention"]
+      },
+      {
+        "path": "/api/referral",
+        "method": "POST/GET",
+        "lines": 76,
+        "purpose": "Track referral codes and rewards",
+        "dependencies": ["Firebase Admin"],
+        "issues": ["Rewards not implemented", "No fraud detection"]
+      },
+      {
+        "path": "/api/seed-faq",
+        "method": "POST",
+        "lines": 238,
+        "purpose": "Seed FAQ data",
+        "dependencies": ["Firebase Admin"],
+        "issues": ["No admin permission check"]
+      }
+    ],
+    "empty": [
+      {
+        "path": "/api/auth",
+        "status": "Empty directory",
+        "action": "Implement or delete"
+      }
+    ]
+  },
+  "components": {
+    "total": 87,
+    "categories": {
+      "analysis": 7,
+      "apps-in-toss": 1,
+      "assessment": 2,
+      "audio": 1,
+      "auth": 2,
+      "chat": 4,
+      "checkin": 3,
+      "community": 3,
+      "counseling": 2,
+      "crisis": 2,
+      "education": 4,
+      "emotion": 6,
+      "empty-states": 1,
+      "error": 1,
+      "forest": 3,
+      "layout": 9,
+      "loading": 1,
+      "onboarding": 3,
+      "optimization": 1,
+      "premium": 2,
+      "profile": 1,
+      "pwa": 1,
+      "referral": 2,
+      "settings": 1,
+      "trust": 4
+    },
+    "largeComponents": [
+      {
+        "file": "components/layout/Header.tsx",
+        "lines": 783,
+        "recommendation": "Split into DesktopNav, UserMenu, AuthButtons"
+      },
+      {
+        "file": "components/chat/ChatInterface.tsx",
+        "lines": 509,
+        "recommendation": "Split into ChatInput, ChatMessages, ChatSettings"
+      },
+      {
+        "file": "components/forest/ForestVisualization.tsx",
+        "lines": 485,
+        "recommendation": "Extract tree rendering logic"
+      }
+    ]
+  },
+  "security": {
+    "contentFiltering": {
+      "layers": 3,
+      "layer1": "Pre-request dangerous intent detection",
+      "layer2": "Crisis keyword detection",
+      "layer3": "Post-response content filtering"
+    },
+    "authentication": {
+      "methods": ["Email/Password", "Google OAuth", "Anonymous"],
+      "issues": ["Admin check via client-side email (insecure)"]
+    },
+    "rateLimit": {
+      "current": "In-memory (10 req/min)",
+      "issue": "Doesn't work in serverless",
+      "recommendation": "Use Upstash Redis"
+    },
+    "firestoreRules": {
+      "collections": 10,
+      "issues": [
+        "FAQ write access not restricted to admins",
+        "No custom claims for admin operations"
+      ]
+    }
+  },
+  "performance": {
+    "bundleSize": {
+      "current": {
+        "/": "~500 KB",
+        "/chat": "~530 KB",
+        "/analysis/[id]": "~570 KB",
+        "/education/[slug]": "~1.35 MB"
+      },
+      "afterOptimization": {
+        "/": "~500 KB",
+        "/chat": "~530 KB",
+        "/analysis/[id]": "~570 KB",
+        "/education/[slug]": "~500 KB"
+      }
+    },
+    "issues": [
+      "types/education.ts: 856KB embedded data",
+      "public/music/: 17MB unused files",
+      "Firebase Admin Proxy overhead",
+      "No bundle analysis configured"
+    ],
+    "recommendations": [
+      "Move article data to JSON/API",
+      "Delete unused music files",
+      "Fix Firebase Admin singleton",
+      "Add @next/bundle-analyzer",
+      "Lazy load Recharts",
+      "Add Redis caching"
+    ]
+  },
+  "infrastructure": {
+    "missing": [
+      "Error monitoring (Sentry)",
+      "Analytics (GA4, Vercel Analytics)",
+      "Performance monitoring (Web Vitals)",
+      "Structured logging",
+      "Redis cache",
+      "CI/CD pipeline",
+      "Automated testing"
+    ],
+    "deployment": {
+      "hosting": "Vercel",
+      "database": "Firebase Firestore",
+      "cdn": "Vercel Edge Network",
+      "functions": "Next.js API Routes (serverless)"
+    }
+  },
+  "technicalDebt": {
+    "deadCode": [
+      {
+        "path": "functions/",
+        "size": "144MB",
+        "status": "Unused Firebase Cloud Functions",
+        "action": "Delete entire directory"
+      },
+      {
+        "path": "public/music/",
+        "size": "17MB",
+        "status": "Unused audio files",
+        "action": "Delete files and BGMPlayer component"
+      },
+      {
+        "path": "app/api/auth/",
+        "size": "0",
+        "status": "Empty directory",
+        "action": "Implement or delete"
+      },
+      {
+        "path": "lib/gemini/advanced-prompts.ts",
+        "lines": 6,
+        "status": "Minimal re-export file",
+        "action": "Delete and use enhanced-prompts.ts"
+      }
+    ],
+    "duplication": [
+      {
+        "files": [
+          "lib/openai/counseling-modes.ts",
+          "lib/gemini/counseling-modes.ts"
+        ],
+        "lines": 370,
+        "status": "Identical implementations",
+        "action": "Create shared lib/ai/shared/counseling-modes.ts"
+      },
+      {
+        "files": [
+          "lib/openai/context-manager.ts",
+          "lib/gemini/context-manager.ts"
+        ],
+        "lines": 191,
+        "status": "Identical implementations",
+        "action": "Create shared lib/ai/shared/context-manager.ts"
+      }
+    ],
+    "testing": {
+      "coverage": "0%",
+      "issues": [
+        "No test framework configured",
+        "No tests for crisis detection",
+        "No tests for content filtering",
+        "No API route tests"
+      ],
+      "action": "Set up Jest + React Testing Library"
+    }
+  },
+  "dependencies": {
+    "heavy": [
+      { "name": "firebase-admin", "size": "8.1MB" },
+      { "name": "firebase", "size": "5.2MB" },
+      { "name": "framer-motion", "size": "2.1MB" },
+      { "name": "@pinecone-database/pinecone", "size": "1.8MB" },
+      { "name": "recharts", "size": "1.5MB" }
+    ],
+    "unused": [
+      { "name": "@apps-in-toss/web-framework", "status": "TODO implementation" }
+    ],
+    "recommendations": [
+      "Lazy load html2canvas (150KB)",
+      "Consider lighter chart library than Recharts",
+      "Evaluate Pinecone cost vs alternatives (Supabase pgvector)"
+    ]
+  },
+  "actionPlan": {
+    "week1": {
+      "title": "Critical Fixes",
+      "hours": 16,
+      "tasks": [
+        "Move education data to JSON (-850KB)",
+        "Delete music files (-17MB)",
+        "Implement Upstash rate limiting",
+        "Fix Firebase Admin proxy",
+        "Add missing env vars",
+        "Secure admin operations"
+      ]
+    },
+    "week2": {
+      "title": "Security & Monitoring",
+      "hours": 12,
+      "tasks": [
+        "Implement Firebase custom claims",
+        "Add Sentry error tracking",
+        "Add Vercel Analytics",
+        "Add structured logging",
+        "Audit git history for secrets"
+      ]
+    },
+    "week3": {
+      "title": "Code Quality",
+      "hours": 20,
+      "tasks": [
+        "Refactor duplicate AI code",
+        "Split large components",
+        "Delete Firebase Functions directory",
+        "Add ESLint rules",
+        "Create Firestore indexes"
+      ]
+    },
+    "week4": {
+      "title": "Testing & Documentation",
+      "hours": 16,
+      "tasks": [
+        "Set up Jest",
+        "Write critical tests",
+        "Add API documentation",
+        "Update README",
+        "Create architecture diagrams"
+      ]
+    },
+    "totalHours": 64,
+    "totalWeeks": 4
+  },
+  "recommendations": {
+    "immediate": [
+      "Fix rate limiting (security risk)",
+      "Remove type file bloat (performance)",
+      "Add error monitoring (operational)"
+    ],
+    "short-term": [
+      "Implement admin security (authorization)",
+      "Write critical tests (quality)",
+      "Add bundle analyzer (optimization)"
+    ],
+    "long-term": [
+      "Migrate to lighter dependencies",
+      "Consider Pinecone alternatives",
+      "Implement comprehensive testing",
+      "Add CI/CD pipeline"
+    ]
+  },
+  "nextReviewDate": "2026-03-01"
+}

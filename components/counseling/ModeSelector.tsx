@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, memo } from 'react'
 import { ChevronDown, Check } from 'lucide-react'
 import { useLanguage } from '../layout/LanguageProvider'
 import { useTheme } from '../layout/ThemeProvider'
@@ -12,7 +12,7 @@ interface ModeSelectorProps {
   onModeChange: (mode: CounselingMode) => void
 }
 
-export default function ModeSelector({ selectedMode, onModeChange }: ModeSelectorProps) {
+function ModeSelector({ selectedMode, onModeChange }: ModeSelectorProps) {
   const { language } = useLanguage()
   const { theme } = useTheme()
   const [isOpen, setIsOpen] = useState(false)
@@ -124,3 +124,4 @@ export default function ModeSelector({ selectedMode, onModeChange }: ModeSelecto
     </div>
   )
 }
+export default memo(ModeSelector)

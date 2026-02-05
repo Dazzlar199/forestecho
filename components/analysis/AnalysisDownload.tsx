@@ -1,16 +1,24 @@
 'use client'
+import { logger } from '@/lib/utils/logger'
 
 import { useState } from 'react'
 import { Download, FileImage, FileText, Loader2 } from 'lucide-react'
+import { useLanguage } from '@/components/layout/LanguageProvider'
 
 interface AnalysisDownloadProps {
   analysisId: string
   title?: string
 }
 
-export default function AnalysisDownload({ analysisId, title = '심리분석결과' }: AnalysisDownloadProps) {
+export default function AnalysisDownload({ analysisId, title }: AnalysisDownloadProps) {
+  const { language } = useLanguage()
   const [isDownloading, setIsDownloading] = useState(false)
   const [showMenu, setShowMenu] = useState(false)
+
+  const defaultTitle = language === 'ko' ? '심리분석결과' :
+                       language === 'en' ? 'PsychologicalAnalysis' :
+                       language === 'ja' ? '心理分析結果' : '心理分析结果'
+  const finalTitle = title || defaultTitle
 
   const downloadAsImage = async () => {
     setIsDownloading(true)
@@ -40,11 +48,15 @@ export default function AnalysisDownload({ analysisId, title = '심리분석결�
       // 다운로드
       const link = document.createElement('a')
       link.href = image
-      link.download = `${title}_${new Date().toISOString().split('T')[0]}.png`
+      link.download = `${finalTitle}_${new Date().toISOString().split('T')[0]}.png`
       link.click()
     } catch (error) {
-      console.error('Image download failed:', error)
-      alert('이미지 다운로드에 실패했습니다.')
+      logger.error('Image download failed:', error)
+      const errorMsg = language === 'ko' ? '이미지 다운로드에 실패했습니다.' :
+                       language === 'en' ? 'Image download failed.' :
+                       language === 'ja' ? '画像のダウンロードに失敗しました。' :
+                       '图片下载失败。'
+      alert(errorMsg)
     } finally {
       setIsDownloading(false)
       setShowMenu(false)
@@ -65,13 +77,17 @@ export default function AnalysisDownload({ analysisId, title = '심리분석결�
 
       const link = document.createElement('a')
       link.href = url
-      link.download = `${title}_${new Date().toISOString().split('T')[0]}.txt`
+      link.download = `${finalTitle}_${new Date().toISOString().split('T')[0]}.txt`
       link.click()
 
       URL.revokeObjectURL(url)
     } catch (error) {
-      console.error('Text download failed:', error)
-      alert('텍스트 다운로드에 실패했습니다.')
+      logger.error('Text download failed:', error)
+      const errorMsg = language === 'ko' ? '텍스트 다운로드에 실패했습니다.' :
+                       language === 'en' ? 'Text download failed.' :
+                       language === 'ja' ? 'テキストのダウンロードに失敗しました。' :
+                       '文本下载失败。'
+      alert(errorMsg)
     } finally {
       setShowMenu(false)
     }
@@ -88,12 +104,18 @@ export default function AnalysisDownload({ analysisId, title = '심리분석결�
         {isDownloading ? (
           <>
             <Loader2 className="w-4 h-4 animate-spin" />
-            다운로드 중...
+            {language === 'ko' && '다운로드 중...'}
+            {language === 'en' && 'Downloading...'}
+            {language === 'ja' && 'ダウンロード中...'}
+            {language === 'zh' && '下载中...'}
           </>
         ) : (
           <>
             <Download className="w-4 h-4" />
-            다운로드
+            {language === 'ko' && '다운로드'}
+            {language === 'en' && 'Download'}
+            {language === 'ja' && 'ダウンロード'}
+            {language === 'zh' && '下载'}
           </>
         )}
       </button>
@@ -114,7 +136,10 @@ export default function AnalysisDownload({ analysisId, title = '심리분석결�
               style={{ fontWeight: 300, letterSpacing: '0.05em' }}
             >
               <FileImage className="w-4 h-4 text-blue-400" />
-              이미지로 저장 (PNG)
+              {language === 'ko' && '이미지로 저장 (PNG)'}
+              {language === 'en' && 'Save as Image (PNG)'}
+              {language === 'ja' && '画像として保存 (PNG)'}
+              {language === 'zh' && '保存为图片 (PNG)'}
             </button>
             <button
               onClick={downloadAsText}
@@ -122,7 +147,10 @@ export default function AnalysisDownload({ analysisId, title = '심리분석결�
               style={{ fontWeight: 300, letterSpacing: '0.05em' }}
             >
               <FileText className="w-4 h-4 text-green-400" />
-              텍스트로 저장 (TXT)
+              {language === 'ko' && '텍스트로 저장 (TXT)'}
+              {language === 'en' && 'Save as Text (TXT)'}
+              {language === 'ja' && 'テキストとして保存 (TXT)'}
+              {language === 'zh' && '保存为文本 (TXT)'}
             </button>
           </div>
         </>

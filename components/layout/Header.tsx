@@ -1,7 +1,8 @@
 'use client'
+import { logger } from '@/lib/utils/logger'
 
 import { useState, useEffect } from 'react'
-import { Sun, Moon, Languages, Heart, Home, Brain, Calendar, Users, BookOpen, LogOut, User as UserIcon, TreePine, Edit2, HelpCircle, MessageSquare, Menu, X } from 'lucide-react'
+import { Languages, Heart, Home, Brain, Calendar, Users, BookOpen, LogOut, User as UserIcon, TreePine, Edit2, HelpCircle, MessageSquare, Menu, X } from 'lucide-react'
 import { useAuth } from './AuthProvider'
 import { useTheme } from './ThemeProvider'
 import { useLanguage, type Language } from './LanguageProvider'
@@ -12,7 +13,6 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { signOut } from 'firebase/auth'
 import { auth } from '@/lib/firebase/config'
-
 export default function Header() {
   const { user } = useAuth()
   const { theme, toggleTheme } = useTheme()
@@ -57,7 +57,7 @@ export default function Header() {
     try {
       await signOut(auth)
     } catch (error) {
-      console.error('Logout error:', error)
+      logger.error('Logout error:', error)
     }
   }
 
@@ -84,46 +84,20 @@ export default function Header() {
     <>
       {/* 데스크톱 헤더 (md 이상) */}
       <header className="hidden md:block fixed top-0 left-0 right-0 z-50 px-8 py-6">
-        <div className="flex items-center justify-between">
-          {/* 왼쪽: 테마 토글 */}
-          <button
-            onClick={toggleTheme}
-            className={`flex items-center gap-3 text-sm transition-colors px-4 py-2 ${
-              theme === 'dark'
-                ? 'text-gray-500 hover:text-gray-300'
-                : 'text-gray-700 hover:text-gray-900'
-            }`}
-            style={{ fontWeight: 300, letterSpacing: '0.1em' }}
-          >
-            {theme === 'dark' ? (
-              <>
-                <Sun className="w-5 h-5" />
-                <span>{t('lightMode')}</span>
-              </>
-            ) : (
-              <>
-                <Moon className="w-5 h-5" />
-                <span>{t('darkMode')}</span>
-              </>
-            )}
-          </button>
-
-          {/* 중앙: 빈 공간 */}
-          <div></div>
-
+        <div className="flex items-center justify-end">
           {/* 오른쪽: 홈/언어/로그인/개인정보 */}
           <div className="flex items-center gap-6">
             {/* 홈 버튼 */}
             <button
               onClick={handleHomeClick}
-              className={`flex items-center gap-2 text-sm transition-colors px-4 py-2 ${
+              className={`flex items-center gap-3 text-base transition-colors px-5 py-3 ${
                 theme === 'dark'
                   ? 'text-gray-500 hover:text-gray-300'
                   : 'text-gray-700 hover:text-gray-900'
               } ${mounted && pathname === '/' ? 'font-medium' : ''}`}
               style={{ fontWeight: mounted && pathname === '/' ? 400 : 300, letterSpacing: '0.1em' }}
             >
-              <Home className="w-4 h-4" />
+              <Home className="w-5 h-5" />
               <span>
                 {language === 'ko' && '홈'}
                 {language === 'en' && 'Home'}
@@ -136,14 +110,14 @@ export default function Header() {
             <div className="relative">
               <button
                 onClick={() => setShowLangMenu(!showLangMenu)}
-                className={`flex items-center gap-2 text-sm transition-colors px-4 py-2 ${
+                className={`flex items-center gap-3 text-base transition-colors px-5 py-3 ${
                   theme === 'dark'
                     ? 'text-gray-500 hover:text-gray-300'
                     : 'text-gray-700 hover:text-gray-900'
                 }`}
                 style={{ fontWeight: 300, letterSpacing: '0.1em' }}
               >
-                <Languages className="w-4 h-4" />
+                <Languages className="w-5 h-5" />
                 <span>{currentLang?.flag}</span>
               </button>
               {showLangMenu && (
@@ -503,7 +477,12 @@ export default function Header() {
         theme === 'dark' ? 'bg-black/90' : 'bg-white/90'
       } backdrop-blur-lg border-b ${
         theme === 'dark' ? 'border-white/10' : 'border-gray-200'
-      }`}>
+      }`}
+      style={{
+        paddingTop: 'max(0.75rem, var(--safe-area-inset-top))',
+        paddingLeft: 'var(--safe-area-inset-left)',
+        paddingRight: 'var(--safe-area-inset-right)'
+      }}>
         <div className="flex items-center justify-between px-4 py-3">
           {/* 햄버거 메뉴 */}
           <button
@@ -518,13 +497,8 @@ export default function Header() {
             숲울림
           </Link>
 
-          {/* 테마 토글 */}
-          <button
-            onClick={toggleTheme}
-            className={`p-2 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}
-          >
-            {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-          </button>
+          {/* 빈 공간 (오른쪽 정렬 유지) */}
+          <div className="w-10"></div>
         </div>
 
         {/* 모바일 메뉴 */}

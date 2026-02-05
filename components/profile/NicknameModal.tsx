@@ -1,4 +1,5 @@
 'use client'
+import { logger } from '@/lib/utils/logger'
 
 import { useState } from 'react'
 import { useTheme } from '../layout/ThemeProvider'
@@ -44,7 +45,7 @@ export default function NicknameModal({ isOpen, onClose }: NicknameModalProps) {
         onClose()
       }
     } catch (error: any) {
-      console.error('Nickname update error:', error)
+      logger.error('Nickname update error:', error)
       setError(language === 'ko' ? '닉네임 변경에 실패했습니다' : 'Failed to update nickname')
     } finally {
       setLoading(false)

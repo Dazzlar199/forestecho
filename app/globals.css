@@ -2,18 +2,118 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 접근성: 스크린 리더 전용 텍스트 */
+@layer utilities {
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .sr-only-focusable:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: inherit;
+    margin: inherit;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+}
+
 @layer base {
+  /* Safe Area CSS Variables */
+  :root {
+    --safe-area-inset-top: env(safe-area-inset-top, 0px);
+    --safe-area-inset-right: env(safe-area-inset-right, 0px);
+    --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-area-inset-left: env(safe-area-inset-left, 0px);
+  }
+
   body {
     margin: 0;
     padding: 0;
-    font-family: 'Spectral', 'Nanum Myeongjo', serif;
-    font-weight: 300;
+    /* Dual Font Strategy: Sans-serif for UI, Serif for brand */
+    font-family: var(--font-ui), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 400;
     position: relative;
     min-height: 100vh;
     overflow-x: hidden;
-    color: #1a1a1a;
-    background: #0a1612;
+    color: var(--text-primary);
+    background: var(--bg-primary);
     transition: background 0.5s ease, color 0.5s ease;
+    /* 모바일 최적화 */
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    touch-action: pan-y pinch-zoom;
+  }
+
+  /* Brand typography - Serif font */
+  h1, h2, h3, h4, h5, h6,
+  .font-brand,
+  .forest-title {
+    font-family: var(--font-brand), var(--font-brand-ko), serif;
+    font-weight: 300;
+    letter-spacing: var(--tracking-wide);
+  }
+
+  h1 {
+    font-size: var(--text-5xl);
+    line-height: var(--leading-tight);
+    font-weight: var(--font-light);
+  }
+
+  h2 {
+    font-size: var(--text-4xl);
+    line-height: var(--leading-tight);
+    font-weight: var(--font-light);
+  }
+
+  h3 {
+    font-size: var(--text-3xl);
+    line-height: var(--leading-snug);
+    font-weight: var(--font-normal);
+  }
+
+  h4 {
+    font-size: var(--text-2xl);
+    line-height: var(--leading-snug);
+    font-weight: var(--font-normal);
+  }
+
+  /* UI typography - Sans-serif font */
+  p, span, button, input, textarea, select,
+  .font-ui {
+    font-family: var(--font-ui), sans-serif;
+    letter-spacing: 0.02em; /* 더 여유있게 */
+  }
+
+  p {
+    line-height: 1.8; /* 더 넓은 줄간격으로 편안함 */
+  }
+
+  /* 부드러운 느낌의 버튼 */
+  button {
+    border-radius: 16px; /* 더 둥글게 */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 500; /* 약간 더 두껍게 */
+  }
+
+  button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Code typography */
+  code, pre {
+    font-family: var(--font-mono), monospace;
   }
 
   /* 다크 모드 (기본) */
@@ -187,18 +287,20 @@
     z-index: -1;
   }
 
-  .firefly {
-    position: absolute;
-    width: 3px;
-    height: 3px;
-    border-radius: 50%;
-    background: rgba(220, 255, 200, 0.8);
-    box-shadow:
-      0 0 10px rgba(220, 255, 200, 0.6),
-      0 0 20px rgba(220, 255, 200, 0.4),
-      0 0 30px rgba(220, 255, 200, 0.2);
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
+  @media (prefers-reduced-motion: no-preference) {
+    .firefly {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: rgba(220, 255, 200, 0.8);
+      box-shadow:
+        0 0 10px rgba(220, 255, 200, 0.6),
+        0 0 20px rgba(220, 255, 200, 0.4),
+        0 0 30px rgba(220, 255, 200, 0.2);
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+    }
   }
 
   .firefly:nth-child(1) {
@@ -478,32 +580,51 @@
 
 @layer components {
   .chat-message {
-    padding: 1.75rem 2rem;
+    padding: 2rem 2.5rem; /* 더 넉넉한 패딩 */
     margin-bottom: 1.5rem;
-    border-radius: 2px;
+    border-radius: 24px; /* 훨씬 더 둥글게 */
     line-height: 1.9;
     font-size: 16px;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.03em; /* 약간 더 넓게 */
+    transition: all 0.3s ease;
   }
 
   .chat-message.user {
-    background: rgba(240, 245, 242, 0.08);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(200, 220, 210, 0.15);
-    color: #e8f0ed;
+    background: rgba(240, 245, 242, 0.15); /* 약간 더 불투명하게 */
+    backdrop-filter: blur(24px);
+    border: 2px solid rgba(200, 220, 210, 0.3); /* 부드러운 테두리 */
+    color: #f0fdf4;
     margin-left: auto;
     max-width: 75%;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    box-shadow:
+      0 4px 20px rgba(16, 185, 129, 0.08),
+      0 2px 8px rgba(0, 0, 0, 0.12); /* 부드러운 그림자 */
+  }
+
+  .chat-message.user:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 8px 32px rgba(16, 185, 129, 0.12),
+      0 4px 12px rgba(0, 0, 0, 0.15);
   }
 
   .chat-message.assistant {
-    background: rgba(250, 255, 252, 0.06);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(180, 200, 190, 0.12);
-    color: #d5e5df;
+    background: rgba(250, 255, 252, 0.12);
+    backdrop-filter: blur(24px);
+    border: 2px solid rgba(180, 200, 190, 0.25);
+    color: #ecfdf5;
     margin-right: auto;
     max-width: 80%;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    box-shadow:
+      0 4px 24px rgba(16, 185, 129, 0.06),
+      0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .chat-message.assistant:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 8px 36px rgba(16, 185, 129, 0.1),
+      0 4px 14px rgba(0, 0, 0, 0.12);
   }
 
   .typing-indicator span {
@@ -578,14 +699,53 @@
       font-size: 1.25rem !important;
     }
 
-    /* 버튼 터치 영역 확대 */
+    /* 버튼 터치 영역 확대 (Apps in Toss 가이드라인) */
     button {
       min-height: 44px;
+      min-width: 44px;
     }
 
     /* 입력창 확대 */
     input, textarea {
       font-size: 16px !important; /* iOS zoom 방지 */
+    }
+
+    /* Apps in Toss: 모바일 키보드 대응 */
+    @supports (-webkit-touch-callout: none) {
+      /* iOS Safari */
+      .chat-input-area {
+        position: relative;
+      }
+    }
+
+    /* 스크롤 최적화 - 모멘텀 스크롤 */
+    .overflow-y-auto {
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* 모바일 하단 네비게이션 여백 확보 */
+    main {
+      padding-bottom: calc(72px + var(--safe-area-inset-bottom));
+    }
+
+    /* Apps in Toss 환경: 하단 네비게이션 없을 때 */
+    body[data-apps-in-toss="true"] main {
+      padding-bottom: var(--safe-area-inset-bottom);
+    }
+
+    /* Pull-to-refresh 방지 */
+    body {
+      overscroll-behavior-y: contain;
+    }
+
+    /* 터치 스크롤 최적화 */
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* 링크와 버튼은 터치 하이라이트 유지 */
+    a, button {
+      -webkit-tap-highlight-color: rgba(100, 200, 150, 0.1);
     }
   }
 
@@ -601,10 +761,83 @@
     }
   }
 
-  /* Accessibility */
+  /* Accessibility - WCAG 2.2 AA Enhanced */
   *:focus-visible {
-    outline: 2px solid rgba(100, 200, 150, 0.6);
+    outline: 3px solid rgba(16, 185, 129, 0.8); /* Emerald-500 at higher contrast */
+    outline-offset: 3px;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+  }
+
+  /* High contrast focus for interactive elements */
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline: 3px solid #10b981; /* Solid emerald-500 */
     outline-offset: 2px;
+  }
+
+  /* Skip to main content link for keyboard navigation */
+  .skip-to-main {
+    position: absolute;
+    left: -9999px;
+    z-index: 999;
+    padding: 1rem 2rem;
+    background: #10b981;
+    color: white;
+    text-decoration: none;
+    border-radius: 0.5rem;
+  }
+
+  .skip-to-main:focus {
+    left: 50%;
+    top: 1rem;
+    transform: translateX(-50%);
+  }
+
+  /* Reduced Motion Support - WCAG 2.2 */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+
+    /* Keep essential transitions for usability */
+    button,
+    a,
+    input,
+    select,
+    textarea {
+      transition: background-color 0.1s, color 0.1s, border-color 0.1s !important;
+    }
+  }
+
+  /* High Contrast Mode Support */
+  @media (prefers-contrast: high) {
+    body {
+      background: #000;
+      color: #fff;
+    }
+
+    .chat-message.user,
+    .chat-message.assistant {
+      border-width: 2px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    button,
+    a {
+      border: 2px solid currentColor;
+    }
+
+    *:focus-visible {
+      outline-width: 4px;
+    }
   }
 
   /* 다크모드 스크롤바 */

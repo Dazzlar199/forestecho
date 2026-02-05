@@ -1,0 +1,165 @@
+/**
+ * 따뜻하고 부드러운 느낌을 위한 스타일
+ */
+
+/* 모든 카드와 박스에 부드러운 느낌 */
+.card,
+.modal,
+.panel,
+[class*="rounded"] {
+  border-radius: 24px !important;
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.08),
+    0 2px 12px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* 입력 필드들 */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+  border-radius: 16px !important;
+  padding: 14px 20px !important;
+  border: 2px solid rgba(200, 220, 210, 0.2) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  font-size: 16px !important;
+  line-height: 1.6 !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: rgba(16, 185, 129, 0.5) !important;
+  box-shadow:
+    0 0 0 4px rgba(16, 185, 129, 0.1),
+    0 4px 16px rgba(16, 185, 129, 0.08) !important;
+  transform: translateY(-1px);
+}
+
+/* 부드러운 버튼 스타일 */
+button,
+.btn,
+[role="button"] {
+  border-radius: 16px !important;
+  padding: 12px 24px !important;
+  font-weight: 500 !important;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  letter-spacing: 0.03em !important;
+}
+
+button:not(:disabled):hover,
+.btn:hover {
+  transform: translateY(-2px) scale(1.02) !important;
+}
+
+button:not(:disabled):active,
+.btn:active {
+  transform: translateY(0) scale(0.98) !important;
+}
+
+/* 따뜻한 색상 오버레이 */
+.warm-overlay {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 243, 224, 0.05) 0%,
+    rgba(255, 237, 213, 0.03) 100%
+  );
+}
+
+/* 부드러운 그림자 */
+.soft-shadow {
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.04),
+    0 4px 16px rgba(0, 0, 0, 0.06),
+    0 8px 32px rgba(0, 0, 0, 0.04) !important;
+}
+
+.soft-shadow:hover {
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.06),
+    0 8px 24px rgba(0, 0, 0, 0.08),
+    0 12px 48px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* 애니메이션을 더 부드럽게 */
+* {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* 따뜻한 강조색 */
+.warm-accent {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 200, 124, 0.15) 0%,
+    rgba(255, 183, 77, 0.1) 100%
+  );
+}
+
+/* 부드러운 텍스트 그림자 */
+h1, h2, h3, h4, h5, h6 {
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* 따뜻한 호버 효과 */
+.warm-hover {
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.warm-hover:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 8px 32px rgba(255, 200, 124, 0.15),
+    0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* 모서리를 더 둥글게 */
+.rounded-soft {
+  border-radius: 20px !important;
+}
+
+.rounded-softer {
+  border-radius: 28px !important;
+}
+
+.rounded-softest {
+  border-radius: 36px !important;
+}
+
+/* 따뜻한 배경 블러 */
+.warm-blur {
+  backdrop-filter: blur(24px) saturate(180%);
+  background: rgba(255, 250, 245, 0.08);
+}
+
+/* 다크 모드에서도 따뜻함 유지 */
+body.dark-mode .warm-blur {
+  background: rgba(255, 243, 224, 0.04);
+}
+
+/* 포근한 패딩 */
+.padding-cozy {
+  padding: 24px !important;
+}
+
+.padding-comfy {
+  padding: 32px !important;
+}
+
+.padding-plush {
+  padding: 48px !important;
+}
+
+/* 부드러운 구분선 */
+hr,
+.divider {
+  border: none;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(200, 220, 210, 0.3) 50%,
+    transparent 100%
+  );
+  margin: 32px 0;
+}

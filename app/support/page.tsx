@@ -1,8 +1,10 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { logger } from '@/lib/utils/logger'
 import { useAuth } from '@/components/layout/AuthProvider'
 import { useTheme } from '@/components/layout/ThemeProvider'
+import { useLanguage } from '@/components/layout/LanguageProvider'
 import { db } from '@/lib/firebase/config'
 import { collection, addDoc, query, where, orderBy, onSnapshot } from 'firebase/firestore'
 import { useRouter } from 'next/navigation'
@@ -22,6 +24,7 @@ interface Inquiry {
 export default function SupportPage() {
   const { user, loading } = useAuth()
   const { theme } = useTheme()
+  const { language } = useLanguage()
   const router = useRouter()
 
   const [inquiries, setInquiries] = useState<Inquiry[]>([])
@@ -82,10 +85,18 @@ export default function SupportPage() {
 
       setFormData({ type: 'inquiry', title: '', content: '' })
       setShowForm(false)
-      alert('문의가 성공적으로 제출되었습니다!')
+      const successMsg = language === 'ko' ? '문의가 성공적으로 제출되었습니다!' :
+                         language === 'en' ? 'Inquiry submitted successfully!' :
+                         language === 'ja' ? 'お問い合わせが正常に送信されました！' :
+                         '咨询已成功提交！'
+      alert(successMsg)
     } catch (error) {
-      console.error('문의 제출 오류:', error)
-      alert('문의 제출 중 오류가 발생했습니다.')
+      logger.error('Inquiry submission error:', error)
+      const errorMsg = language === 'ko' ? '문의 제출 중 오류가 발생했습니다.' :
+                       language === 'en' ? 'An error occurred while submitting.' :
+                       language === 'ja' ? '送信中にエラーが発生しました。' :
+                       '提交时发生错误。'
+      alert(errorMsg)
     } finally {
       setSubmitting(false)
     }
@@ -105,16 +116,12 @@ export default function SupportPage() {
   }
 
   const getTypeLabel = (type: string) => {
-    switch (type) {
-      case 'inquiry':
-        return '문의'
-      case 'feedback':
-        return '피드백'
-      case 'bug':
-        return '버그 제보'
-      default:
-        return '문의'
+    const labels: Record<string, Record<string, string>> = {
+      inquiry: { ko: '문의', en: 'Inquiry', ja: 'お問い合わせ', zh: '咨询' },
+      feedback: { ko: '피드백', en: 'Feedback', ja: 'フィードバック', zh: '反馈' },
+      bug: { ko: '버그 제보', en: 'Bug Report', ja: 'バグ報告', zh: '错误报告' },
     }
+    return labels[type]?.[language] || labels.inquiry[language]
   }
 
   const getStatusBadge = (status: string) => {
@@ -123,25 +130,25 @@ export default function SupportPage() {
         bg: theme === 'dark' ? 'bg-yellow-900/30' : 'bg-yellow-100',
         text: theme === 'dark' ? 'text-yellow-400' : 'text-yellow-700',
         icon: <Clock className="w-4 h-4" />,
-        label: '대기중',
+        label: language === 'ko' ? '대기중' : language === 'en' ? 'Pending' : language === 'ja' ? '待機中' : '待处理',
       },
       'in-progress': {
         bg: theme === 'dark' ? 'bg-blue-900/30' : 'bg-blue-100',
         text: theme === 'dark' ? 'text-blue-400' : 'text-blue-700',
         icon: <MessageSquare className="w-4 h-4" />,
-        label: '확인중',
+        label: language === 'ko' ? '확인중' : language === 'en' ? 'In Progress' : language === 'ja' ? '確認中' : '处理中',
       },
       resolved: {
         bg: theme === 'dark' ? 'bg-green-900/30' : 'bg-green-100',
         text: theme === 'dark' ? 'text-green-400' : 'text-green-700',
         icon: <CheckCircle className="w-4 h-4" />,
-        label: '완료',
+        label: language === 'ko' ? '완료' : language === 'en' ? 'Resolved' : language === 'ja' ? '完了' : '已完成',
       },
       rejected: {
         bg: theme === 'dark' ? 'bg-red-900/30' : 'bg-red-100',
         text: theme === 'dark' ? 'text-red-400' : 'text-red-700',
         icon: <XCircle className="w-4 h-4" />,
-        label: '거절됨',
+        label: language === 'ko' ? '거절됨' : language === 'en' ? 'Rejected' : language === 'ja' ? '却下' : '已拒绝',
       },
     }
     return styles[status as keyof typeof styles] || styles.pending
@@ -150,7 +157,9 @@ export default function SupportPage() {
   if (loading || !user) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">로딩 중...</div>
+        <div className="text-center">
+          {language === 'ko' ? '로딩 중...' : language === 'en' ? 'Loading...' : language === 'ja' ? '読み込み中...' : '加载中...'}
+        </div>
       </div>
     )
   }
@@ -161,10 +170,13 @@ export default function SupportPage() {
         {/* 헤더 */}
         <div className="mb-6 sm:mb-8">
           <h1 className={`text-2xl sm:text-3xl md:text-4xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-            고객 지원
+            {language === 'ko' ? '고객 지원' : language === 'en' ? 'Support' : language === 'ja' ? 'サポート' : '客户支持'}
           </h1>
           <p className={`text-sm sm:text-base ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
-            문의사항, 피드백, 버그 제보를 남겨주세요
+            {language === 'ko' ? '문의사항, 피드백, 버그 제보를 남겨주세요' :
+             language === 'en' ? 'Submit inquiries, feedback, or bug reports' :
+             language === 'ja' ? 'お問い合わせ、フィードバック、バグ報告をお送りください' :
+             '提交咨询、反馈或错误报告'}
           </p>
         </div>
 
@@ -178,7 +190,8 @@ export default function SupportPage() {
                 : 'bg-emerald-500 hover:bg-emerald-600 text-white'
             }`}
           >
-            <Send className="w-4 sm:w-5 h-4 sm:h-5 inline mr-2" />새 문의 작성
+            <Send className="w-4 sm:w-5 h-4 sm:h-5 inline mr-2" />
+            {language === 'ko' ? '새 문의 작성' : language === 'en' ? 'New Inquiry' : language === 'ja' ? '新しいお問い合わせ' : '新建咨询'}
           </button>
         )}
 
@@ -190,19 +203,19 @@ export default function SupportPage() {
             }`}
           >
             <h2 className={`text-lg sm:text-xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-              새 문의 작성
+              {language === 'ko' ? '새 문의 작성' : language === 'en' ? 'New Inquiry' : language === 'ja' ? '新しいお問い合わせ' : '新建咨询'}
             </h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* 타입 선택 */}
               <div>
                 <label className={`block mb-2 font-medium text-sm sm:text-base ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-                  문의 유형
+                  {language === 'ko' ? '문의 유형' : language === 'en' ? 'Type' : language === 'ja' ? 'お問い合わせ種別' : '咨询类型'}
                 </label>
                 <div className="grid grid-cols-3 gap-2 sm:gap-3">
                   {[
-                    { value: 'inquiry', label: '문의', icon: MessageSquare },
-                    { value: 'feedback', label: '피드백', icon: Lightbulb },
-                    { value: 'bug', label: '버그 제보', icon: Bug },
+                    { value: 'inquiry', label: language === 'ko' ? '문의' : language === 'en' ? 'Inquiry' : language === 'ja' ? 'お問い合わせ' : '咨询', icon: MessageSquare },
+                    { value: 'feedback', label: language === 'ko' ? '피드백' : language === 'en' ? 'Feedback' : language === 'ja' ? 'フィードバック' : '反馈', icon: Lightbulb },
+                    { value: 'bug', label: language === 'ko' ? '버그 제보' : language === 'en' ? 'Bug Report' : language === 'ja' ? 'バグ報告' : '错误报告', icon: Bug },
                   ].map((type) => (
                     <button
                       key={type.value}
@@ -250,13 +263,13 @@ export default function SupportPage() {
               {/* 제목 */}
               <div>
                 <label className={`block mb-2 font-medium text-sm sm:text-base ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-                  제목
+                  {language === 'ko' ? '제목' : language === 'en' ? 'Title' : language === 'ja' ? 'タイトル' : '标题'}
                 </label>
                 <input
                   type="text"
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  placeholder="간단한 제목을 입력해주세요"
+                  placeholder={language === 'ko' ? '간단한 제목을 입력해주세요' : language === 'en' ? 'Enter a brief title' : language === 'ja' ? '簡単なタイトルを入力してください' : '请输入简短标题'}
                   required
                   className={`w-full px-4 py-3 rounded-xl border text-sm sm:text-base transition-colors ${
                     theme === 'dark'
@@ -269,12 +282,12 @@ export default function SupportPage() {
               {/* 내용 */}
               <div>
                 <label className={`block mb-2 font-medium text-sm sm:text-base ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-                  내용
+                  {language === 'ko' ? '내용' : language === 'en' ? 'Content' : language === 'ja' ? '内容' : '内容'}
                 </label>
                 <textarea
                   value={formData.content}
                   onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                  placeholder="자세한 내용을 입력해주세요"
+                  placeholder={language === 'ko' ? '자세한 내용을 입력해주세요' : language === 'en' ? 'Please provide details' : language === 'ja' ? '詳しい内容を入力してください' : '请输入详细内容'}
                   required
                   rows={6}
                   className={`w-full px-4 py-3 rounded-xl border text-sm sm:text-base transition-colors resize-none ${
@@ -296,7 +309,10 @@ export default function SupportPage() {
                       : 'bg-emerald-500 hover:bg-emerald-600 text-white disabled:bg-gray-300'
                   }`}
                 >
-                  {submitting ? '제출 중...' : '제출하기'}
+                  {submitting
+                    ? (language === 'ko' ? '제출 중...' : language === 'en' ? 'Submitting...' : language === 'ja' ? '送信中...' : '提交中...')
+                    : (language === 'ko' ? '제출하기' : language === 'en' ? 'Submit' : language === 'ja' ? '送信する' : '提交')
+                  }
                 </button>
                 <button
                   type="button"
@@ -307,7 +323,7 @@ export default function SupportPage() {
                       : 'bg-gray-200 hover:bg-gray-300 text-gray-700'
                   }`}
                 >
-                  취소
+                  {language === 'ko' ? '취소' : language === 'en' ? 'Cancel' : language === 'ja' ? 'キャンセル' : '取消'}
                 </button>
               </div>
             </form>
@@ -317,7 +333,7 @@ export default function SupportPage() {
         {/* 문의 내역 */}
         <div className="space-y-4">
           <h2 className={`text-lg sm:text-xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-            내 문의 내역
+            {language === 'ko' ? '내 문의 내역' : language === 'en' ? 'My Inquiries' : language === 'ja' ? 'お問い合わせ履歴' : '我的咨询记录'}
           </h2>
           {inquiries.length === 0 ? (
             <div
@@ -326,7 +342,9 @@ export default function SupportPage() {
               }`}
             >
               <MessageSquare className={`w-10 sm:w-12 h-10 sm:h-12 mx-auto mb-3 ${theme === 'dark' ? 'text-gray-600' : 'text-gray-400'}`} />
-              <p className={`text-sm sm:text-base ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>아직 문의 내역이 없습니다</p>
+              <p className={`text-sm sm:text-base ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+                {language === 'ko' ? '아직 문의 내역이 없습니다' : language === 'en' ? 'No inquiries yet' : language === 'ja' ? 'お問い合わせ履歴がありません' : '暂无咨询记录'}
+              </p>
             </div>
           ) : (
             inquiries.map((inquiry) => {
@@ -358,7 +376,7 @@ export default function SupportPage() {
                           </span>
                         </div>
                         <div className={`text-xs sm:text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
-                          {inquiry.createdAt.toLocaleDateString('ko-KR')} {inquiry.createdAt.toLocaleTimeString('ko-KR')}
+                          {inquiry.createdAt.toLocaleDateString(language === 'ko' ? 'ko-KR' : language === 'ja' ? 'ja-JP' : language === 'zh' ? 'zh-CN' : 'en-US')} {inquiry.createdAt.toLocaleTimeString(language === 'ko' ? 'ko-KR' : language === 'ja' ? 'ja-JP' : language === 'zh' ? 'zh-CN' : 'en-US')}
                         </div>
                       </div>
                     </div>
@@ -381,12 +399,12 @@ export default function SupportPage() {
                       }`}
                     >
                       <div className={`text-xs sm:text-sm font-medium mb-2 ${theme === 'dark' ? 'text-emerald-400' : 'text-emerald-600'}`}>
-                        관리자 답변
+                        {language === 'ko' ? '관리자 답변' : language === 'en' ? 'Admin Reply' : language === 'ja' ? '管理者の回答' : '管理员回复'}
                       </div>
                       <div className={`text-sm sm:text-base ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>{inquiry.adminReply}</div>
                       {inquiry.repliedAt && (
                         <div className={`text-xs mt-2 ${theme === 'dark' ? 'text-gray-500' : 'text-gray-500'}`}>
-                          {inquiry.repliedAt.toLocaleDateString('ko-KR')} {inquiry.repliedAt.toLocaleTimeString('ko-KR')}
+                          {inquiry.repliedAt.toLocaleDateString(language === 'ko' ? 'ko-KR' : language === 'ja' ? 'ja-JP' : language === 'zh' ? 'zh-CN' : 'en-US')} {inquiry.repliedAt.toLocaleTimeString(language === 'ko' ? 'ko-KR' : language === 'ja' ? 'ja-JP' : language === 'zh' ? 'zh-CN' : 'en-US')}
                         </div>
                       )}
                     </div>

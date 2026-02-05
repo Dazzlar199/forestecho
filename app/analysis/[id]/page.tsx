@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { logger } from '@/lib/utils/logger'
 import { useParams, useRouter } from 'next/navigation'
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from '@/lib/firebase/config'
@@ -10,6 +11,8 @@ import LifeImpactChart from '@/components/analysis/LifeImpactChart'
 import ScoreGauge from '@/components/analysis/ScoreGauge'
 import RecommendedCareSection from '@/components/analysis/RecommendedCareSection'
 import AnalysisDownload from '@/components/analysis/AnalysisDownload'
+import AnalysisFeedback from '@/components/analysis/AnalysisFeedback'
+import { useAuth } from '@/components/layout/AuthProvider'
 import {
   FileText,
   Brain,
@@ -25,6 +28,7 @@ import {
 export default function AnalysisPage() {
   const params = useParams()
   const router = useRouter()
+  const { user } = useAuth()
   const [analysis, setAnalysis] = useState<PsychologicalAnalysis | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -42,7 +46,7 @@ export default function AnalysisPage() {
           setError('분석 결과를 찾을 수 없습니다.')
         }
       } catch (err) {
-        console.error('Error fetching analysis:', err)
+        logger.error('Error fetching analysis:', err)
         setError('분석 결과를 불러오는 중 오류가 발생했습니다.')
       } finally {
         setLoading(false)
@@ -907,6 +911,11 @@ export default function AnalysisPage() {
           riskLevel={analysis.riskAssessment?.riskLevel}
           recoveryPotential={analysis.prognosis?.recoveryPotential}
         />
+
+        {/* Feedback Section */}
+        <section className="mb-12">
+          <AnalysisFeedback analysisId={analysis.id} userId={user?.uid} />
+        </section>
 
         {/* Footer */}
         <div className="text-center text-sm text-gray-600 mt-16">

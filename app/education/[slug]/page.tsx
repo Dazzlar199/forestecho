@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Script from 'next/script'
-import { ARTICLES } from '@/types/education'
+import { ARTICLES } from '@/lib/data/articles'
 import ArticleContent from '@/components/education/ArticleContent'
 
 // Generate static paths for all articles
@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       title: article.title.ko,
       description: article.summary.ko,
       type: 'article',
-      publishedTime: article.lastUpdated.toISOString(),
+      publishedTime: new Date(article.lastUpdated).toISOString(),
       authors: ['숲울림'],
       tags: article.tags,
       url: `https://forestecho.app/education/${article.id}`,
@@ -76,8 +76,8 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       name: '숲울림',
       url: 'https://forestecho.app',
     },
-    datePublished: article.lastUpdated.toISOString(),
-    dateModified: article.lastUpdated.toISOString(),
+    datePublished: new Date(article.lastUpdated).toISOString(),
+    dateModified: new Date(article.lastUpdated).toISOString(),
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': `https://forestecho.app/education/${article.id}`,
